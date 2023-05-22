@@ -1,0 +1,58 @@
+package rules;
+dialect  "mvel"
+import com.ftn.sbnz.model.models.Restaurant;
+import com.ftn.sbnz.model.models.MenuItem
+import com.ftn.sbnz.model.models.Recommendation;
+import java.util.List;
+
+global java.time.LocalDateTime now;
+
+rule "New Restaurant"
+    when
+        $restaurant: Restaurant(createdOn >= now.minusMonths(1))
+    then
+        modify($restaurant){isNew(true)}
+end
+
+rule "Popular Restaurant"
+    when
+        $restaurant: Restaurant(reviews.size() >= 20 || (reviews.size() >= 10 && isNew))
+    then
+        modify($restaurant){isPopular(true)}
+end
+
+rule "Well Rated Restaurant"
+    when
+        $restaurant: Restaurant(getRating() >= 4)
+    then
+        modify($restaurant){isTopRated(true)}
+end
+
+rule "Badly Rated Restaurant"
+    when
+        $restaurant: Restaurant(getRating() < 2.5)
+    then
+        modify($restaurant){isBadRated(true)}
+end
+
+rule "Recommend Popular Not Badly Rated Restaurant"
+    when
+        $restaurant: Restaurant((isPopular && isBadRated == false) ||  isNew)
+    then
+        Recommendation recommendation = new Recommendation($restaurant, $restaurant.getRating());
+        insert(recommendation);
+end
+
+rule "Remove Worst Rated Restaurants From Recommendation"
+when
+    $recommendations: List(size > 10) from collect(Recommendation())
+    $minRating: Number() from accumulate(Recommendation($rating: rating), min($rating))
+    Recommendation(rating == $minRating) from $recommendations
+then
+    delete($recommendations);
+end
+
+rule "Recommend 10 Closest Restaurants"
+    when
+    then
+end

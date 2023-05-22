@@ -1,0 +1,45 @@
+package rules;
+dialect  "mvel"
+import com.ftn.sbnz.model.models.User;
+import com.ftn.sbnz.model.models.Order;
+
+
+rule "Calculate User Discount 15%"
+    agenda-group "Discount Rules"
+    salience 4
+    when
+        $user: User($orders: orders)
+        $orderCount: Number($orders.size() >= 10000)
+    then
+        modify($user){setDiscount(15/100)}
+end
+
+rule "Calculate User Discount 10%"
+    agenda-group "Discount Rules"
+    salience 3
+    when
+        $user: User($orders: orders)
+        $orderCount: Number($orders.size() >= 1000 && $orders.size() < 10000)
+    then
+        modify($user){setDiscount(10/100)}
+end
+
+rule "Calculate User Discount 8%"
+    agenda-group "Discount Rules"
+    salience 2
+    when
+        $user: User($orders: orders)
+        $orderCount: Number($orders.size() >= 500 && $orders.size() < 1000)
+    then
+        modify($user){setDiscount(8/100)}
+end
+
+rule "Calculate User Discount 5%"
+    agenda-group "Discount Rules"
+    salience 1
+    when
+        $user: User($orders: orders)
+        $orderCount: Number($orders.size() >= 100 && $orders.size() < 500)
+    then
+        modify($user){setDiscount(5/100)}
+end
