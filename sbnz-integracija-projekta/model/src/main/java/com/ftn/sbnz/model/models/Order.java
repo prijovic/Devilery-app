@@ -57,6 +57,10 @@ public class Order extends BaseEntity {
     @JoinTable(name = "items", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
     Set<MenuItem> items = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "report_id")
+    Report report;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "charge_id")
     Charge charge;

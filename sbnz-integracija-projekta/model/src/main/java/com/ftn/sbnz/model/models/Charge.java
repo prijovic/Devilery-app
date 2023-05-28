@@ -3,7 +3,9 @@ package com.ftn.sbnz.model.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -26,7 +28,7 @@ public class Charge extends BaseEntity {
     @Column(name = "payment_id")
     String paymentId;
 
-    String currency = "RSD";
+    String currency = "EUR";
 
     @Column(name = "charged")
     Boolean charged = false;

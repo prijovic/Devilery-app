@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -53,15 +54,22 @@ public class User extends BaseEntity {
     @Value("true")
     boolean active;
 
+    @Column(name = "blocked")
+    @Value("false")
+    boolean blocked;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    List<Address> deliveryAddresses;
+    List<Address> deliveryAddresses = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    List<Order> orders;
+    List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")
-    List<Review> reviews;
+    List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer")
+    List<Report> reports = new ArrayList<>();
 
     @Column(name = "discount")
     @Value("0.0")

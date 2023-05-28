@@ -28,8 +28,11 @@ public class Deliverer extends User {
     @OneToMany(mappedBy = "deliverer", fetch = FetchType.LAZY)
     List<Order> ordersDelivered = new ArrayList<>();
 
-    @OneToMany(mappedBy = "deliverer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "deliverer", cascade = CascadeType.DETACH)
     List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "deliverer", cascade = CascadeType.ALL)
+    List<Report> reports = new ArrayList<>();
 
     boolean isWellRated = false;
 
