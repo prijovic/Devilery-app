@@ -1,81 +1,118 @@
 package com.ftn.sbnz.service.tests;
-import com.ftn.sbnz.model.models.Review;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
-import com.ftn.sbnz.model.models.Restaurant;
+
 import com.ftn.sbnz.model.models.Recommendation;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.ftn.sbnz.model.models.Restaurant;
+import org.drools.core.ClassObjectFilter;
+import org.junit.jupiter.api.Test;
+import org.kie.api.runtime.KieSession;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RecommendationTest {
-
-    private KieSession kieSession;
-
-    @BeforeEach
-    public void setup() {
-        KieServices ks = KieServices.Factory.get();
-        KieContainer kContainer = ks.getKieClasspathContainer();
-        this.kieSession = kContainer.newKieSession("recommendationKieSession");
-    }
+public class RecommendationTest extends RestaurantTest {
 
     @Test
     public void testNewRestaurantRule() {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime oneMonthAgo = now.minusMonths(1);
+        Restaurant restaurant = getNewRestaurant();
 
-        Restaurant restaurant = new Restaurant();
-        restaurant.setCreatedOn(oneMonthAgo);
-
-        kieSession.setGlobal("now", now);
+        KieSession kieSession = initKieSession(now);
         kieSession.insert(restaurant);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
         assertTrue(restaurant.isNew());
     }
 
     @Test
     public void testPopularRestaurantRule() {
-        Restaurant restaurant = new Restaurant();
-        restaurant.setCreatedOn(LocalDateTime.now());
-        restaurant.setReviews(new ArrayList<>());
+        Restaurant restaurant1 = getPopularRestaurantByReviewNumber();
+        Restaurant restaurant2 = getPopularNewRestaurant();
 
-        for (int i = 0; i < 20; i++) {
-            restaurant.getReviews().add(new Review());
-        }
-
-        kieSession.insert(restaurant);
+        KieSession kieSession = initKieSession(now);
+        kieSession.insert(restaurant1);
+        kieSession.insert(restaurant2);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
-        assertTrue(restaurant.isPopular());
+        assertTrue(restaurant1.isPopular());
+        assertTrue(restaurant2.isPopular());
     }
 
     @Test
     public void testWellRatedRestaurantRule() {
-        Restaurant restaurant = new Restaurant();
-        Review review = new Review();
-        review.setRestaurantRating(5.0);
+        Restaurant restaurant = getRatedRestaurant(now.minusMonths(2), 4.5, 5, 10);
 
+        KieSession kieSession = initKieSession(now);
         kieSession.insert(restaurant);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
-        assertTrue(restaurant.isTopRated());
+        assertTrue(restaurant.isWellRated());
+        assertFalse(restaurant.isBadRated());
     }
 
     @Test
     public void testBadlyRatedRestaurantRule() {
-        Restaurant restaurant = new Restaurant();
-        Review review = new Review();
-        review.setRestaurantRating(5.0);
+        Restaurant restaurant = getRatedRestaurant(now.minusMonths(2), 1, 2.49, 10);
 
+        KieSession kieSession = initKieSession(now);
         kieSession.insert(restaurant);
         kieSession.fireAllRules();
+        kieSession.dispose();
 
         assertTrue(restaurant.isBadRated());
+        assertFalse(restaurant.isWellRated());
     }
+
+    @Test
+    public void testRestaurantRecommendation() {
+        Restaurant restaurant1 = getRatedRestaurant(now.minusMonths(2), 2.5, 5, 20);
+        restaurant1.setId(UUID.randomUUID());
+        Restaurant restaurant2 = getRatedRestaurant(now.minusMonths(2), 1, 2.49, 20);
+        restaurant2.setId(UUID.randomUUID());
+        Restaurant restaurant3 = getNewRestaurant();
+        restaurant3.setId(UUID.randomUUID());
+
+        KieSession kieSession = initKieSession(now);
+        kieSession.insert(restaurant1);
+        kieSession.insert(restaurant2);
+        kieSession.insert(restaurant3);
+
+        kieSession.fireAllRules();
+
+        Collection<Recommendation> recommendations = (Collection<Recommendation>) kieSession.getObjects(new ClassObjectFilter(Recommendation.class));
+
+        kieSession.dispose();
+
+        assertEquals(2, recommendations.size());
+    }
+
+    @Test
+    public void testRedundantRestaurantRecommendationRemoval() {
+        KieSession kieSession = initKieSession(now);
+        List<Restaurant> restaurants = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            Restaurant restaurant = getRatedRestaurant(now.minusMonths(2), 2.5, 5, 20);
+            restaurant.setId(UUID.randomUUID());
+            kieSession.insert(restaurant);
+            restaurants.add(restaurant);
+        }
+        kieSession.fireAllRules();
+
+        Collection<Recommendation> recommendations = (Collection<Recommendation>) kieSession.getObjects(new ClassObjectFilter(Recommendation.class));
+
+        kieSession.dispose();
+
+        restaurants.sort(Comparator.comparing(Restaurant::getRating).reversed());
+        List<Restaurant> top10Restaurants = restaurants.subList(0, 10);
+
+        assertEquals(10, recommendations.size());
+        for (Recommendation recommendation : recommendations) {
+            assertTrue(top10Restaurants.contains(recommendation.getRestaurant()));
+        }
+    }
+
+
 }
