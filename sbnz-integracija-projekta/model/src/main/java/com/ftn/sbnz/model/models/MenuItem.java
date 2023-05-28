@@ -28,23 +28,27 @@ public class MenuItem extends BaseEntity {
     @Column(name = "description", nullable = false)
     String description;
 
-    @Column(name="price", nullable = false)
+    @Column(name = "price", nullable = false)
     Double price;
 
-    @Column(name="available")
+    @Column(name = "available")
     @Value("true")
     boolean available;
 
     @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
     MenuItemType type;
 
     @ElementCollection(targetClass = Allergen.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "menu_item_allergens")
     @Column(name = "allergens")
-    private List<Allergen> allergens;
+    List<Allergen> allergens;
+
+    @ManyToMany(mappedBy = "items")
+    Set<Order> orders;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-    private Restaurant restaurant;
+    Restaurant restaurant;
 }

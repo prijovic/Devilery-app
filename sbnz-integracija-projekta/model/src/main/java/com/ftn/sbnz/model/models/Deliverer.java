@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -16,10 +16,37 @@ import java.util.Set;
 @Table(name = "deliverer")
 public class Deliverer extends User {
 
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    DelivererStatus status;
+
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    DelivererType type;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "deliverer", fetch = FetchType.LAZY)
-    List<Order> orders_delivered;
+    List<Order> ordersDelivered = new ArrayList<>();
 
     @OneToMany(mappedBy = "deliverer", cascade = CascadeType.ALL)
-    List<Review> reviews;
+    List<Review> reviews = new ArrayList<>();
+
+    boolean isWellRated = false;
+
+    boolean isBadRated = false;
+
+    public Double getRating() {
+        return reviews.stream()
+                .filter(review -> review.getDelivererRating() != null)
+                .mapToDouble(Review::getDelivererRating)
+                .average()
+                .orElse(0.0);
+    }
+
+    public Order getCurrentOrder() {
+        return ordersDelivered
+                .stream()
+                .filter(order -> order.getStatus().equals(OrderStatus.BEING_DELIVERED))
+                .findFirst().orElse(null);
+    }
 }

@@ -1,18 +1,15 @@
 package com.ftn.sbnz.model.models;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.kie.api.definition.type.Role;
-import org.kie.api.definition.type.Timestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Getter
@@ -39,34 +36,42 @@ public class Restaurant extends BaseEntity {
     @Column(name = "min_order", nullable = false)
     Double minOrder;
 
-    @Column(name="closed")
+    @Column(name = "closed")
     boolean closed;
 
     boolean isNew = false;
 
     boolean isPopular = false;
 
-    boolean isTopRated = false;
+    boolean isWellRated = false;
 
     boolean isBadRated = false;
+
+    @Transient
+    Set<MenuItemType> specializedTypes;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     RestaurantOwner owner;
 
     @OneToMany(mappedBy = "restaurant")
-    List<RestaurantEmployee> employees;
+    List<RestaurantEmployee> employees = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant")
-    List<MenuItem> items;
+    List<MenuItem> items = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    List<Review> reviews;
+    List<Review> reviews = new ArrayList<>();
 
     public Double getRating() {
         return reviews.stream()
                 .filter(review -> review.getRestaurantRating() != null)
                 .mapToDouble(Review::getRestaurantRating)
                 .average()
-                .orElse(0.0);    }
+                .orElse(0.0);
+    }
+
+    public boolean isSpecializedForType(MenuItemType type) {
+        return specializedTypes.contains(type);
+    }
 }

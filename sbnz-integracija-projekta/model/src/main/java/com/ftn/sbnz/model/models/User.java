@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -65,5 +64,6 @@ public class User extends BaseEntity {
     List<Review> reviews;
 
     @Column(name = "discount")
+    @Value("0.0")
     Double discount;
 }
