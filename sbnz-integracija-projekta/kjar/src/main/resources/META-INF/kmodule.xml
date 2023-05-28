@@ -11,4 +11,7 @@
     <kbase name="deliveryBase" packages="rules.delivery">
         <ksession name="deliveryKieSession"/>
     </kbase>
+    <kbase name="reportsBase" eventProcessingMode="stream" packages="rules.reports">
+        <ksession name="reportsKieSession" clockType="realtime"/>
+    </kbase>
 </kmodule>

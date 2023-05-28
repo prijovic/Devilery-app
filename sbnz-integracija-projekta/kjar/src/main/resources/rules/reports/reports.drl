@@ -1,0 +1,33 @@
+package rules.reports;
+
+import com.ftn.sbnz.model.models.Deliverer;
+import com.ftn.sbnz.model.models.Report;
+import com.ftn.sbnz.model.models.ReportStatus
+import org.drools.core.spi.KnowledgeHelper;
+import org.kie.api.event.rule.AfterMatchFiredEvent;
+
+dialect  "mvel"
+
+rule "Block Deliverer with 3 Approved Reports"
+    when
+        $deliverer: Deliverer()
+        Number(intValue >= 3) from accumulate(
+            Report(deliverer == $deliverer, status == ReportStatus.ACCEPTED) over window:time(30d),
+            count(1)
+        )
+    then
+        modify($deliverer){setBlocked(true)}
+        System.out.println("Deliverer " + $deliverer.getId() + " has been blocked.");
+end
+
+rule "Unblock Deliverer with Less than 3 Approved Reports"
+    when
+        $deliverer: Deliverer(isBlocked() == true)
+        Number(intValue < 3) from accumulate(
+            Report(deliverer == $deliverer, status == ReportStatus.ACCEPTED) over window:time(30d),
+            count(1)
+        )
+    then
+        modify($deliverer){setBlocked(false)}
+        System.out.println("Deliverer " + $deliverer.getId() + " has been unblocked.");
+end
