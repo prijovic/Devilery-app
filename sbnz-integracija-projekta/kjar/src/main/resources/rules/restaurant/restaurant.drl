@@ -1,0 +1,130 @@
+package rules.restaurant;
+
+import com.ftn.sbnz.model.models.Restaurant;
+import com.ftn.sbnz.model.models.MenuItem
+import com.ftn.sbnz.model.models.Recommendation;
+import com.ftn.sbnz.model.models.MenuItemType;
+import java.util.*;
+
+dialect  "mvel"
+
+global java.time.LocalDateTime now;
+
+rule "New Restaurant"
+    when
+        $restaurant: Restaurant(createdOn >= now.minusMonths(1))
+    then
+        modify($restaurant){setNew(true)}
+end
+
+rule "Popular Restaurant"
+    when
+    $restaurant: Restaurant($reviews: reviews,
+    (
+        $reviews.size() >= 20 ||
+        ($reviews.size() >= 10 && isNew())
+    ))
+    then
+        modify($restaurant){setPopular(true)}
+end
+
+rule "Well Rated Restaurant"
+    when
+        $restaurant: Restaurant(getRating() >= 4)
+    then
+        modify($restaurant){
+        setWellRated(true), setBadRated(false)}
+end
+
+rule "Badly Rated Restaurant"
+    when
+        $restaurant: Restaurant(getRating() < 2.5)
+    then
+        modify($restaurant){
+        setWellRated(false), setBadRated(true)}
+end
+
+// todo: dodati uslov da je otvoren
+// todo: dodati pravilo da ako je predlozeno manje od 10 da se dodaju zatvoreni restorani
+rule "Base Restaurant Recommendation Rule"
+    when
+        $restaurant: Restaurant(
+            $restaurantId: id,
+            (isPopular() == true && isBadRated() == false)
+            || isNew() == true
+            && closed == false
+        )
+    then
+        Recommendation recommendation = new Recommendation($restaurant, $restaurant.getRating());
+        insert(recommendation);
+end
+
+rule "Recommend Popular Not Badly Rated Restaurant" extends "Base Restaurant Recommendation Rule"
+    when
+        not(MenuItemType())
+        $newRestaurant: Restaurant($restaurantId == id)
+    then
+end
+
+rule "Remove Worst Rated Restaurants From Recommendation"
+    when
+        $recommendations: List(size > 10) from collect(Recommendation())
+        $minRating: Number() from accumulate(Recommendation($rating: rating), min($rating))
+        $recommendation: Recommendation(rating == $minRating) from $recommendations
+    then
+        delete($recommendation);
+end
+
+rule "Restaurant can be specialised for a type if it has at least 3 items of that type"
+    when
+        MenuItemType()
+        $restaurant: Restaurant($items: items)
+        $countMap: Map() from accumulate(
+            MenuItem($type: type) from $items,
+            init(Map countMap = new HashMap();),
+            action(countMap.put($type, countMap.getOrDefault($type, 0) + 1)),
+            reverse(countMap.put($type, countMap.get($type) - 1)),
+            result(countMap)
+        )
+        $filteredListOfMapEntries: List() from accumulate(
+            $entry: Map.Entry(getValue() > 3) from $countMap.entrySet(),
+            collectList($entry)
+        )
+    then
+        for (Object entry : $filteredListOfMapEntries) {
+            insert(entry);
+        }
+end
+
+rule "Restaurant can be specialized for max 3 types with highest occurances"
+    when
+        MenuItemType()
+        $mapEntries: Set(size > 3) from collect(Map.Entry())
+        $minOccurance: Number() from accumulate(
+            Map.Entry($type: getKey(), $occurrance: getValue()),
+            min($occurrance)
+        )
+        $mapEntry: Map.Entry(getValue() == $minOccurance) from $mapEntries
+    then
+        delete($mapEntry);
+end
+
+rule "Restaurant is specialised for 3 most occured items with at least 3 occurances"
+    when
+        MenuItemType()
+        $restaurant: Restaurant()
+        $mapEntries: Set(size <= 3) from collect(Map.Entry())
+        $specializedTypes: Set(size <= 3) from accumulate(
+            $entry: Map.Entry() from $mapEntries,
+            collectSet($entry.getKey())
+        )
+    then
+        modify($restaurant){setSpecializedTypes($specializedTypes)}
+end
+
+rule "Include Specialized and Popular Restaurants in Search Result" extends "Base Restaurant Recommendation Rule"
+    when
+        $type: MenuItemType()
+        $specializedRestaurant: Restaurant($restaurantId == id, isSpecializedForType($type))
+    then
+end

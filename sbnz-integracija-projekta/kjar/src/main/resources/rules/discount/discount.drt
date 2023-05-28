@@ -1,0 +1,22 @@
+template header
+min
+max
+discount
+
+package rules.discount;
+
+import com.ftn.sbnz.model.models.User;
+import com.ftn.sbnz.model.models.Order;
+
+dialect "mvel"
+
+template "discount-rules"
+
+rule "Calculate User Discount @{discount*100}%"
+    when
+        $user: User($orders: orders, $orders.size() >= @{min} && $orders.size() < @{max})
+    then
+        modify($user){setDiscount(@{discount})}
+end
+
+end template

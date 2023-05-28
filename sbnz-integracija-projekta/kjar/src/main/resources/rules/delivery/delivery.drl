@@ -1,0 +1,62 @@
+package rules.delivery;
+
+import com.ftn.sbnz.model.models.Deliverer;
+import com.ftn.sbnz.model.models.DelivererStatus;
+import com.ftn.sbnz.model.models.DelivererType;
+import com.ftn.sbnz.model.models.Order;
+import com.ftn.sbnz.model.models.OrderStatus;
+
+dialect  "mvel"
+
+rule "Well Rated Deliverer"
+    salience 4
+    when
+        $deliverer: Deliverer(getRating() >= 4)
+    then
+        modify($deliverer){setWellRated(true), setBadRated(false)}
+end
+
+rule "Badly Rated Deliverer"
+    salience 4
+    when
+        $deliverer: Deliverer(getRating() < 2.5)
+    then
+        modify($deliverer){setWellRated(false), setBadRated(true)}
+end
+
+rule "Assign Order to Deliverer"
+    when
+        $deliverer: Deliverer($delivererId: id, status != DelivererStatus.UNAVAILABLE)
+        $order: Order(status == OrderStatus.ACCEPTED, deliverer == null)
+    then
+end
+
+rule "Assign Order to not Bad Rated Deliverer" extends "Assign Order to Deliverer"
+    when
+        Deliverer($delivererId == id, $notBadRatedDelivererId: id, isBadRated() == false)
+    then
+end
+
+rule "Assign Order to Available not Bad Rated Deliverer" extends "Assign Order to not Bad Rated Deliverer"
+    salience 3
+    when
+        Deliverer($delivererId == id, id == $notBadRatedDelivererId, status == DelivererStatus.AVAILABLE)
+    then
+        modify($order){setDeliverer($deliverer)}
+end
+
+rule "Assign Order to Delivering not Bad Rated Deliverer" extends "Assign Order to not Bad Rated Deliverer"
+    salience 2
+    when
+        Deliverer($delivererId == id, id == $notBadRatedDelivererId, status == DelivererStatus.DELIVERING)
+    then
+        modify($order){setDeliverer($deliverer)}
+end
+
+rule "Assign Order to Any Available Deliverer" extends "Assign Order to Deliverer"
+    salience 1
+    when
+        Deliverer($delivererId == id, status == DelivererStatus.AVAILABLE)
+    then
+        modify($order){setDeliverer($deliverer)}
+end

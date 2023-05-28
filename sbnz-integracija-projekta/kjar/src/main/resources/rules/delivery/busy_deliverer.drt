@@ -1,0 +1,20 @@
+template header
+type
+distance
+status
+
+template "busy-deliverer-rules"
+rule "@{type} Deliverer with order further than @{distance}km is @{status}"
+    salience 4
+    when
+        $deliverer: Deliverer(
+            type == @{type},
+            $currentOrder: getCurrentOrder(),
+            $currentOrder != null,
+            $currentOrder.deliveryDistance > @{distance}
+            )
+    then
+        modify($deliverer){setStatus(@{status})}
+end
+
+end template
