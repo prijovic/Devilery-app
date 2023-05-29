@@ -28,7 +28,7 @@ public class Deliverer extends User {
     @OneToMany(mappedBy = "deliverer", fetch = FetchType.LAZY)
     List<Order> ordersDelivered = new ArrayList<>();
 
-    @OneToMany(mappedBy = "deliverer", cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "deliverer", cascade = CascadeType.ALL)
     List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "deliverer", cascade = CascadeType.ALL)

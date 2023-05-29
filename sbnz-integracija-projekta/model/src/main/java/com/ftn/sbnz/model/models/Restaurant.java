@@ -29,7 +29,7 @@ public class Restaurant extends BaseEntity {
     @Embedded
     WorkingHours workingHours;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "address_id")
     Address address;
 
@@ -54,10 +54,10 @@ public class Restaurant extends BaseEntity {
     @JoinColumn(name = "owner_id", nullable = false)
     RestaurantOwner owner;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     List<RestaurantEmployee> employees = new ArrayList<>();
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     List<MenuItem> items = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)

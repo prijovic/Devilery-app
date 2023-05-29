@@ -1,13 +1,19 @@
 package com.ftn.sbnz.service;
 
+import lombok.RequiredArgsConstructor;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(scanBasePackages = {"com.ftn.sbnz.model", "com.ftn.sbnz.kjar"})
+@SpringBootApplication
+@RequiredArgsConstructor
+@EntityScan(basePackages = {"com.ftn.sbnz.model.models", "com.ftn.sbnz.kjar"})
+@ConfigurationPropertiesScan("com.ftn.sbnz.service.configProperties")
 public class ServiceApplication {
 
     public static void main(String[] args) {

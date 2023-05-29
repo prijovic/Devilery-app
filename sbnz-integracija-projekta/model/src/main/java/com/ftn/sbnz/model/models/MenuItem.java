@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -39,11 +39,11 @@ public class MenuItem extends BaseEntity {
     @Enumerated(EnumType.STRING)
     MenuItemType type;
 
-    @ElementCollection(targetClass = Allergen.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Allergen.class, fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "menu_item_allergens")
     @Column(name = "allergens")
-    List<Allergen> allergens;
+    Collection<Allergen> allergens;
 
     @ManyToMany(mappedBy = "items")
     Set<Order> orders;

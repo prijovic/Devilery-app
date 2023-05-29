@@ -17,17 +17,17 @@ import java.util.Set;
 @AllArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order extends BaseEntity {
     @Column(name = "createdOn", nullable = false)
     LocalDateTime createdOn;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "deliverer_id")
     @JsonBackReference
     Deliverer deliverer;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     @JsonBackReference
     User customer;
@@ -57,15 +57,15 @@ public class Order extends BaseEntity {
     @JoinTable(name = "items", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
     Set<MenuItem> items = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne
     @JoinColumn(name = "report_id")
     Report report;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "charge_id")
     Charge charge;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "address_id")
     Address address;
 }

@@ -58,7 +58,7 @@ public class User extends BaseEntity {
     @Value("false")
     boolean blocked;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     List<Address> deliveryAddresses = new ArrayList<>();
 
     @JsonManagedReference
