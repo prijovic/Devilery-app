@@ -47,9 +47,6 @@ public class User extends BaseEntity {
     @Column(name = "profile_picture")
     String profilePicture;
 
-    @Column(name = "customer_id")
-    String customerId;
-
     @Column(name = "active")
     @Value("true")
     boolean active;

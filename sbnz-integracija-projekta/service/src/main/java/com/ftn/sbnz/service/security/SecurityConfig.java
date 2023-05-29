@@ -39,7 +39,7 @@ public class SecurityConfig {
 
                 .antMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
                 .antMatchers("/auth/login", "/auth/self", "/auth/login-google/{credentials}",
-                        "/auth/user-exists/{email}", "/auth/user-signed-with-google-exists/{credentials}")
+                        "/auth/user-exists/{email}", "/auth/register")
                 .permitAll()
                 .antMatchers("/password/request-change", "/password/change").permitAll()
 

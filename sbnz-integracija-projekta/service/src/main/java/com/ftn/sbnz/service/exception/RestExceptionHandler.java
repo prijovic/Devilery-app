@@ -33,7 +33,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({
             UserAlreadyExistsException.class,
             PasswordSameException.class,
-            PasswordMismatchException.class})
+            PasswordMismatchException.class,
+            RoleNotFoundException.class
+    })
     protected ResponseEntity<?> handleBadRequestExceptions(CustomRuntimeException ex) {
         return buildResponseEntity(new ApiException(toLocale(ex.getKey()), HttpStatus.BAD_REQUEST));
     }
@@ -73,11 +75,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleMultipartException(MultipartException e) {
         return buildResponseEntity(new ApiException(e.getMessage(), HttpStatus.BAD_REQUEST));
     }
-
-//    @ExceptionHandler(StripeException.class)
-//    public ResponseEntity<?> handeStripeException(StripeException e) {
-//        return buildResponseEntity(new ApiException(e.getUserMessage(), HttpStatus.valueOf(e.getStatusCode())));
-//    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

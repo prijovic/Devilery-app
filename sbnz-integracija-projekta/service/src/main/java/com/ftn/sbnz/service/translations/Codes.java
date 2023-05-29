@@ -5,11 +5,11 @@ public enum Codes implements Translation {
     PASSWORD_RESET_EMAIL_SUBJECT("password_reset_email_subject"),
     PASSWORD_RESET_REQUEST_SUCCESS("password_reset_request_success"),
 
-    PASSENGER_SIGN_UP_ACTIVATION_EMAIL("passenger_sign_up_activation_email"),
+    USER_SIGN_UP_ACTIVATION_EMAIL("user_sign_up_activation_email"),
 
-    PASSENGER_SIGN_UP_ACTIVATION_EMAIL_SUBJECT("passenger_sign_up_activation_email_subject"),
+    USER_SIGN_UP_ACTIVATION_EMAIL_SUBJECT("user_sign_up_activation_email_subject"),
 
-    PASSENGER_EMAIL_ACTIVATION_SUCCESS("passenger_email_activation_success");
+    USER_EMAIL_ACTIVATION_SUCCESS("user_email_activation_success");
 
     private final String code;
 
