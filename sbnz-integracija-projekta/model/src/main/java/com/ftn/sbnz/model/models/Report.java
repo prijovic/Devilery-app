@@ -27,11 +27,11 @@ public class Report extends BaseEntity {
     @Enumerated(EnumType.STRING)
     ReportStatus status;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     User customer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "deliverer_id")
     Deliverer deliverer;
 
