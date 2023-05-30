@@ -38,10 +38,12 @@ public class SecurityConfig {
                 .antMatchers("/picture/**").permitAll()
 
                 .antMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
-                .antMatchers("/auth/login", "/auth/self", "/auth/login-google/{credentials}",
+                .antMatchers("/auth/login", "/auth/self", "/auth/activate-email/{token}",
                         "/auth/user-exists/{email}", "/auth/register")
                 .permitAll()
                 .antMatchers("/password/request-change", "/password/change").permitAll()
+
+                .antMatchers("/restaurant/all", "/restaurant/general-recommendation").permitAll()
 
                 .antMatchers("/**").authenticated()
                 .anyRequest().authenticated();

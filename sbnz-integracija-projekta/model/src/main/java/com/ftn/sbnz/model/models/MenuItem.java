@@ -3,7 +3,6 @@ package com.ftn.sbnz.model.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,8 +30,7 @@ public class MenuItem extends BaseEntity {
     @Column(name = "price", nullable = false)
     Double price;
 
-    @Column(name = "available")
-    @Value("true")
+    @Column(name = "available", nullable = false)
     boolean available;
 
     @Column(name = "type", nullable = false)
