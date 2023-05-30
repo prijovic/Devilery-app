@@ -1,7 +1,9 @@
 package com.ftn.sbnz.service.services.menuItem;
 
 import com.ftn.sbnz.model.models.MenuItem;
+import com.ftn.sbnz.service.converter.MenuItemConverter;
 import com.ftn.sbnz.service.dto.request.menuItem.MenuItemUpdateRequest;
+import com.ftn.sbnz.service.dto.response.MenuItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class UpdateMenuItem {
     private final GetMenuItemById getMenuItemById;
     private final SaveMenuItem saveMenuItem;
 
-    public MenuItem execute(UUID id, MenuItemUpdateRequest menuItemUpdateRequest) {
+    public MenuItemResponse execute(UUID id, MenuItemUpdateRequest menuItemUpdateRequest) {
         MenuItem menuItem = getMenuItemById.execute(id);
 
         menuItem.setPrice(menuItemUpdateRequest.getPrice());
@@ -23,6 +25,6 @@ public class UpdateMenuItem {
         menuItem.setAllergens(menuItemUpdateRequest.getAllergens());
         menuItem.setAvailable(menuItemUpdateRequest.getAvailable());
 
-        return saveMenuItem.execute(menuItem);
+        return MenuItemConverter.toMenuItemResponse(saveMenuItem.execute(menuItem));
     }
 }

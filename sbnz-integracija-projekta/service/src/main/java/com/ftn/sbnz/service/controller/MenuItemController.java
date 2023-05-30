@@ -1,8 +1,8 @@
 package com.ftn.sbnz.service.controller;
 
-import com.ftn.sbnz.model.models.MenuItem;
 import com.ftn.sbnz.service.dto.request.menuItem.MenuItemUpdateRequest;
 import com.ftn.sbnz.service.dto.request.menuItem.NewMenuItemRequest;
+import com.ftn.sbnz.service.dto.response.MenuItemResponse;
 import com.ftn.sbnz.service.services.menuItem.CreateMenuItem;
 import com.ftn.sbnz.service.services.menuItem.DeleteMenuItem;
 import com.ftn.sbnz.service.services.menuItem.UpdateMenuItem;
@@ -26,7 +26,7 @@ public class MenuItemController {
     }
 
     @PutMapping("/{id}")
-    public MenuItem updateMenuItem(@NotBlank @PathVariable UUID id, @RequestBody MenuItemUpdateRequest menuItemUpdateRequest) {
+    public MenuItemResponse updateMenuItem(@NotBlank @PathVariable UUID id, @RequestBody MenuItemUpdateRequest menuItemUpdateRequest) {
         return updateMenuItem.execute(id, menuItemUpdateRequest);
     }
 

@@ -1,7 +1,9 @@
 package com.ftn.sbnz.service.services.restaurant;
 
 import com.ftn.sbnz.model.models.Restaurant;
+import com.ftn.sbnz.service.converter.RestaurantConverter;
 import com.ftn.sbnz.service.dto.request.restaurant.RestaurantUpdateRequest;
+import com.ftn.sbnz.service.dto.response.RestaurantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ public class UpdateRestaurant {
     private final GetRestaurantById getRestaurantById;
     private final SaveRestaurant saveRestaurant;
 
-    public Restaurant execute(UUID restaurantId, RestaurantUpdateRequest restaurantUpdateRequest) {
+    public RestaurantResponse execute(UUID restaurantId, RestaurantUpdateRequest restaurantUpdateRequest) {
         Restaurant restaurant = getRestaurantById.execute(restaurantId);
 
         restaurant.setClosed(restaurantUpdateRequest.getIsClosed());
@@ -25,6 +27,6 @@ public class UpdateRestaurant {
         restaurant.getWorkingHours().setOpensAt(Time.valueOf(restaurantUpdateRequest.getOpensAt()));
         restaurant.getWorkingHours().setClosesAt(Time.valueOf(restaurantUpdateRequest.getClosesAt()));
 
-        return saveRestaurant.execute(restaurant);
+        return RestaurantConverter.toRestaurantResponse(saveRestaurant.execute(restaurant));
     }
 }
