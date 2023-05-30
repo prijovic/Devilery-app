@@ -1,0 +1,12 @@
+@use "src/custom-theme" as theme;
+
+footer {
+  background-color: theme.$orange;
+  color: theme.$white;
+  min-height: 300px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

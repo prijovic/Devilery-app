@@ -36,5 +36,4 @@ public class AuthController {
     public void activateEmail(@PathVariable("token") final String token) {
         activateEmail.execute(token);
     }
-
 }

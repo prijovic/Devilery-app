@@ -23,4 +23,8 @@ export class PictureService {
       params: new HttpParams().append("fileName", pictureName)
     });
   }
+
+  getSelfProfilePicture() {
+    return this.http.get(this.config.apiEndpoint + "self/profile-picture", {responseType: "blob"})
+  }
 }
