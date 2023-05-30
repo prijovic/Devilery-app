@@ -13,9 +13,9 @@ end
 rule "Apply Discount"
     salience 1
     when
-        $discountApplication: DiscountApplication(!(discount == null), $order: order, $orderPrice: order.totalPrice, $discount: discount)
+        $discountApplication: DiscountApplication(!(discount == null), $order: order, $orderPrice: order.totalPrice, $discount: discount, $tip: order.tip)
     then
-        modify($order){setTotalPrice($orderPrice * (1 - $discount))}
+        modify($order){setTotalPrice($orderPrice * (1 - $discount) + tip)}
 end
 
 rule "Calculate Order Price"

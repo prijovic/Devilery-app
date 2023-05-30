@@ -19,15 +19,6 @@ public class Charge extends BaseEntity {
     @Column(name = "amount")
     Double amount;
 
-    @Column(name = "payment_method_id")
-    String paymentMethodId;
-
-    @Column(name = "customer_id")
-    String customerId;
-
-    @Column(name = "payment_id")
-    String paymentId;
-
     String currency = "EUR";
 
     @Column(name = "charged")

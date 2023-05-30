@@ -7,8 +7,8 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -55,7 +55,7 @@ public class Order extends BaseEntity {
 
     @ManyToMany
     @JoinTable(name = "items", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
-    Set<MenuItem> items = new HashSet<>();
+    List<MenuItem> items = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "report_id")
