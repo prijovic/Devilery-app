@@ -3,6 +3,7 @@ package com.ftn.sbnz.service.controller;
 import com.ftn.sbnz.model.models.MenuItemType;
 import com.ftn.sbnz.model.models.Permission;
 import com.ftn.sbnz.service.dto.request.restaurant.RestaurantRegistrationRequest;
+import com.ftn.sbnz.service.dto.request.restaurant.RestaurantUpdateRequest;
 import com.ftn.sbnz.service.dto.response.RestaurantResponse;
 import com.ftn.sbnz.service.security.HasAnyPermission;
 import com.ftn.sbnz.service.services.restaurant.*;
@@ -23,6 +24,7 @@ public class RestaurantController {
     private final GetAllRestaurants getAllRestaurants;
     private final GetSpecializedRestaurantForType getSpecializedRestaurantForType;
     private final GetGenerallyRecommendedRestaurants getGenerallyRecommendedRestaurants;
+    private final UpdateRestaurant updateRestaurant;
 
     @PostMapping
     @HasAnyPermission({Permission.RESTAURANT_CRUD})
@@ -52,7 +54,8 @@ public class RestaurantController {
     }
 
     @PutMapping("/{id}")
-    public void updateRestaurant(@NotBlank @PathVariable UUID id) {
+    public void updateRestaurant(@NotBlank @PathVariable UUID id, @RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
+        updateRestaurant.execute(id, restaurantUpdateRequest);
     }
 
     @PutMapping("/{id}/add-item")
