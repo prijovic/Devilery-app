@@ -22,7 +22,8 @@ public enum ExceptionKeys implements Translation {
     MAIL_FAILED("mail_failed"),
     PASSWORD_SAME("password_same"),
     PASSWORD_MISMATCH("password_mismatch"),
-    RESTAURANT_NOT_FOUND("restaurant_not_found");
+    RESTAURANT_NOT_FOUND("restaurant_not_found"),
+    MENU_ITEM_NOT_FOUND("menu_item_not_found");
 
     private final String code;
 

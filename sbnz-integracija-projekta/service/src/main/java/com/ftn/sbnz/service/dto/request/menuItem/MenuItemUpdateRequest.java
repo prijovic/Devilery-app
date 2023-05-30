@@ -1,4 +1,4 @@
-package com.ftn.sbnz.service.dto.request.restaurant;
+package com.ftn.sbnz.service.dto.request.menuItem;
 
 import com.ftn.sbnz.model.models.Allergen;
 import com.ftn.sbnz.model.models.MenuItemType;
@@ -8,18 +8,11 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class NewMenuItemRequest {
-    @NotNull
-    private UUID restaurantId;
-
-    @NotNull
-    private String name;
-
+public class MenuItemUpdateRequest {
     @NotNull
     private String description;
 
@@ -32,5 +25,9 @@ public class NewMenuItemRequest {
     @NotNull
     private Double price;
 
+    @NotNull
     private List<Allergen> allergens;
+
+    @NotNull
+    private Boolean available;
 }
