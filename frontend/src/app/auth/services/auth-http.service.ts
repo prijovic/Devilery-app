@@ -23,11 +23,14 @@ export class AuthHttpService {
     });
   }
 
-  sendSignUpRequest(email: string, password: string, role: string) {
+  sendSignUpRequest(email: string, password: string, name: string, surname: string, phoneNumber: string, profilePicture: string) {
     return this.http.post(this.config.apiEndpoint + this.SIGN_UP, {
       email,
       password,
-      role,
+      name,
+      surname,
+      phoneNumber,
+      profilePicture
     });
   }
 

@@ -1,5 +1,6 @@
 package com.ftn.sbnz.service.converter;
 
+import com.ftn.sbnz.service.dto.response.FileNameResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -14,5 +15,9 @@ public class FileConverter {
             fos.close();
         }
         return tempFile;
+    }
+
+    public static FileNameResponse toFileNameResponse(String fileName) {
+        return new FileNameResponse(fileName);
     }
 }
