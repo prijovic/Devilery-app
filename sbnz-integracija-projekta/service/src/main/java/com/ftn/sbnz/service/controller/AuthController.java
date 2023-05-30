@@ -6,7 +6,6 @@ import com.ftn.sbnz.service.dto.response.AuthTokenResponse;
 import com.ftn.sbnz.service.services.auth.ActivateEmail;
 import com.ftn.sbnz.service.services.auth.LogInUser;
 import com.ftn.sbnz.service.services.auth.RegisterNewUser;
-import com.ftn.sbnz.service.services.role.GetRoleByName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import javax.validation.Valid;
 public class AuthController {
     private final LogInUser loginUser;
     private final RegisterNewUser registerNewUser;
-    private final GetRoleByName getRoleByName;
     private final ActivateEmail activateEmail;
 
     @ResponseStatus(HttpStatus.OK)
@@ -31,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public void register(@Valid @RequestBody RegistrationRequest registrationRequest) {
-        registerNewUser.execute(registrationRequest, getRoleByName.execute("CLIENT"));
+        registerNewUser.execute(registrationRequest);
     }
 
     @PutMapping("/activate-email/{token}")

@@ -77,7 +77,6 @@ end
 
 rule "Restaurant can be specialised for a type if it has at least 3 items of that type"
     when
-        MenuItemType()
         $restaurant: Restaurant($items: items)
         $countMap: Map() from accumulate(
             MenuItem($type: type) from $items,
@@ -98,7 +97,6 @@ end
 
 rule "Restaurant can be specialized for max 3 types with highest occurances"
     when
-        MenuItemType()
         $mapEntries: Set(size > 3) from collect(Map.Entry())
         $minOccurance: Number() from accumulate(
             Map.Entry($type: getKey(), $occurrance: getValue()),
@@ -111,7 +109,6 @@ end
 
 rule "Restaurant is specialised for 3 most occured items with at least 3 occurances"
     when
-        MenuItemType()
         $restaurant: Restaurant()
         $mapEntries: Set(size <= 3) from collect(Map.Entry())
         $specializedTypes: Set(size <= 3) from accumulate(

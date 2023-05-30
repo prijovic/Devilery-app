@@ -1,14 +1,16 @@
-package com.ftn.sbnz.service.services.auth;
+package com.ftn.sbnz.service.services.deliverer;
 
+import com.ftn.sbnz.model.models.Deliverer;
+import com.ftn.sbnz.model.models.DelivererStatus;
+import com.ftn.sbnz.model.models.DelivererType;
 import com.ftn.sbnz.model.models.User;
 import com.ftn.sbnz.service.configProperties.CustomProperties;
-import com.ftn.sbnz.service.dto.request.auth.RegistrationRequest;
+import com.ftn.sbnz.service.dto.request.deliverer.DelivererRegistrationRequest;
 import com.ftn.sbnz.service.exception.UserAlreadyExistsException;
 import com.ftn.sbnz.service.services.jwt.JwtGenerateToken;
 import com.ftn.sbnz.service.services.mail.SendMail;
 import com.ftn.sbnz.service.services.model.EmailDetails;
 import com.ftn.sbnz.service.services.role.GetRoleByName;
-import com.ftn.sbnz.service.services.user.SaveUser;
 import com.ftn.sbnz.service.services.user.UserExistsByEmail;
 import com.ftn.sbnz.service.translations.Codes;
 import lombok.RequiredArgsConstructor;
@@ -22,38 +24,40 @@ import static com.ftn.sbnz.service.translations.Translator.toLocale;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterNewUser {
+public class RegisterNewDeliverer {
     private final UserExistsByEmail userExistsByEmail;
     private final PasswordEncoder passwordEncoder;
-    private final SaveUser saveUser;
+    private final SaveDeliverer saveDeliverer;
     private final SendMail sendMail;
     private final JwtGenerateToken jwtGenerateToken;
     private final CustomProperties customProperties;
     private final GetRoleByName getRoleByName;
 
-    public User execute(@Valid final RegistrationRequest registrationRequest) {
-        if (userExistsByEmail.execute(registrationRequest.getEmail())) {
+    public User execute(@Valid final DelivererRegistrationRequest delivererRegistrationRequest) {
+        if (userExistsByEmail.execute(delivererRegistrationRequest.getEmail())) {
             throw new UserAlreadyExistsException();
         }
 
-        final User user = User.builder()
-                .email(registrationRequest.getEmail())
-                .name(registrationRequest.getName())
-                .surname(registrationRequest.getSurname())
-                .passwordHash(passwordEncoder.encode(registrationRequest.getPassword()))
-                .phoneNumber(registrationRequest.getPhoneNumber())
-                .profilePicture(registrationRequest.getProfilePicture())
-                .role(getRoleByName.execute("CLIENT"))
+        final Deliverer deliverer = Deliverer.builder()
+                .email(delivererRegistrationRequest.getEmail())
+                .name(delivererRegistrationRequest.getName())
+                .surname(delivererRegistrationRequest.getSurname())
+                .passwordHash(passwordEncoder.encode(delivererRegistrationRequest.getPassword()))
+                .phoneNumber(delivererRegistrationRequest.getPhoneNumber())
+                .profilePicture(delivererRegistrationRequest.getProfilePicture())
+                .role(getRoleByName.execute("DELIVERER"))
+                .type(DelivererType.valueOf(delivererRegistrationRequest.getType()))
                 .blocked(false)
                 .active(false)
+                .status(DelivererStatus.UNAVAILABLE)
                 .build();
 
-        final String activateEmailUrl = constructActivateEmailUrl(user.getEmail());
-        final EmailDetails emailDetails = new EmailDetails(user.getEmail(), toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL, new String[]{activateEmailUrl}),
+        final String activateEmailUrl = constructActivateEmailUrl(deliverer.getEmail());
+        final EmailDetails emailDetails = new EmailDetails(deliverer.getEmail(), toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL, new String[]{activateEmailUrl}),
                 toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL_SUBJECT));
         sendMail.execute(emailDetails);
 
-        return saveUser.execute(user);
+        return saveDeliverer.execute(deliverer);
     }
 
     private String constructActivateEmailUrl(final String passengerEmail) {

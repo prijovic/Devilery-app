@@ -188,11 +188,11 @@
 //    }
 //
 //    private KieSession initKieSession() throws IOException {
-//        InputStream template = DiscountTest.class.getResourceAsStream("/rules/delivery/busy_deliverer.drt");
-//        InputStream data = DiscountTest.class.getResourceAsStream("/rules/delivery/busy_deliverer_rules.xls");
+//        InputStream template = DeliveryTest.class.getResourceAsStream("/rules/delivery/busy_deliverer.drt");
+//        InputStream data = DeliveryTest.class.getResourceAsStream("/rules/delivery/busy_deliverer_rules.xls");
 //
 //        ExternalSpreadsheetCompiler converter = new ExternalSpreadsheetCompiler();
-//        String drl = readDRLFileAsString("/rules/delivery/delivery.drl");
+//        String drl = readDRLFileAsString();
 //        drl += converter.compile(data, template, 3, 2);
 //
 //        return createKieSessionFromDRL(drl);
@@ -216,15 +216,17 @@
 //        return kieHelper.build().newKieSession();
 //    }
 //
-//    private String readDRLFileAsString(String resourcePath) throws IOException {
-//        try (InputStream inputStream = DeliveryTest.class.getResourceAsStream(resourcePath);
-//             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-//            StringBuilder stringBuilder = new StringBuilder();
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                stringBuilder.append(line).append("\n");
+//    private String readDRLFileAsString() throws IOException {
+//        try (InputStream inputStream = DeliveryTest.class.getResourceAsStream("/rules/delivery/delivery.drl")) {
+//            assert inputStream != null;
+//            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+//                StringBuilder stringBuilder = new StringBuilder();
+//                String line;
+//                while ((line = reader.readLine()) != null) {
+//                    stringBuilder.append(line).append("\n");
+//                }
+//                return stringBuilder.toString();
 //            }
-//            return stringBuilder.toString();
 //        }
 //    }
 //}

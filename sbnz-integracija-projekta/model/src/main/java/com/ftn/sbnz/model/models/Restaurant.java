@@ -2,6 +2,7 @@ package com.ftn.sbnz.model.models;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@SuperBuilder
 @Table(name = "restaurant")
 public class Restaurant extends BaseEntity {
     @Column(name = "createdOn", nullable = false)
@@ -36,22 +38,32 @@ public class Restaurant extends BaseEntity {
     @Column(name = "min_order", nullable = false)
     Double minOrder;
 
+    @Column(name = "min_prep", nullable = false)
+    Integer minPrep;
+
+    @Column(name = "max_prep", nullable = false)
+    Integer maxPrep;
+
     @Column(name = "closed")
     boolean closed;
 
+    @Transient
     boolean isNew = false;
 
+    @Transient
     boolean isPopular = false;
 
+    @Transient
     boolean isWellRated = false;
 
+    @Transient
     boolean isBadRated = false;
 
     @Transient
     Set<MenuItemType> specializedTypes;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(name = "owner_id")
     RestaurantOwner owner;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)

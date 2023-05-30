@@ -1,9 +1,11 @@
 package com.ftn.sbnz.model.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +15,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@SuperBuilder
 @Table(name = "deliverer")
+@AllArgsConstructor
 public class Deliverer extends User {
 
     @Column(name = "status", nullable = false)

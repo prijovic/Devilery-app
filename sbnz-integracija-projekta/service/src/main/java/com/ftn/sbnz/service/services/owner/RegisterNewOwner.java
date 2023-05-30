@@ -1,59 +1,58 @@
-package com.ftn.sbnz.service.services.auth;
+package com.ftn.sbnz.service.services.owner;
 
+import com.ftn.sbnz.model.models.RestaurantOwner;
 import com.ftn.sbnz.model.models.User;
 import com.ftn.sbnz.service.configProperties.CustomProperties;
-import com.ftn.sbnz.service.dto.request.auth.RegistrationRequest;
+import com.ftn.sbnz.service.dto.request.owner.OwnerRegistrationRequest;
 import com.ftn.sbnz.service.exception.UserAlreadyExistsException;
 import com.ftn.sbnz.service.services.jwt.JwtGenerateToken;
 import com.ftn.sbnz.service.services.mail.SendMail;
 import com.ftn.sbnz.service.services.model.EmailDetails;
 import com.ftn.sbnz.service.services.role.GetRoleByName;
-import com.ftn.sbnz.service.services.user.SaveUser;
 import com.ftn.sbnz.service.services.user.UserExistsByEmail;
 import com.ftn.sbnz.service.translations.Codes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
-
 import static com.ftn.sbnz.service.constants.LinkConstants.EMAIL_ACTIVATION_PATH;
 import static com.ftn.sbnz.service.translations.Translator.toLocale;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterNewUser {
+public class RegisterNewOwner {
     private final UserExistsByEmail userExistsByEmail;
     private final PasswordEncoder passwordEncoder;
-    private final SaveUser saveUser;
     private final SendMail sendMail;
     private final JwtGenerateToken jwtGenerateToken;
     private final CustomProperties customProperties;
     private final GetRoleByName getRoleByName;
+    private final AddRestaurantsToOwner addRestaurantsToOwner;
+    private final SaveOwner saveOwner;
 
-    public User execute(@Valid final RegistrationRequest registrationRequest) {
-        if (userExistsByEmail.execute(registrationRequest.getEmail())) {
+    public User execute(OwnerRegistrationRequest ownerRegistrationRequest) {
+        if (userExistsByEmail.execute(ownerRegistrationRequest.getEmail())) {
             throw new UserAlreadyExistsException();
         }
 
-        final User user = User.builder()
-                .email(registrationRequest.getEmail())
-                .name(registrationRequest.getName())
-                .surname(registrationRequest.getSurname())
-                .passwordHash(passwordEncoder.encode(registrationRequest.getPassword()))
-                .phoneNumber(registrationRequest.getPhoneNumber())
-                .profilePicture(registrationRequest.getProfilePicture())
-                .role(getRoleByName.execute("CLIENT"))
+        final RestaurantOwner owner = RestaurantOwner.builder()
+                .email(ownerRegistrationRequest.getEmail())
+                .name(ownerRegistrationRequest.getName())
+                .surname(ownerRegistrationRequest.getSurname())
+                .passwordHash(passwordEncoder.encode(ownerRegistrationRequest.getPassword()))
+                .phoneNumber(ownerRegistrationRequest.getPhoneNumber())
+                .profilePicture(ownerRegistrationRequest.getProfilePicture())
+                .role(getRoleByName.execute("OWNER"))
                 .blocked(false)
                 .active(false)
                 .build();
 
-        final String activateEmailUrl = constructActivateEmailUrl(user.getEmail());
-        final EmailDetails emailDetails = new EmailDetails(user.getEmail(), toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL, new String[]{activateEmailUrl}),
+        final String activateEmailUrl = constructActivateEmailUrl(owner.getEmail());
+        final EmailDetails emailDetails = new EmailDetails(owner.getEmail(), toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL, new String[]{activateEmailUrl}),
                 toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL_SUBJECT));
         sendMail.execute(emailDetails);
 
-        return saveUser.execute(user);
+        return addRestaurantsToOwner.execute(saveOwner.execute(owner), ownerRegistrationRequest.getRestaurants());
     }
 
     private String constructActivateEmailUrl(final String passengerEmail) {
