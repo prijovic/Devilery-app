@@ -6,6 +6,7 @@ import com.ftn.sbnz.service.dto.request.restaurant.RestaurantRegistrationRequest
 import com.ftn.sbnz.service.dto.request.restaurant.RestaurantUpdateRequest;
 import com.ftn.sbnz.service.dto.response.RestaurantResponse;
 import com.ftn.sbnz.service.security.HasAnyPermission;
+import com.ftn.sbnz.service.services.menuItem.CreateMenuItem;
 import com.ftn.sbnz.service.services.restaurant.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class RestaurantController {
     private final GetSpecializedRestaurantForType getSpecializedRestaurantForType;
     private final GetGenerallyRecommendedRestaurants getGenerallyRecommendedRestaurants;
     private final UpdateRestaurant updateRestaurant;
+    private final CreateMenuItem addMenuItemToRestaurant;
 
     @PostMapping
     @HasAnyPermission({Permission.RESTAURANT_CRUD})
@@ -56,9 +58,5 @@ public class RestaurantController {
     @PutMapping("/{id}")
     public void updateRestaurant(@NotBlank @PathVariable UUID id, @RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
         updateRestaurant.execute(id, restaurantUpdateRequest);
-    }
-
-    @PutMapping("/{id}/add-item")
-    public void addItemToRestaurant(@NotBlank @PathVariable UUID id) {
     }
 }
