@@ -3,6 +3,7 @@ package com.ftn.sbnz.service.controller;
 import com.ftn.sbnz.model.models.MenuItemType;
 import com.ftn.sbnz.model.models.Permission;
 import com.ftn.sbnz.service.dto.request.restaurant.RestaurantRegistrationRequest;
+import com.ftn.sbnz.service.dto.request.restaurant.RestaurantUpdateRequest;
 import com.ftn.sbnz.service.dto.response.RestaurantResponse;
 import com.ftn.sbnz.service.security.HasAnyPermission;
 import com.ftn.sbnz.service.services.restaurant.*;
@@ -10,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/restaurant")
@@ -21,6 +24,7 @@ public class RestaurantController {
     private final GetAllRestaurants getAllRestaurants;
     private final GetSpecializedRestaurantForType getSpecializedRestaurantForType;
     private final GetGenerallyRecommendedRestaurants getGenerallyRecommendedRestaurants;
+    private final UpdateRestaurant updateRestaurant;
 
     @PostMapping
     @HasAnyPermission({Permission.RESTAURANT_CRUD})
@@ -47,5 +51,10 @@ public class RestaurantController {
     @GetMapping("/general-recommendation")
     public List<RestaurantResponse> getGenerallyRecommendedRestaurants() {
         return getGenerallyRecommendedRestaurants.execute();
+    }
+
+    @PutMapping("/{id}")
+    public RestaurantResponse updateRestaurant(@NotBlank @PathVariable UUID id, @RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
+        return updateRestaurant.execute(id, restaurantUpdateRequest);
     }
 }

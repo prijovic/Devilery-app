@@ -3,9 +3,11 @@ package com.ftn.sbnz.model.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@SuperBuilder
 @Table(name = "menu_item")
 public class MenuItem extends BaseEntity {
     @Column(name = "createdOn", nullable = false)
@@ -41,7 +44,7 @@ public class MenuItem extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "menu_item_allergens")
     @Column(name = "allergens")
-    Collection<Allergen> allergens;
+    Collection<Allergen> allergens = new ArrayList<>();
 
     @ManyToMany(mappedBy = "items")
     Set<Order> orders;
