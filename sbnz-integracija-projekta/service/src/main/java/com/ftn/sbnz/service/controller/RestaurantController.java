@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/restaurant")
@@ -47,5 +49,13 @@ public class RestaurantController {
     @GetMapping("/general-recommendation")
     public List<RestaurantResponse> getGenerallyRecommendedRestaurants() {
         return getGenerallyRecommendedRestaurants.execute();
+    }
+
+    @PutMapping("/{id}")
+    public void updateRestaurant(@NotBlank @PathVariable UUID id) {
+    }
+
+    @PutMapping("/{id}/add-item")
+    public void addItemToRestaurant(@NotBlank @PathVariable UUID id) {
     }
 }
