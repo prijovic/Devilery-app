@@ -1,0 +1,37 @@
+@use "src/custom-theme" as theme;
+
+@media screen and (max-width: theme.$small-window-max) {
+  nav {
+    padding: 3px 10px;
+  }
+}
+
+@media screen and (max-width: theme.$medium-window-max) and (min-width: theme.$medium-window-min) {
+  nav {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 3px 5%;
+  }
+}
+
+@media screen and (min-width: theme.$large-window-min) {
+  nav {
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    padding: 3px 7.5%;
+  }
+}
+
+nav {
+  background-color: theme.$green;
+  color: theme.$white;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-image {
+  height: 50px;
+}

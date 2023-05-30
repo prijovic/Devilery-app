@@ -1,0 +1,11 @@
+@use 'custom-theme' as customTheme;
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: customTheme.$white;
+  font-family: Nunito, sans-serif;
+}

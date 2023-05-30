@@ -1,0 +1,24 @@
+@use "src/custom-theme" as theme;
+
+.image-upload-container {
+  display: table;
+  height: 100%;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border-radius: 100%;
+  border: 1px solid theme.$dark-gray;
+  margin-bottom: 16px;
+}
+
+.image-upload-container:is(:hover, :active, :focus) {
+  border-color: theme.$black;
+}
+
+.image-upload-container span {
+  display: table-cell;
+  vertical-align: middle;
+  visibility: hidden;
+}

@@ -1,0 +1,15 @@
+@use "src/custom-theme" as theme;
+
+.navbar-item {
+  text-decoration: none;
+  background-color: theme.$green;
+  color: theme.$white;
+  margin-left: 10px;
+  border-radius: 5px;
+  padding: 3px 15px;
+  font-size: 16px;
+}
+
+.navbar-item:is(:hover, :active, :focus) {
+  background-color: theme.$dark-green;
+}

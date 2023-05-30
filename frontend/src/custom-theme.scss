@@ -1,0 +1,84 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$orange: #F7931E;
+$green: #004F27;
+$dark-green: #003617;
+$black: #111111;
+$white: #FFFFFF;
+$light-gray: #F5F5F5;
+$dark-gray: #808080;
+$small-window-max: 640px;
+$medium-window-min: 641px;
+$medium-window-max: 1007px;
+$large-window-min: 1008px;
+
+$green-palette: (
+  50: #E0EAE5,
+  100: #B3CABE,
+  200: #80A793,
+  300: #4D8468,
+  400: #266947,
+  500: #004F27,
+  600: #004823,
+  700: #003F1D,
+  800: #003617,
+  900: #00260E,
+  contrast: (
+    50: $black,
+    100: $black,
+    200: $black,
+    300: $black,
+    400: $black,
+    500: $white,
+    600: $white,
+    700: $white,
+    800: $white,
+    900: $white,
+  )
+);
+
+$orange-palette: (
+  50 : #FEF2E4,
+  100 : #FDDFBC,
+  200 : #FBC98F,
+  300 : #F9B362,
+  400 : #F8A340,
+  500 : #F7931E,
+  600 : #F68B1A,
+  700 : #F58016,
+  800 : #F37612,
+  900 : #F1640A,
+  contrast: (
+    50: $black,
+    100: $black,
+    200: $black,
+    300: $black,
+    400: $black,
+    500: $white,
+    600: $white,
+    700: $white,
+    800: $white,
+    900: $white,
+  )
+);
+
+$frontend-primary: mat.define-palette(mat.$green-palette, 500);
+$frontend-accent: mat.define-palette(mat.$orange-palette, 500);
+$frontend-warn: mat.define-palette(mat.$red-palette);
+
+$frontend-theme: mat.define-light-theme((
+  color: (
+    primary: $frontend-primary,
+    accent: $frontend-accent,
+    warn: $frontend-warn,
+  )
+));
+
+@include mat.all-component-themes($frontend-theme);
+
+@font-face {
+  font-family: 'Nunito';
+  src: url("assets/fonts/Nunito.ttf");
+}

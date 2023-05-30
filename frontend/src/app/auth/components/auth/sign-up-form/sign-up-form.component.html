@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+      <h1 class="form-title">SIGN UP</h1>
+      <h2 class="form-subtitle">Fill your information and create Fast & Foodious account.</h2>
+
+      <app-image-upload-field (fileChanged)="imageChanged($event)"></app-image-upload-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput type="email" placeholder="email@example.com">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Enter your password"
+               formControlName="password">
+        <button mat-icon-button matSuffix
+                class="password-visibility"
+                [matTooltip]="hidePassword ? 'Show password' : 'Hide password'"
+                (click)="toggleShowPassword($event)">
+          <mat-icon [svgIcon]="hidePassword ? 'eye' : 'eye-crossed'"></mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput type="text" placeholder="Name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Surname</mat-label>
+        <input formControlName="surname" matInput type="text" placeholder="Surname">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input formControlName="phoneNumber" matInput type="tel" placeholder="06* *** ***">
+      </mat-form-field>
+
+      <button>Sign up</button>
+    </form>
+  </div>
+</div>

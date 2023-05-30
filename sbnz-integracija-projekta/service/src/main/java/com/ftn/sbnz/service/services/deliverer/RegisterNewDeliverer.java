@@ -1,9 +1,6 @@
 package com.ftn.sbnz.service.services.deliverer;
 
-import com.ftn.sbnz.model.models.Deliverer;
-import com.ftn.sbnz.model.models.DelivererStatus;
-import com.ftn.sbnz.model.models.DelivererType;
-import com.ftn.sbnz.model.models.User;
+import com.ftn.sbnz.model.models.*;
 import com.ftn.sbnz.service.configProperties.CustomProperties;
 import com.ftn.sbnz.service.dto.request.deliverer.DelivererRegistrationRequest;
 import com.ftn.sbnz.service.exception.UserAlreadyExistsException;
@@ -52,7 +49,7 @@ public class RegisterNewDeliverer {
                 .status(DelivererStatus.UNAVAILABLE)
                 .build();
 
-        final String activateEmailUrl = constructActivateEmailUrl(deliverer.getEmail());
+        final String activateEmailUrl = constructActivateEmailUrl(deliverer.getEmail(), deliverer.getRole());
         final EmailDetails emailDetails = new EmailDetails(deliverer.getEmail(), toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL, new String[]{activateEmailUrl}),
                 toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL_SUBJECT));
         sendMail.execute(emailDetails);
@@ -60,8 +57,8 @@ public class RegisterNewDeliverer {
         return saveDeliverer.execute(deliverer);
     }
 
-    private String constructActivateEmailUrl(final String passengerEmail) {
-        final String authToken = jwtGenerateToken.execute(passengerEmail, customProperties.getJwtActivateEmailTokenExpiration());
+    private String constructActivateEmailUrl(final String passengerEmail, final Role role) {
+        final String authToken = jwtGenerateToken.execute(passengerEmail, customProperties.getJwtActivateEmailTokenExpiration(), role);
         return customProperties.getClientUrl().concat(EMAIL_ACTIVATION_PATH).concat(authToken);
     }
 }

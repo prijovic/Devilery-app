@@ -1,0 +1,12 @@
+<nav>
+  <a routerLink="/">
+    <img class="logo-image" src="../../../assets/icons/navbar-logo.svg" alt="Fast & Foodious">
+  </a>
+  <div class="navbar-items">
+    <app-navbar-item text="Home" url="/"></app-navbar-item>
+    <app-navbar-item text="About us" url="/" *ngIf="!role"></app-navbar-item>
+    <app-navbar-item text="Log in" url="/auth/login" *ngIf="!role"></app-navbar-item>
+    <app-navbar-item text="Sign up" url="/auth/sign-up" *ngIf="!role"></app-navbar-item>
+    <app-navbar-item text="Log out" url="/" (click)="logout()" *ngIf="role"></app-navbar-item>
+  </div>
+</nav>

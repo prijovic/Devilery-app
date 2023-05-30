@@ -55,7 +55,7 @@ public class LogInUser {
             makeDelivererActive.execute(user.getEmail());
         }
 
-        return new AuthTokenResponse(jwtGenerateToken.execute(user.getEmail(), customProperties.getAuthTokenExpirationMilliseconds()),
+        return new AuthTokenResponse(jwtGenerateToken.execute(user.getEmail(), customProperties.getAuthTokenExpirationMilliseconds(), user.getRole()),
                 customProperties.getAuthTokenExpirationMilliseconds(), user.getRole().getName());
     }
 }

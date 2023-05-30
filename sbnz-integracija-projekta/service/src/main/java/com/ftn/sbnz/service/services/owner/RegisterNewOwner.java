@@ -1,6 +1,7 @@
 package com.ftn.sbnz.service.services.owner;
 
 import com.ftn.sbnz.model.models.RestaurantOwner;
+import com.ftn.sbnz.model.models.Role;
 import com.ftn.sbnz.model.models.User;
 import com.ftn.sbnz.service.configProperties.CustomProperties;
 import com.ftn.sbnz.service.dto.request.owner.OwnerRegistrationRequest;
@@ -47,7 +48,7 @@ public class RegisterNewOwner {
                 .active(false)
                 .build();
 
-        final String activateEmailUrl = constructActivateEmailUrl(owner.getEmail());
+        final String activateEmailUrl = constructActivateEmailUrl(owner.getEmail(), owner.getRole());
         final EmailDetails emailDetails = new EmailDetails(owner.getEmail(), toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL, new String[]{activateEmailUrl}),
                 toLocale(Codes.USER_SIGN_UP_ACTIVATION_EMAIL_SUBJECT));
         sendMail.execute(emailDetails);
@@ -55,8 +56,8 @@ public class RegisterNewOwner {
         return addRestaurantsToOwner.execute(saveOwner.execute(owner), ownerRegistrationRequest.getRestaurants());
     }
 
-    private String constructActivateEmailUrl(final String passengerEmail) {
-        final String authToken = jwtGenerateToken.execute(passengerEmail, customProperties.getJwtActivateEmailTokenExpiration());
+    private String constructActivateEmailUrl(final String passengerEmail, final Role role) {
+        final String authToken = jwtGenerateToken.execute(passengerEmail, customProperties.getJwtActivateEmailTokenExpiration(), role);
         return customProperties.getClientUrl().concat(EMAIL_ACTIVATION_PATH).concat(authToken);
     }
 }
