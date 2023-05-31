@@ -9,6 +9,8 @@ import { environment } from '../../environments/environment.prod';
 import { AuthEffects } from '../auth/store/auth.effects';
 import { AuthInterceptor } from '../auth/auth.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
+import {CoreEffects} from "./store/core.effects";
+import {AdminDeliverersEffects} from "../admin-deliverers/store/admin-deliverers.effects";
 
 @NgModule({
   providers: [
@@ -29,7 +31,7 @@ import { ErrorInterceptor } from './error.interceptor';
   ],
   imports: [
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, CoreEffects, AdminDeliverersEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
   exports: [StoreModule, EffectsModule, StoreDevtoolsModule],

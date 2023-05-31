@@ -13,6 +13,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./auth/auth.module').then((module) => module.AuthModule),
   },
+  {
+    path: 'admin/deliverers',
+    loadChildren: () =>
+      import('./admin-deliverers/admin-deliverers.module').then((module) => module.AdminDeliverersModule),
+  },
 ];
 
 @NgModule({

@@ -4,18 +4,20 @@ import {PictureService} from "../../../../services/picture.service";
 import {Store} from "@ngrx/store";
 import {signUp} from "../../../store/auth.actions";
 import {map} from "rxjs";
+import {
+  FormWithImageInputComponent
+} from "../../../../shared/components/form-with-image-input/form-with-image-input.component";
 
 @Component({
   selector: 'app-sign-up-form',
   templateUrl: './sign-up-form.component.html',
   styleUrls: ['./sign-up-form.component.scss'],
 })
-export class SignUpFormComponent implements OnInit {
-  hidePassword = true;
-  profilePicture: File | undefined;
+export class SignUpFormComponent extends FormWithImageInputComponent implements OnInit {
   signUpForm!: FormGroup;
 
   constructor(private pictureService: PictureService, private store: Store) {
+    super();
   }
 
   ngOnInit(): void {
@@ -28,19 +30,10 @@ export class SignUpFormComponent implements OnInit {
     });
   }
 
-  imageChanged($event: File) {
-    this.profilePicture = $event;
-  }
-
-  toggleShowPassword(event: Event) {
-    event.preventDefault();
-    this.hidePassword = !this.hidePassword;
-  }
-
   signUp() {
-    if (this.signUpForm.valid && this.profilePicture) {
+    if (this.signUpForm.valid && this.picture) {
       const signUpRequest = this.signUpForm.value;
-      this.pictureService.uploadPicture(this.profilePicture).pipe(
+      this.pictureService.uploadPicture(this.picture).pipe(
         map(response => response.fileName)
       ).subscribe(
         profilePicture => {

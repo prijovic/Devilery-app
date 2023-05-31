@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { AuthHttpService } from '../services/auth-http.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as AuthActions from './auth.actions';
+import * as CoreActions from '../../core/store/core.actions';
 import { autoLoginFail, loginSuccess } from './auth.actions';
-import {catchError, map, of, switchMap, tap} from 'rxjs';
+import {catchError, map, of, switchMap} from 'rxjs';
 import { Router } from '@angular/router';
 import { NotifierService } from '../../core/notifier.service';
 import { AuthService } from '../services/auth.service';
-import {createAction} from "@ngrx/store";
-import {PictureService} from "../../services/picture.service";
 
 @Injectable()
 export class AuthEffects {
@@ -73,7 +72,7 @@ export class AuthEffects {
           .sendSignUpRequest(action.email, action.password, action.name, action.surname, action.phoneNumber, action.profilePicture)
           .pipe(
             map(() => AuthActions.signUpSuccess()),
-            catchError(() => of(AuthActions.signUpFail({fileName: action.profilePicture})))
+            catchError(() => of(CoreActions.cleanUpFile({fileName: action.profilePicture})))
           );
       })
     );
@@ -91,21 +90,6 @@ export class AuthEffects {
       );
     },
     { dispatch: false }
-  );
-
-  sign_up_fail = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(AuthActions.signUpFail.type),
-        switchMap((action) => {
-          return this.pictureService.deletePicture(action.fileName)
-            .pipe(
-              map(() => AuthActions.signUpFailCleanSuccess()),
-              catchError(() => of(AuthActions.signUpFailCleanFail()))
-            );
-        })
-      );
-    }
   );
 
   confirm_email = createEffect(() => {
@@ -135,7 +119,6 @@ export class AuthEffects {
   );
 
   constructor(
-    private pictureService: PictureService,
     private notifierService: NotifierService,
     private router: Router,
     private actions$: Actions<AuthActions.AuthActionsUnion>,
