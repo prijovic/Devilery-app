@@ -2,7 +2,7 @@
   <label
     matTooltip="Upload profile image"
     matTooltipPosition="above"
-    [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}"
+    [ngStyle]="{'background-image': !image ? 'url(\'../../../assets/images/avatar-grey.png\')' : getBackgroundImageUrl()}"
     class="image-upload-container">
     <span>
       <input type="file" accept="image/*" (change)="processFile($event)">
