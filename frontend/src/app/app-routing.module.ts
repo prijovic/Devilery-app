@@ -18,6 +18,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin-deliverers/admin-deliverers.module').then((module) => module.AdminDeliverersModule),
   },
+  {
+    path: 'admin/restaurants',
+    loadChildren: () =>
+      import('./admin-restaurants/admin-restaurants.module').then((module) => module.AdminRestaurantsModule),
+  },
 ];
 
 @NgModule({

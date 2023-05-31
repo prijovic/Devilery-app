@@ -23,8 +23,6 @@ export const signUp = createAction(
   props<{ email: string; password: string; name: string; surname: string; phoneNumber: string; profilePicture: string }>()
 );
 
-export const signUpSuccess = createAction('[Auth] Sign Up Success');
-
 export const confirmEmail = createAction(
   '[Auth] Confirm Email',
   props<{ token: string }>()
@@ -40,7 +38,6 @@ const all = union({
   logout,
   logoutSuccess,
   signUp,
-  signUpSuccess,
   confirmEmail,
   confirmEmailSuccess,
 });

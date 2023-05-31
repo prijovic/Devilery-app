@@ -20,7 +20,7 @@ export class NotifierService {
     this.toast.error(message, '');
   }
 
-  public notifySuccess(message: string) {
-    this.toast.success(message, '');
+  public notifySuccess(message: string, title?: string) {
+    this.toast.success(message, title ? title : '');
   }
 }

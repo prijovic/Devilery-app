@@ -41,5 +41,8 @@ public class RestaurantRegistrationRequest {
     @NotNull
     private Double minOrder;
 
+    @NotNull
+    private String picture;
+
     private UUID ownerId;
 }
