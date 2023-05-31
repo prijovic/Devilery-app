@@ -28,6 +28,9 @@ public class Restaurant extends BaseEntity {
     @Column(name = "description", nullable = false)
     String description;
 
+    @Column(name = "picture", nullable = false)
+    String picture;
+
     @Embedded
     WorkingHours workingHours;
 

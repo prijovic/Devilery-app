@@ -20,16 +20,8 @@ export const logoutSuccess = createAction('[Auth] Logout Success');
 
 export const signUp = createAction(
   '[Auth] Sign Up Start',
-  props<{ email: string; password: string; name: string; surname: string; phoneNumber: string, profilePicture: string }>()
+  props<{ email: string; password: string; name: string; surname: string; phoneNumber: string; profilePicture: string }>()
 );
-
-export const signUpSuccess = createAction('[Auth] Sign Up Success');
-
-export const signUpFail = createAction('[Auth] Sign Up Fail', props<{fileName: string}>());
-
-export const signUpFailCleanSuccess = createAction('[Auth] Sign Up Fail Clean Success');
-
-export const signUpFailCleanFail = createAction('[Auth] Sign Up Fail Clean Fail');
 
 export const confirmEmail = createAction(
   '[Auth] Confirm Email',
@@ -46,10 +38,6 @@ const all = union({
   logout,
   logoutSuccess,
   signUp,
-  signUpSuccess,
-  signUpFail,
-  signUpFailCleanSuccess,
-  signUpFailCleanFail,
   confirmEmail,
   confirmEmailSuccess,
 });

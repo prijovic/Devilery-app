@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="restaurantRegistrationForm" (ngSubmit)="registerRestaurant()">
+      <h1 class="form-title">RESTAURANT REGISTRATION</h1>
+      <h2 class="form-subtitle">Fill the information to add new restaurant.</h2>
+
+      <app-image-upload-field [alterImage]="'restaurant'" (fileChanged)="imageChanged($event)"></app-image-upload-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput type="text" placeholder="Restaurant">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput maxlength="100" placeholder="Short description of the restaurant"></textarea>
+      </mat-form-field>
+
+      <app-address-field (addressSelected)="this.restaurantRegistrationForm.controls['address'].setValue({addressName: $event.formatted, longitude: $event.lon, latitude: $event.lat})"></app-address-field>
+
+      <h3 class="form-section-title">Working hours</h3>
+      <app-working-hours-field
+        (opensAtChanged)="restaurantRegistrationForm.controls['opensAt'].setValue($event)"
+        (closesAtChanged)="restaurantRegistrationForm.controls['closesAt'].setValue($event)"></app-working-hours-field>
+
+      <h3 class="form-section-title">Food preparation details</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Minimal time</mat-label>
+        <input formControlName="minPreparation" matInput type="number" min="0" placeholder="20">
+        <span class="form-suffix" matTextSuffix>min</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Maximum time</mat-label>
+        <input formControlName="maxPreparation" matInput type="number" min="0" placeholder="30">
+        <span class="form-suffix" matTextSuffix>min</span>
+      </mat-form-field>
+
+      <h3 class="form-section-title">Ordering details</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Minimal order</mat-label>
+        <input formControlName="minOrder" matInput type="number" min="0" placeholder="10.0">
+        <span class="form-suffix" matTextSuffix>€</span>
+      </mat-form-field>
+
+      <button>Register restaurant</button>
+    </form>
+  </div>
+</div>

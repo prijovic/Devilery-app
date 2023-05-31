@@ -1,0 +1,13 @@
+<mat-form-field appearance="outline" [formGroup]="addressGroup">
+  <mat-label>Address</mat-label>
+  <input matInput formControlName="address" [matAutocomplete]="addresses"/>
+  <mat-autocomplete #addresses="matAutocomplete">
+    <mat-option
+      *ngFor="let address of addresses$ | async"
+      [value]="address.formatted"
+      (onSelectionChange)="this.addressSelected.emit(address);"
+    >
+      {{ address.formatted }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

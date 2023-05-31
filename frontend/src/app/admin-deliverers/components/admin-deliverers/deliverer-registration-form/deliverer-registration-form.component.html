@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="delivererRegistrationForm" (ngSubmit)="registerDeliverer()">
+      <h1 class="form-title">DELIVERER REGISTRATION</h1>
+      <h2 class="form-subtitle">Fill the information to add new deliverer.</h2>
+
+      <app-image-upload-field (fileChanged)="imageChanged($event)"></app-image-upload-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput type="email" placeholder="email@example.com">
+      </mat-form-field>
+
+      <app-password-field (passwordChanged)="delivererRegistrationForm.controls['password'].setValue($event)"></app-password-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput type="text" placeholder="Name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Surname</mat-label>
+        <input formControlName="surname" matInput type="text" placeholder="Surname">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input formControlName="phoneNumber" matInput type="tel" placeholder="06* *** ***">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Vehicle Type</mat-label>
+        <mat-select formControlName="delivererType">
+          <mat-option value="BICYCLE">Bicycle</mat-option>
+          <mat-option value="MOTORCYCLE">Motorcycle</mat-option>
+          <mat-option value="CAR">Car</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button>Register deliverer</button>
+    </form>
+  </div>
+</div>

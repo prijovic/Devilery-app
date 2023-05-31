@@ -46,6 +46,7 @@ public class RegisterNewRestaurant {
                 .minOrder(restaurantRegistrationRequest.getMinOrder() == null ? 0 : restaurantRegistrationRequest.getMinOrder())
                 .minPrep(restaurantRegistrationRequest.getMinPreparation())
                 .maxPrep(restaurantRegistrationRequest.getMaxPreparation())
+                .picture(restaurantRegistrationRequest.getPicture())
                 .closed(true)
                 .workingHours(workingHours)
                 .build();

@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {NgxMatTimepickerModule} from "ngx-mat-timepicker";
 
 @NgModule({
   exports: [
@@ -34,6 +35,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatMenuModule,
     MatTabsModule,
     MatAutocompleteModule,
+    NgxMatTimepickerModule
   ],
 })
 export class MaterialModule {}

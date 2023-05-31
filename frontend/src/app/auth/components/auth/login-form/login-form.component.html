@@ -9,17 +9,7 @@
         <input formControlName="email" matInput type="email" placeholder="email@example.com">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Enter your password"
-               formControlName="password">
-        <button mat-icon-button matSuffix
-                class="password-visibility"
-                [matTooltip]="hidePassword ? 'Show password' : 'Hide password'"
-                (click)="toggleShowPassword($event)">
-          <mat-icon [svgIcon]="hidePassword ? 'eye' : 'eye-crossed'"></mat-icon>
-        </button>
-      </mat-form-field>
+      <app-password-field (passwordChanged)="loginForm.controls['password'].setValue($event)"></app-password-field>
 
       <button>Log in</button>
     </form>
