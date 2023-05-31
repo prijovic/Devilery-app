@@ -6,7 +6,7 @@
     <app-navbar-item text="Log in" url="/auth/login" *ngIf="!role"></app-navbar-item>
     <app-navbar-item text="Sign up" url="/auth/sign-up" *ngIf="!role"></app-navbar-item>
     <app-navbar-item text="Deliverers" url="/admin/deliverers/new" *ngIf="role === 'ADMIN'"></app-navbar-item>
-    <app-navbar-item text="Restaurants" url="/admin/restaurants" *ngIf="role === 'ADMIN'"></app-navbar-item>
+    <app-navbar-item text="Restaurants" url="/admin/restaurants/new" *ngIf="role === 'ADMIN'"></app-navbar-item>
     <app-navbar-item text="Users" url="/admin/users" *ngIf="role === 'ADMIN'"></app-navbar-item>
     <app-navbar-item text="Restaurants" url="/owner/restaurants" *ngIf="role === 'OWNER'"></app-navbar-item>
     <app-navbar-item text="Home" url="/order/confirm" *ngIf="role === 'OWNER' || role === 'EMPLOYEE'"></app-navbar-item>

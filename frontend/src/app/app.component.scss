@@ -2,8 +2,9 @@
 
 .main-container {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: grid;
+  margin-bottom: 10px;
 }
 
 @media screen and (max-width: theme.$small-window-max) {

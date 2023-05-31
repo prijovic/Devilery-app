@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
@@ -8,6 +8,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./image-upload-field.component.scss'],
 })
 export class ImageUploadFieldComponent {
+  @Input() alterImage!: string;
   @Output() fileChanged = new EventEmitter<File>();
   image!: SafeUrl;
 

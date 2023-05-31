@@ -1,0 +1,28 @@
+<div [formGroup]="workingHoursForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Opens at</mat-label>
+    <input formControlName="opensAt" matInput [ngxMatTimepicker]="opensAtPicker" placeholder="09:00" readonly [format]="24">
+    <mat-icon matSuffix
+              class="form-suffix"
+              (click)="opensAtPicker.open()">
+      access_time
+    </mat-icon>
+  </mat-form-field>
+  <div>
+    <ngx-mat-timepicker #opensAtPicker appendToInput="true"></ngx-mat-timepicker>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Closes at</mat-label>
+    <input formControlName="closesAt" matInput [ngxMatTimepicker]="closesAtPicker" placeholder="22:00" readonly [format]="24">
+    <mat-icon matSuffix
+              class="form-suffix"
+              (click)="closesAtPicker.open()">
+      access_time
+    </mat-icon>
+  </mat-form-field>
+  <div>
+    <ngx-mat-timepicker #closesAtPicker appendToInput="true"></ngx-mat-timepicker>
+  </div>
+</div>
+
+

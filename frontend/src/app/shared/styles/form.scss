@@ -53,6 +53,14 @@ h2.form-subtitle {
   align-self: flex-start;
 }
 
+h3.form-section-title {
+  font-size: 16px;
+  color: theme.$dark-gray;
+  font-weight: normal;
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -81,4 +89,12 @@ button {
 
 button:is(:hover, :active, :focus) {
   background-color: theme.$dark-green;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-suffix {
+  color: theme.$dark-gray;
 }

@@ -1,0 +1,11 @@
+@use "src/custom-theme" as theme;
+@import "src/app/shared/styles/form";
+
+:host {
+  width: 100%;
+}
+
+mat-icon {
+  color: theme.$dark-gray;
+}
+
