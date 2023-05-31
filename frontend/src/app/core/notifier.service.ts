@@ -10,7 +10,7 @@ export class NotifierService {
 
   public notifyError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred';
-    if (errorRes.error) {
+    if (errorRes.error && errorRes.error.message) {
       errorMessage = errorRes.error.message;
     }
     this.toast.error(errorMessage, '');

@@ -3,10 +3,12 @@
     <img class="logo-image" src="../../../assets/icons/navbar-logo.svg" alt="Fast & Foodious">
   </a>
   <div class="navbar-items">
-    <app-navbar-item text="Home" url="/"></app-navbar-item>
-    <app-navbar-item text="About us" url="/" *ngIf="!role"></app-navbar-item>
     <app-navbar-item text="Log in" url="/auth/login" *ngIf="!role"></app-navbar-item>
     <app-navbar-item text="Sign up" url="/auth/sign-up" *ngIf="!role"></app-navbar-item>
+    <app-navbar-item text="Restaurants" url="/admin/restaurants" *ngIf="role === 'ADMIN'"></app-navbar-item>
+    <app-navbar-item text="Users" url="/admin/users" *ngIf="role === 'ADMIN'"></app-navbar-item>
+    <app-navbar-item text="Restaurants" url="/owner/restaurants" *ngIf="role === 'OWNER'"></app-navbar-item>
+    <app-navbar-item text="Home" url="/order/confirm" *ngIf="role === 'OWNER' || role === 'EMPLOYEE'"></app-navbar-item>
     <app-user-profile-button *ngIf="role"></app-user-profile-button>
   </div>
 </nav>

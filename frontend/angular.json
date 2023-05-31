@@ -20,7 +20,8 @@
           "skipTests": true
         },
         "@schematics/angular:module": {
-          "skipTests": true
+          "routing": true,
+          "module": ""
         },
         "@schematics/angular:pipe": {
           "skipTests": true
