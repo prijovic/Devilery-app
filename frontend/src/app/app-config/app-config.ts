@@ -5,6 +5,7 @@ export interface AppConfig {
   apiEndpoint: string;
   addressApiEndpoint: string;
   addressApiKey: string;
+  routeApiEndpoint: string;
 }
 
 export const APP_SERVICE_CONFIG = new InjectionToken<AppConfig>(
@@ -15,4 +16,5 @@ export const APP_CONFIG: AppConfig = {
   apiEndpoint: environment.apiEndpoint,
   addressApiEndpoint: environment.addressApiEndpoint,
   addressApiKey: environment.addressApiKey,
+  routeApiEndpoint: environment.routeApiEndpoint
 };

@@ -2,7 +2,6 @@ package com.ftn.sbnz.service.dto.response;
 
 import com.ftn.sbnz.model.models.Address;
 import com.ftn.sbnz.model.models.MenuItemType;
-import com.ftn.sbnz.model.models.WorkingHours;
 import lombok.*;
 
 import java.util.Set;
@@ -17,7 +16,9 @@ public class RestaurantResponse {
     UUID id;
     String name;
     String description;
-    WorkingHours workingHours;
+    String picture;
+    String opensAt;
+    String closesAt;
     Address address;
     Double minOrder;
     Integer minPrep;

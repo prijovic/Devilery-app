@@ -1,0 +1,7 @@
+<div class="restaurant-details">
+  <h1 class="restaurant-name">{{name}}</h1>
+  <p class="restaurant-description">{{description}}</p>
+  <ul class="restaurant-specialized-types">
+    <li class="restaurant-specialized-type" *ngFor="let specializedType of specializedTypes">{{specializedType | enumeration}}</li>
+  </ul>
+</div>

@@ -27,6 +27,30 @@ export class AppComponent implements OnInit {
         '../assets/icons/eye.svg'
       )
     );
+    matIconRegistry.addSvgIcon(
+      'delivery',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/delivery.svg'
+      )
+    );
+    matIconRegistry.addSvgIcon(
+      'star',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/star.svg'
+      )
+    );
+    matIconRegistry.addSvgIcon(
+      'star-grey',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/star-grey.svg'
+      )
+    );
+    matIconRegistry.addSvgIcon(
+      'time',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/time.svg'
+      )
+    );
   }
 
   ngOnInit(): void {

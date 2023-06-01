@@ -31,4 +31,23 @@ export class AddressService {
       map(response => response.results)
     );
   }
+
+  getAddressDistance(lon1: number, lat1: number, lon2: number, lat2: number) {
+    const params = new HttpParams()
+      .append('waypoints', `${lat1},${lon1}|${lat2},${lon2}`)
+      .append('format', 'json')
+      .append('mode', 'drive')
+      .append('apiKey', this.config.addressApiKey)
+      .append('lang', 'en');
+    const headers = new HttpHeaders().append('skip', 'true');
+    return this.http.get<{results: {distance: number}[]}>(
+      this.config.routeApiEndpoint,
+      {
+        params,
+        headers,
+      }
+    ).pipe(
+      map(response => response.results[0].distance / 1000)
+    );
+  }
 }

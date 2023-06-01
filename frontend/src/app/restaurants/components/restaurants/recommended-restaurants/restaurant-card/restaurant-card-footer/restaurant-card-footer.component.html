@@ -1,0 +1,14 @@
+<div class="restaurant-ordering-details">
+  <div class="delivery-cost">
+    <mat-icon svgIcon="delivery"></mat-icon>
+    <div class="value">{{deliveryCost.getValue() | number:'1.0-2'}} €</div>
+  </div>
+  <div class="working-hours">
+    <mat-icon svgIcon="time"></mat-icon>
+    <div class="working-hours-value">{{opensAt | timePipe }}-{{closesAt | timePipe }}h</div>
+  </div>
+  <div class="rating">
+    <mat-icon class="rating-icon" [svgIcon]="isClosed ? 'star-grey' : 'star'"></mat-icon>
+    <div class="rating-value">{{rating}}</div>
+  </div>
+</div>

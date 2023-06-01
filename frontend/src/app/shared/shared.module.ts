@@ -6,6 +6,8 @@ import { ImageUploadFieldComponent } from './components/image-upload-field/image
 import { FormWithImageInputComponent } from './components/form-with-image-input/form-with-image-input.component';
 import { PasswordFieldComponent } from './components/password-field/password-field.component';
 import { AddressFieldComponent } from './components/address-field/address-field.component';
+import { TimePipe } from './pipes/time.pipe';
+import {EnumerationPipe} from "./pipes/enumeration.pipe";
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, MaterialModule],
@@ -17,7 +19,9 @@ import { AddressFieldComponent } from './components/address-field/address-field.
     ImageUploadFieldComponent,
     PasswordFieldComponent,
     AddressFieldComponent,
+    TimePipe,
+    EnumerationPipe
   ],
-  declarations: [ImageUploadFieldComponent, FormWithImageInputComponent, PasswordFieldComponent, AddressFieldComponent],
+  declarations: [ImageUploadFieldComponent, FormWithImageInputComponent, PasswordFieldComponent, AddressFieldComponent, TimePipe, EnumerationPipe],
 })
 export class SharedModule {}

@@ -7,6 +7,10 @@
   margin-bottom: 10px;
 }
 
+.main-content {
+  max-height: none;
+}
+
 @media screen and (max-width: theme.$small-window-max) {
   .main-container {
     grid-template-columns: 100%;

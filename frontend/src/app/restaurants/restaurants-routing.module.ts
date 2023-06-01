@@ -4,6 +4,7 @@ import {RestaurantsComponent} from "./components/restaurants/restaurants.compone
 import {
   RecommendedRestaurantsComponent
 } from "./components/restaurants/recommended-restaurants/recommended-restaurants.component";
+import {RestaurantsResolver} from "./reslovers/restaurants.resolver";
 
 const routes: Routes = [{
   path: '',
@@ -11,7 +12,8 @@ const routes: Routes = [{
   children: [
     {
       path: 'all',
-      component: RecommendedRestaurantsComponent
+      component: RecommendedRestaurantsComponent,
+      resolve: [RestaurantsResolver]
     }]
 }];
 

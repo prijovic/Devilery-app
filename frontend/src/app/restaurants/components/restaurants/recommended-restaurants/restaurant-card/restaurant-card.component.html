@@ -1,0 +1,27 @@
+<a class="restaurant-card" [ngClass]="{'closed': restaurant.isClosed, 'new': restaurant.isNew}">
+  <div class="restaurant-picture" [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}">
+  </div>
+  <div *ngIf="restaurant.isNew" class="new-restaurant-tag">NEW</div>
+  <div class="preparation-details">
+    <div class="preparation-time" *ngIf="!restaurant.isClosed">
+      <div class="min-preparation-time">{{restaurant.minPrep | number:'1.0-0'}}</div>
+      <span class="preparation-time-separator">-</span>
+      <div class="max-preparation-time">{{restaurant.maxPrep | number:'1.0-0'}}</div>
+    </div>
+    <div class="preparation-time-units" *ngIf="!restaurant.isClosed">min</div>
+    <div *ngIf="restaurant.isClosed">Closed</div>
+  </div>
+  <app-restaurant-card-content
+    [name]="restaurant.name"
+    [description]="restaurant.description"
+    [specializedTypes]="restaurant.specializedTypes"
+  ></app-restaurant-card-content>
+  <app-restaurant-card-footer
+    [restaurantLon]="restaurant.address.longitude"
+    [restaurantLat]="restaurant.address.latitude"
+    [isClosed]="restaurant.isClosed"
+    [opensAt]="restaurant.opensAt"
+    [closesAt]="restaurant.closesAt"
+    [rating]="restaurant.rating"
+  ></app-restaurant-card-footer>
+</a>

@@ -1,0 +1,9 @@
+@use "src/custom-theme" as theme;
+
+
+.restaurant-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 15px;
+  justify-items: center;
+}

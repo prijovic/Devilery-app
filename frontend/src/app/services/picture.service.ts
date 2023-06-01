@@ -24,6 +24,13 @@ export class PictureService {
     });
   }
 
+  getPicture(pictureName: string) {
+    return this.http.get(this.config.apiEndpoint + "picture/", {
+      params: new HttpParams().append('fileName', pictureName),
+      responseType: "blob"
+    });
+  }
+
   getSelfProfilePicture() {
     return this.http.get(this.config.apiEndpoint + "self/profile-picture", {responseType: "blob"})
   }
