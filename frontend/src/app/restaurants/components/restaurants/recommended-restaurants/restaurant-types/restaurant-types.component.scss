@@ -1,0 +1,47 @@
+@use "src/custom-theme" as theme;
+
+.restaurant-type-container {
+  overflow-y: hidden;
+}
+
+.scrollable-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+app-restaurant-type-card {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: theme.$green;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: theme.$light-gray;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: theme.$green;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: theme.$dark-green;
+}

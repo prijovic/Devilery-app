@@ -1,0 +1,37 @@
+@use "src/custom-theme" as theme;
+@import "src/app/restaurants/styles/card";
+
+.restaurant-type-card {
+  background-color: theme.$light-gray;
+  display: grid;
+  grid-template-columns: 5% 90% 5%;
+  grid-template-rows: 65% 35%;
+  max-width: 200px;
+  min-width: 150px;
+  min-height: 150px;
+  max-height: 200px;
+  aspect-ratio: 1/1;
+}
+
+.restaurant-type-picture {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+}
+
+.restaurant-type-details {
+  grid-row: 2;
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restaurant-type-name {
+  font-size: 20px;
+  font-weight: 800;
+  font-stretch: condensed;
+}
+
+h1 {
+  text-align: center;
+}

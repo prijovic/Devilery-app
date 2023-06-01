@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class NavbarItemComponent {
   @Input() text!: string;
   @Input() url!: string;
+  @Input() isReverse: boolean = false;
 }
