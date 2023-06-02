@@ -23,7 +23,7 @@ public class RestaurantTest {
     }
 
     protected Restaurant getNewRestaurant() {
-        LocalDateTime oneMonthAgo = now.minusMonths(1);
+        LocalDateTime oneMonthAgo = now.minusDays(1);
 
         Restaurant restaurant = new Restaurant();
         restaurant.setCreatedOn(oneMonthAgo);

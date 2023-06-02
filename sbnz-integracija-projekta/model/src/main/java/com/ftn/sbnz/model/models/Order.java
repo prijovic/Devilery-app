@@ -41,9 +41,6 @@ public class Order extends BaseEntity {
     @Column(name = "discount")
     Double discount;
 
-    @Column(name = "tip")
-    Double tip;
-
     @Column(name = "rejection_reason")
     String rejectionReason;
 

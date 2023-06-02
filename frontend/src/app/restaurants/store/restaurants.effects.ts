@@ -7,11 +7,23 @@ import {RestaurantsHttpService} from "../services/restaurants-http.service";
 @Injectable()
 export class RestaurantsEffects {
 
-  restaurant_registration = createEffect(() => {
+  get_restaurants = createEffect(() => {
     return this.actions$.pipe(
       ofType(RestaurantsActions.getRestaurants.type),
       switchMap(() => {
         return this.httpService.getRestaurants()
+          .pipe(
+            map((restaurants) => RestaurantsActions.setRestaurants({restaurants}))
+          );
+      })
+    );
+  });
+
+  get_restaurants_by_type = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RestaurantsActions.getRestaurantsByType.type),
+      switchMap((action) => {
+        return this.httpService.getRestaurantsByType(action.restaurantType)
           .pipe(
             map((restaurants) => RestaurantsActions.setRestaurants({restaurants}))
           );

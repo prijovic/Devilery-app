@@ -4,6 +4,7 @@ import com.ftn.sbnz.model.models.MenuItem;
 import com.ftn.sbnz.model.models.MenuItemType;
 import com.ftn.sbnz.model.models.Recommendation;
 import com.ftn.sbnz.model.models.Restaurant;
+import com.ftn.sbnz.service.services.kie.GetRestaurantKieSession;
 import org.drools.core.ClassObjectFilter;
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
@@ -17,7 +18,7 @@ public class SearchTest extends RestaurantTest {
 
     @Test
     public void testRestaurantSpecialization() {
-        KieSession kieSession = initKieSession(now);
+        KieSession kieSession = new GetRestaurantKieSession().execute();
 
         Restaurant restaurant = new Restaurant();
 
@@ -48,7 +49,6 @@ public class SearchTest extends RestaurantTest {
         kieSession.insert(MenuItemType.CHICKEN);
         kieSession.insert(restaurant);
 
-        kieSession.getAgenda().getAgendaGroup("searchGroup").setFocus();
         kieSession.fireAllRules();
 
         assertEquals(3, restaurant.getSpecializedTypes().size());
@@ -62,7 +62,7 @@ public class SearchTest extends RestaurantTest {
 
     @Test
     public void testRestaurantSearchBySpecialization() {
-        KieSession kieSession = initKieSession(now);
+        KieSession kieSession = new GetRestaurantKieSession().execute();
 
         Restaurant restaurant1 = getPopularNewRestaurant();
         Restaurant restaurant2 = getRatedRestaurant(now.minusMonths(2), 1, 2.49, 10);
@@ -99,22 +99,24 @@ public class SearchTest extends RestaurantTest {
         kieSession.insert(restaurant4);
         kieSession.insert(MenuItemType.ITALIAN);
 
-        kieSession.getAgenda().getAgendaGroup("searchGroup").setFocus();
         kieSession.fireAllRules();
 
         Collection<Recommendation> recommendations = (Collection<Recommendation>) kieSession.getObjects(new ClassObjectFilter(Recommendation.class));
 
         assertTrue(restaurant1.getSpecializedTypes().contains(MenuItemType.ITALIAN));
+        assertFalse(restaurant1.getSpecializedTypes().contains(MenuItemType.BURGER));
         assertTrue(restaurant1.isPopular());
         assertTrue(restaurant1.isNew());
         assertFalse(restaurant1.isBadRated());
 
         assertTrue(restaurant2.getSpecializedTypes().contains(MenuItemType.ITALIAN));
+        assertFalse(restaurant2.getSpecializedTypes().contains(MenuItemType.BURGER));
         assertFalse(restaurant2.isPopular());
         assertFalse(restaurant2.isNew());
         assertTrue(restaurant2.isBadRated());
 
         assertTrue(restaurant3.getSpecializedTypes().contains(MenuItemType.ITALIAN));
+        assertFalse(restaurant3.getSpecializedTypes().contains(MenuItemType.BURGER));
         assertFalse(restaurant3.isPopular());
         assertFalse(restaurant3.isNew());
         assertFalse(restaurant3.isBadRated());
@@ -132,5 +134,5 @@ public class SearchTest extends RestaurantTest {
         kieSession.dispose();
     }
 
-    
+
 }

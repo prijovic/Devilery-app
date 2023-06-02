@@ -19,8 +19,5 @@ public class NewOrderRequest {
     UUID addressId;
 
     @NotNull
-    Double tip;
-
-    @NotNull
     Double deliveryDistance;
 }

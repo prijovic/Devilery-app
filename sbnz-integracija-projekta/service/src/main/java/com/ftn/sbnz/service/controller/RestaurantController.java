@@ -43,8 +43,8 @@ public class RestaurantController {
         return getAllRestaurants.execute();
     }
 
-    @GetMapping("/specializedFor")
-    public List<RestaurantResponse> getSpecializedRestaurantsForType(@RequestParam MenuItemType type) {
+    @GetMapping("/type/{type}")
+    public List<RestaurantResponse> getSpecializedRestaurantsForType(@NotBlank @PathVariable MenuItemType type) {
         return getSpecializedRestaurantForType.execute(type);
     }
 

@@ -10,9 +10,15 @@ export const setRestaurants = createAction(
   props<{restaurants: Restaurant[]}>()
 );
 
+export const getRestaurantsByType = createAction(
+  '[Restaurants] Get Restaurants By Type',
+  props<{restaurantType: string}>()
+);
+
 const all = union({
   getRestaurants,
-  setRestaurants
+  setRestaurants,
+  getRestaurantsByType
 });
 
 export type RestaurantsActionsUnion = typeof all;

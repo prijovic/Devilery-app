@@ -23,5 +23,4 @@ public enum MenuItemType {
     SUSHI,
     FISH,
     ITALIAN,
-    FINE_DINING
 }

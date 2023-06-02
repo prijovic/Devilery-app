@@ -8,20 +8,22 @@ import { PasswordFieldComponent } from './components/password-field/password-fie
 import { AddressFieldComponent } from './components/address-field/address-field.component';
 import { TimePipe } from './pipes/time.pipe';
 import {EnumerationPipe} from "./pipes/enumeration.pipe";
+import { ReverseEnumerationPipe } from './pipes/reverse-enumeration.pipe';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, MaterialModule],
-  exports: [
-    CommonModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ImageUploadFieldComponent,
-    PasswordFieldComponent,
-    AddressFieldComponent,
-    TimePipe,
-    EnumerationPipe
-  ],
-  declarations: [ImageUploadFieldComponent, FormWithImageInputComponent, PasswordFieldComponent, AddressFieldComponent, TimePipe, EnumerationPipe],
+    exports: [
+        CommonModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ImageUploadFieldComponent,
+        PasswordFieldComponent,
+        AddressFieldComponent,
+        TimePipe,
+        EnumerationPipe,
+        ReverseEnumerationPipe
+    ],
+  declarations: [ImageUploadFieldComponent, FormWithImageInputComponent, PasswordFieldComponent, AddressFieldComponent, TimePipe, EnumerationPipe, ReverseEnumerationPipe],
 })
 export class SharedModule {}

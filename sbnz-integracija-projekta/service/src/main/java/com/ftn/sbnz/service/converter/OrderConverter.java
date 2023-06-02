@@ -14,7 +14,6 @@ public class OrderConverter {
                 .status(order.getStatus())
                 .deliveryDistance(order.getDeliveryDistance())
                 .discount(order.getDiscount())
-                .tip(order.getTip())
                 .totalPrice(order.getTotalPrice())
                 .address(order.getAddress())
                 .build();

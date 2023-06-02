@@ -12,4 +12,14 @@ export class RestaurantTypeCardComponent {
   getBackgroundImageUrl() {
     return `url("${this.image}")`;
   }
+
+  transform(value: string): string {
+    if (!value) {
+      return '';
+    }
+
+    return value.toUpperCase()
+      .split(' ')
+      .join('_');
+  }
 }

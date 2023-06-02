@@ -13,6 +13,8 @@ public class GetPriceKieSession {
     public KieSession execute() {
         KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        return kContainer.newKieSession("priceKieSession");
+        KieSession kieSession = kContainer.newKieSession("priceKieSession");
+//        kieSession.addEventListener(new KieSessionCreatorHelper.CustomAgendaEventListener());
+        return kieSession;
     }
 }

@@ -18,6 +18,10 @@ public class GetDiscountKieSession {
         ExternalSpreadsheetCompiler converter = new ExternalSpreadsheetCompiler();
         String drl = converter.compile(data, template, 3, 2);
 
-        return KieSessionCreatorHelper.createKieSessionFromDRL(drl);
+        KieSession kieSession = KieSessionCreatorHelper.createKieSessionFromDRL(drl);
+
+//        kieSession.addEventListener(new KieSessionCreatorHelper.CustomAgendaEventListener());
+
+        return kieSession;
     }
 }

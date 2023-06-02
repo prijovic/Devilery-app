@@ -1,4 +1,4 @@
-<a class="restaurant-type-card card">
+<a class="restaurant-type-card card" [routerLink]="'/restaurants/' + transform(name)">
   <div class="restaurant-type-picture card-picture" [ngStyle]="{'background-image': getBackgroundImageUrl()}"></div>
   <div class="restaurant-type-details">
     <h1 class="restaurant-type-name">{{name | enumeration}}</h1>

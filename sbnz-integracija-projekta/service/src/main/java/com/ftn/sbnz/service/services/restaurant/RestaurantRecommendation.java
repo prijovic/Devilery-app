@@ -28,4 +28,5 @@ public class RestaurantRecommendation {
 
         return restaurantResponses;
     }
+
 }

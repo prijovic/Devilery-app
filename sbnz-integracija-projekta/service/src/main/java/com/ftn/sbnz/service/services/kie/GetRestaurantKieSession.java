@@ -17,6 +17,7 @@ public class GetRestaurantKieSession {
         KieContainer kContainer = ks.getKieClasspathContainer();
         KieSession kieSession = kContainer.newKieSession("restaurantKieSession");
         kieSession.setGlobal("now", LocalDateTime.now());
+        kieSession.addEventListener(new KieSessionCreatorHelper.CustomAgendaEventListener());
         return kieSession;
     }
 }
