@@ -1,13 +1,11 @@
 package com.ftn.sbnz.service.dto.request.menuItem;
 
-import com.ftn.sbnz.model.models.Allergen;
 import com.ftn.sbnz.model.models.MenuItemType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -31,6 +29,4 @@ public class NewMenuItemRequest {
 
     @NotNull
     private Double price;
-
-    private List<Allergen> allergens;
 }

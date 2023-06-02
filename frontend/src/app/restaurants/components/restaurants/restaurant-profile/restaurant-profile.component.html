@@ -1,0 +1,5 @@
+<app-restaurant-details-container [restaurant]="restaurant | async" *ngIf="restaurant.getValue()"></app-restaurant-details-container>
+<div class="menu-items">
+  <app-restaurant-items-container [restaurantItems]="restaurantItems | async" *ngIf="restaurantItems.getValue()"></app-restaurant-items-container>
+</div>
+

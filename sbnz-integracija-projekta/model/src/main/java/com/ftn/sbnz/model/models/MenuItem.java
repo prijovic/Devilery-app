@@ -7,8 +7,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -39,12 +37,6 @@ public class MenuItem extends BaseEntity {
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     MenuItemType type;
-
-    @ElementCollection(targetClass = Allergen.class, fetch = FetchType.LAZY)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "menu_item_allergens")
-    @Column(name = "allergens")
-    Collection<Allergen> allergens = new ArrayList<>();
 
     @ManyToMany(mappedBy = "items")
     Set<Order> orders;

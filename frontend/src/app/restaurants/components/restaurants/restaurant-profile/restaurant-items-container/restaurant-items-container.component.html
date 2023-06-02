@@ -1,0 +1,4 @@
+<h2>Menu</h2>
+<div class="restaurant-item-card-container">
+  <app-restaurant-item-card *ngFor="let restaurantItem of restaurantItems" [isUserLoggedIn]="isUserLoggedIn.getValue()" [restaurantItem]="restaurantItem"></app-restaurant-item-card>
+</div>

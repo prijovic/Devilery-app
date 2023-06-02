@@ -4,6 +4,7 @@ import com.ftn.sbnz.model.models.MenuItemType;
 import com.ftn.sbnz.model.models.Permission;
 import com.ftn.sbnz.service.dto.request.restaurant.RestaurantRegistrationRequest;
 import com.ftn.sbnz.service.dto.request.restaurant.RestaurantUpdateRequest;
+import com.ftn.sbnz.service.dto.response.MenuItemResponse;
 import com.ftn.sbnz.service.dto.response.RestaurantResponse;
 import com.ftn.sbnz.service.security.HasAnyPermission;
 import com.ftn.sbnz.service.services.restaurant.*;
@@ -25,6 +26,7 @@ public class RestaurantController {
     private final GetSpecializedRestaurantForType getSpecializedRestaurantForType;
     private final GetGenerallyRecommendedRestaurants getGenerallyRecommendedRestaurants;
     private final UpdateRestaurant updateRestaurant;
+    private final GetRestaurantItems getRestaurantItems;
 
     @PostMapping
     @HasAnyPermission({Permission.RESTAURANT_CRUD})
@@ -36,6 +38,11 @@ public class RestaurantController {
     @HasAnyPermission({Permission.RESTAURANT_CRUD})
     public List<RestaurantResponse> getRestaurantsWithoutOwner() {
         return getRestaurantsWithoutOwner.execute();
+    }
+
+    @GetMapping("/menu-items")
+    public List<MenuItemResponse> getRestaurantItems(@RequestParam UUID id) {
+        return getRestaurantItems.execute(id);
     }
 
     @GetMapping("/all")

@@ -1,0 +1,7 @@
+@use "src/custom-theme" as theme;
+@import "src/app/restaurants/styles/restaurant_ordering_details";
+
+:host {
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,11 @@
+h2 {
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+.restaurant-item-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 15px;
+  justify-items: center;
+}

@@ -1,4 +1,4 @@
-<a class="restaurant-card card" [ngClass]="{'closed': restaurant.isClosed, 'new': restaurant.isNew}">
+<a class="restaurant-card card" [ngClass]="{'closed': restaurant.isClosed, 'new': restaurant.isNew}" [routerLink]="'/restaurants/restaurant/' + restaurant.id">
   <div class="restaurant-picture card-picture" [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}">
   </div>
   <div *ngIf="restaurant.isNew" class="new-restaurant-tag">NEW</div>

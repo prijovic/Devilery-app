@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AddressService} from "../../../../../../shared/services/address.service";
+import {AddressService} from "../../../../../../../shared/services/address.service";
 import {BehaviorSubject} from "rxjs";
 
 @Component({
