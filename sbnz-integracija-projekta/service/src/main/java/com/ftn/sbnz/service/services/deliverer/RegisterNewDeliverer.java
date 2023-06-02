@@ -6,7 +6,7 @@ import com.ftn.sbnz.model.models.DelivererType;
 import com.ftn.sbnz.model.models.User;
 import com.ftn.sbnz.service.dto.request.deliverer.DelivererRegistrationRequest;
 import com.ftn.sbnz.service.services.role.GetRoleByName;
-import com.ftn.sbnz.service.services.user.RegisterNewUser;
+import com.ftn.sbnz.service.services.user.RegisterUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @Service
 @RequiredArgsConstructor
 public class RegisterNewDeliverer {
-    private final RegisterNewUser registerNewUser;
+    private final RegisterUser registerUser;
     private final PasswordEncoder passwordEncoder;
     private final GetRoleByName getRoleByName;
 
@@ -35,7 +35,7 @@ public class RegisterNewDeliverer {
                 .status(DelivererStatus.UNAVAILABLE)
                 .build();
 
-        return registerNewUser.execute(deliverer);
+        return registerUser.execute(deliverer);
     }
 
 }

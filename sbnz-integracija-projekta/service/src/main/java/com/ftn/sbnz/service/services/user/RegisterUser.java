@@ -16,7 +16,7 @@ import static com.ftn.sbnz.service.translations.Translator.toLocale;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterNewUser {
+public class RegisterUser {
     private final UserExistsByEmail userExistsByEmail;
     private final SaveUser saveUser;
     private final SendMail sendMail;
