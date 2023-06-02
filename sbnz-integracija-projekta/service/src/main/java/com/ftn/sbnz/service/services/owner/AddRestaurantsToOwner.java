@@ -4,6 +4,7 @@ import com.ftn.sbnz.model.models.Restaurant;
 import com.ftn.sbnz.model.models.RestaurantOwner;
 import com.ftn.sbnz.service.services.restaurant.GetRestaurantById;
 import com.ftn.sbnz.service.services.restaurant.SaveRestaurant;
+import com.ftn.sbnz.service.services.user.SaveUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AddRestaurantsToOwner {
-    private final SaveOwner saveOwner;
+    private final SaveUser saveOwner;
     private final SaveRestaurant saveRestaurant;
     private final GetRestaurantById getRestaurantById;
 
@@ -24,7 +25,7 @@ public class AddRestaurantsToOwner {
             restaurant.setOwner(restaurantOwner);
             saveRestaurant.execute(restaurant);
         }
-        return saveOwner.execute(restaurantOwner);
+        return (RestaurantOwner) saveOwner.execute(restaurantOwner);
     }
 
 }
