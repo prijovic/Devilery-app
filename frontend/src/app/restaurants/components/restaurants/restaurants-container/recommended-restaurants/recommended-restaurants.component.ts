@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Restaurant} from "../../../model/restaurant.model";
+import {Restaurant} from "../../../../model/restaurant.model";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
-import {selectRestaurants} from "../../../store/restaurants.selectors";
+import {selectRestaurants} from "../../../../store/restaurants.selectors";
 
 @Component({
   selector: 'app-recommended-restaurants',

@@ -1,0 +1,74 @@
+@use "src/custom-theme" as theme;
+@import "src/app/restaurants/styles/card";
+
+:host {
+  width: 100%;
+}
+
+.card {
+  border-radius: 10px;
+  cursor: default;
+}
+
+.card-picture {
+  border-radius: 10px;
+}
+
+.restaurant-item-card {
+  display: grid;
+  grid-template-columns: 5% 33% auto 10% 5%;
+  grid-template-rows: 5% auto 5%;
+  min-height: 150px;
+}
+
+.restaurant-item-picture {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.restaurant-item-details {
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+.restaurant-item-name {
+  margin-top: 0;
+  font-weight: 800;
+  font-stretch: condensed;
+}
+
+.restaurant-item-description {
+  font-weight: 600;
+  color: theme.$dark-gray;
+}
+
+.restaurant-item-price {
+  margin-top: auto;
+  color: theme.$green;
+  font-weight: 700;
+}
+
+.restaurant-item-options {
+  grid-column: 4 / span 2;
+  grid-row: 1 / span 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: auto;
+}
+
+.add-item-button {
+  color: theme.$green;
+}
+
+.remove-item-button {
+  color: red;
+}
+

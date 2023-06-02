@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Restaurant} from "../../../model/restaurant.model";
+import {Restaurant} from "../../../../model/restaurant.model";
 import {Store} from "@ngrx/store";
 import {Subscription} from "rxjs";
-import {selectRestaurants} from "../../../store/restaurants.selectors";
+import {selectRestaurants} from "../../../../store/restaurants.selectors";
 
 @Component({
   selector: 'app-search-result-restaurants',

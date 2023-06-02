@@ -1,8 +1,14 @@
 @use "src/custom-theme" as theme;
 @import "src/app/restaurants/styles/card";
 
+
 :host {
   width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: theme.$black;
 }
 
 .restaurant-card {

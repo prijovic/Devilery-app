@@ -22,7 +22,6 @@ public class UpdateMenuItem {
         menuItem.setDescription(menuItemUpdateRequest.getDescription());
         menuItem.setPicture(menuItemUpdateRequest.getPicture());
         menuItem.setType(menuItemUpdateRequest.getType());
-        menuItem.setAllergens(menuItemUpdateRequest.getAllergens());
         menuItem.setAvailable(menuItemUpdateRequest.getAvailable());
 
         return MenuItemConverter.toMenuItemResponse(saveMenuItem.execute(menuItem));

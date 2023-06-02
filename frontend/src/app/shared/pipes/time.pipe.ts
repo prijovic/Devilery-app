@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimePipe implements PipeTransform {
 
-  transform(value: string): string {
+  transform(value: string | undefined | null): string {
     if (!value) {
       return '';
     }

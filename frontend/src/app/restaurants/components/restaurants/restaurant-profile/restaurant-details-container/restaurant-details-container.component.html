@@ -1,0 +1,4 @@
+<div class="restaurant-details-container">
+  <div class="restaurant-picture card-picture" [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}"></div>
+  <app-restaurant-details [restaurant]="restaurant"></app-restaurant-details>
+</div>

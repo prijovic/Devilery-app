@@ -24,7 +24,6 @@ public class CreateMenuItem {
                 .type(newMenuItemRequest.getType())
                 .name(newMenuItemRequest.getName())
                 .description(newMenuItemRequest.getDescription())
-                .allergens(newMenuItemRequest.getAllergens())
                 .picture(newMenuItemRequest.getPicture())
                 .price(newMenuItemRequest.getPrice())
                 .createdOn(LocalDateTime.now())

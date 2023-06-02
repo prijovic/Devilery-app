@@ -1,0 +1,26 @@
+<div class="restaurant-details-container">
+  <div class="restaurant-details">
+    <h1 class="restaurant-name">{{restaurant.name}}</h1>
+    <p class="restaurant-description">{{restaurant.description}}</p>
+  </div>
+  <div class="restaurant-ordering-details">
+    <div class="delivery-cost">
+      <mat-icon svgIcon="delivery"></mat-icon>
+      <div class="value">{{10.15 | number:'1.0-2'}} €</div>
+    </div>
+    <div class="min-order">
+      <span>Min Order:</span>
+      <div class="value">{{restaurant.minOrder | number:'1.0-2'}} €</div>
+    </div>
+    <div class="working-hours">
+      <mat-icon svgIcon="time"></mat-icon>
+      <div class="working-hours-value">{{restaurant.opensAt | timePipe }}-{{restaurant.closesAt | timePipe }}h</div>
+    </div>
+    <div class="rating">
+      <mat-icon class="rating-icon" [svgIcon]="restaurant.isClosed ? 'star-grey' : 'star'"></mat-icon>
+      <div class="rating-value">{{restaurant.rating}}</div>
+    </div>
+  </div>
+</div>
+
+

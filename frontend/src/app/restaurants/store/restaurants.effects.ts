@@ -31,6 +31,18 @@ export class RestaurantsEffects {
     );
   });
 
+  get_restaurant_items = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RestaurantsActions.getRestaurantMenuItems.type),
+      switchMap((action) => {
+        return this.httpService.getRestaurantItems(action.restaurantId)
+          .pipe(
+            map((restaurantItems) => RestaurantsActions.setRestaurantMenuItems({restaurantItems}))
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions<RestaurantsActions.RestaurantsActionsUnion>,
     private httpService: RestaurantsHttpService,

@@ -1,0 +1,16 @@
+<div class="restaurant-item-card card">
+  <div class="restaurant-item-picture card-picture" [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}"></div>
+  <div class="restaurant-item-details">
+    <h3 class="restaurant-item-name">{{restaurantItem.name}}</h3>
+    <p class="restaurant-item-description">{{restaurantItem.description}}</p>
+    <p class="restaurant-item-price">{{restaurantItem.price}} €</p>
+  </div>
+  <div class="restaurant-item-options" *ngIf="isUserLoggedIn">
+    <button class="add-item-button" mat-icon-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <button class="remove-item-button" mat-icon-button>
+      <mat-icon>remove</mat-icon>
+    </button>
+  </div>
+</div>
