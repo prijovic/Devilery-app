@@ -23,4 +23,5 @@ export class RecommendedRestaurantsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.storeSubscription = this.store.select(selectRestaurants).subscribe(restaurants => this.restaurants = restaurants);
   }
+
 }

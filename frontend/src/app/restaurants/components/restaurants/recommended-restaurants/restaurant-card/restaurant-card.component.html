@@ -1,5 +1,5 @@
-<a class="restaurant-card" [ngClass]="{'closed': restaurant.isClosed, 'new': restaurant.isNew}">
-  <div class="restaurant-picture" [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}">
+<a class="restaurant-card card" [ngClass]="{'closed': restaurant.isClosed, 'new': restaurant.isNew}">
+  <div class="restaurant-picture card-picture" [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}">
   </div>
   <div *ngIf="restaurant.isNew" class="new-restaurant-tag">NEW</div>
   <div class="preparation-details">
