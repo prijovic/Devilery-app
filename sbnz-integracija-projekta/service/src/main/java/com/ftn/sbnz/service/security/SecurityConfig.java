@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/password/request-change", "/password/change").permitAll()
 
-                .antMatchers("/restaurant/all", "/restaurant/general-recommendation").permitAll()
+                .antMatchers("/restaurant/all", "/restaurant/general-recommendation", "/restaurant/type/**").permitAll()
 
                 .antMatchers("/**").authenticated()
                 .anyRequest().authenticated();

@@ -4,13 +4,16 @@ import com.ftn.sbnz.model.models.Restaurant;
 import com.ftn.sbnz.model.models.MenuItem
 import com.ftn.sbnz.model.models.Recommendation;
 import com.ftn.sbnz.model.models.MenuItemType;
+import com.ftn.sbnz.model.models.SpecializedTypesOccurrences;
 import java.util.*;
+import java.lang.Integer;
 
 dialect  "mvel"
 
 global java.time.LocalDateTime now;
 
 rule "New Restaurant"
+    salience 1
     when
         $restaurant: Restaurant(createdOn >= now.minusMonths(1))
     then
@@ -38,10 +41,63 @@ end
 
 rule "Badly Rated Restaurant"
     when
-        $restaurant: Restaurant(getRating() < 2.5)
+        $restaurant: Restaurant(getRating() < 2.5, getRating() != 0)
     then
         modify($restaurant){
         setWellRated(false), setBadRated(true)}
+end
+
+// todo: popraviti pravila tako da se racuna za svaki restoran zasebno
+rule "Restaurant can be specialised for a type if it has at least 3 items of that type"
+    when
+        $restaurant: Restaurant($items: items)
+        $countMap: Map() from accumulate(
+            MenuItem($type: type) from $items,
+            init(Map countMap = new HashMap();),
+            action(countMap.put($type, countMap.getOrDefault($type, 0) + 1)),
+            reverse(countMap.put($type, countMap.get($type) - 1)),
+            result(countMap)
+        )
+        $filteredListOfMapEntries: List() from accumulate(
+            $entry: Map.Entry(getValue() >= 3) from $countMap.entrySet(),
+            collectList($entry)
+        )
+    then
+        insert(new SpecializedTypesOccurrences($restaurant, $filteredListOfMapEntries));
+end
+
+rule "Restaurant can be specialized for max 3 types with highest occurrences"
+    when
+        $occurrences: SpecializedTypesOccurrences($entries: occurrences)
+        $mapEntries: Set(size > 3) from accumulate(
+            $mapEntry: Map.Entry() from $entries,
+            collectSet($mapEntry)
+        )
+        $minOccurrence: Number() from accumulate(
+            Map.Entry($type: getKey(), $occurrence: getValue()) from $mapEntries,
+            min($occurrence)
+        )
+        $mapEntry: Map.Entry(getValue() == $minOccurrence) from $mapEntries
+    then
+        List occurrences = new ArrayList($occurrences.getOccurrences());
+        occurrences.remove($mapEntry);
+        modify($occurrences) {setOccurrences(occurrences)}
+end
+
+rule "Restaurant is specialised for 3 most occured items with at least 3 occurrences"
+    when
+        $restaurant: Restaurant()
+        SpecializedTypesOccurrences($restaurant == restaurant, $mapEntriesList: occurrences)
+        $mapEntries: Set(size <= 3) from accumulate(
+            $mapEntry: Map.Entry() from $mapEntriesList,
+            collectSet($mapEntry)
+        )
+        $specializedTypes: Set(size <= 3) from accumulate(
+            $entry: Map.Entry() from $mapEntries,
+            collectSet($entry.getKey())
+        )
+    then
+        modify($restaurant){setSpecializedTypes($specializedTypes)}
 end
 
 // todo: dodati uslov da je otvoren
@@ -54,9 +110,8 @@ rule "Base Restaurant Recommendation Rule"
             || isNew() == true
             && closed == false
         )
+        not(Recommendation($restaurant == restaurant))
     then
-        Recommendation recommendation = new Recommendation($restaurant, $restaurant.getRating());
-        insert(recommendation);
 end
 
 rule "Recommend Popular Not Badly Rated Restaurant" extends "Base Restaurant Recommendation Rule"
@@ -64,6 +119,8 @@ rule "Recommend Popular Not Badly Rated Restaurant" extends "Base Restaurant Rec
         not(MenuItemType())
         $newRestaurant: Restaurant($restaurantId == id)
     then
+        Recommendation recommendation = new Recommendation($restaurant, $restaurant.getRating());
+        insert(recommendation);
 end
 
 rule "Remove Worst Rated Restaurants From Recommendation"
@@ -75,53 +132,11 @@ rule "Remove Worst Rated Restaurants From Recommendation"
         delete($recommendation);
 end
 
-rule "Restaurant can be specialised for a type if it has at least 3 items of that type"
-    when
-        $restaurant: Restaurant($items: items)
-        $countMap: Map() from accumulate(
-            MenuItem($type: type) from $items,
-            init(Map countMap = new HashMap();),
-            action(countMap.put($type, countMap.getOrDefault($type, 0) + 1)),
-            reverse(countMap.put($type, countMap.get($type) - 1)),
-            result(countMap)
-        )
-        $filteredListOfMapEntries: List() from accumulate(
-            $entry: Map.Entry(getValue() > 3) from $countMap.entrySet(),
-            collectList($entry)
-        )
-    then
-        for (Object entry : $filteredListOfMapEntries) {
-            insert(entry);
-        }
-end
-
-rule "Restaurant can be specialized for max 3 types with highest occurances"
-    when
-        $mapEntries: Set(size > 3) from collect(Map.Entry())
-        $minOccurance: Number() from accumulate(
-            Map.Entry($type: getKey(), $occurrance: getValue()),
-            min($occurrance)
-        )
-        $mapEntry: Map.Entry(getValue() == $minOccurance) from $mapEntries
-    then
-        delete($mapEntry);
-end
-
-rule "Restaurant is specialised for 3 most occured items with at least 3 occurances"
-    when
-        $restaurant: Restaurant()
-        $mapEntries: Set(size <= 3) from collect(Map.Entry())
-        $specializedTypes: Set(size <= 3) from accumulate(
-            $entry: Map.Entry() from $mapEntries,
-            collectSet($entry.getKey())
-        )
-    then
-        modify($restaurant){setSpecializedTypes($specializedTypes)}
-end
-
 rule "Include Specialized and Popular Restaurants in Search Result" extends "Base Restaurant Recommendation Rule"
     when
         $type: MenuItemType()
         $specializedRestaurant: Restaurant($restaurantId == id, isSpecializedForType($type))
     then
+        Recommendation recommendation = new Recommendation($restaurant, $restaurant.getRating());
+        insert(recommendation);
 end

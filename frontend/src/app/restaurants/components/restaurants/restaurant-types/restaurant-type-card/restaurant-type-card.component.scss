@@ -1,6 +1,15 @@
 @use "src/custom-theme" as theme;
 @import "src/app/restaurants/styles/card";
 
+a {
+  text-decoration: none;
+  color: theme.$black;
+}
+
+a:is(:hover, :active, :visited, :focus) {
+  color: initial;
+}
+
 .restaurant-type-card {
   background-color: theme.$light-gray;
   display: grid;

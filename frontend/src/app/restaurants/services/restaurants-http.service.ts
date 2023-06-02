@@ -8,6 +8,7 @@ import {Restaurant} from "../model/restaurant.model";
 })
 export class RestaurantsHttpService {
   GET_RESTAURANTS = 'restaurant/general-recommendation';
+  GET_RESTAURANTS_BY_TYPE = 'restaurant/type/';
 
   constructor(
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig,
@@ -16,5 +17,9 @@ export class RestaurantsHttpService {
 
   getRestaurants() {
     return this.http.get<Restaurant[]>(this.config.apiEndpoint + this.GET_RESTAURANTS);
+  }
+
+  getRestaurantsByType(type: string) {
+    return this.http.get<Restaurant[]>(this.config.apiEndpoint + this.GET_RESTAURANTS_BY_TYPE + type);
   }
 }

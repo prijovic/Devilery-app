@@ -35,7 +35,6 @@ public class CreateOrder {
                 .status(OrderStatus.PENDING)
                 .deliveryDistance(newOrderRequest.getDeliveryDistance())
                 .discount(customer.getDiscount())
-                .tip(newOrderRequest.getTip())
                 .address(getAddressById.execute(newOrderRequest.getAddressId()))
                 .build();
 

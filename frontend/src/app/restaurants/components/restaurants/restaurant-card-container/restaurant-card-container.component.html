@@ -1,0 +1,7 @@
+<div class="restaurant-card-container" *ngIf="restaurants.length > 0">
+  <app-restaurant-card *ngFor="let restaurant of restaurants" [restaurant]="restaurant"></app-restaurant-card>
+</div>
+<div class="no-restaurants-container" *ngIf="restaurants.length === 0">
+  <h3>Unfortunately, there are no restaurants...</h3>
+  <a routerLink="/restaurants/all">Show all restaurants</a>
+</div>
