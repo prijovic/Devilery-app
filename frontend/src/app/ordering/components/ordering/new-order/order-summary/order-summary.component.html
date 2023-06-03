@@ -1,0 +1,22 @@
+<table>
+  <tbody>
+    <tr>
+      <td>Products</td>
+      <td>{{itemCost | async}} €</td>
+    </tr>
+    <tr>
+      <td>Delivery</td>
+      <td>{{deliveryCost}} €</td>
+    </tr>
+    <tr>
+      <td>Discount ({{discount}}%)</td>
+      <td>-{{discountValue}} €</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>TOTAL</td>
+      <td>{{totalPrice}} €</td>
+    </tr>
+  </tfoot>
+</table>

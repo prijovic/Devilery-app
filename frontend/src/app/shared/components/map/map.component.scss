@@ -1,0 +1,15 @@
+@use "src/custom-theme" as theme;
+
+#map {
+  height: 300px;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: theme.$small-window-max) {
+  #map {
+    max-width: 100%;
+  }
+}

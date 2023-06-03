@@ -7,7 +7,7 @@ import {map, Observable, take} from 'rxjs';
 import {Store} from "@ngrx/store";
 import {Actions, ofType} from "@ngrx/effects";
 import * as RestaurantsActions from "../store/restaurants.actions";
-import {RestaurantItem} from "../model/restaurant-item.model";
+import {RestaurantItem} from "../../shared/model/restaurant-item.model";
 
 @Injectable({
   providedIn: 'root'

@@ -30,8 +30,4 @@ export class PictureService {
       responseType: "blob"
     });
   }
-
-  getSelfProfilePicture() {
-    return this.http.get(this.config.apiEndpoint + "self/profile-picture", {responseType: "blob"})
-  }
 }

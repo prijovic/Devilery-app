@@ -1,13 +1,10 @@
 package com.ftn.sbnz.model.models;
-import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -29,5 +26,6 @@ public class Address extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     User user;
 }

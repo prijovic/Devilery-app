@@ -51,6 +51,12 @@ export class AppComponent implements OnInit {
         '../assets/icons/time.svg'
       )
     );
+    matIconRegistry.addSvgIcon(
+      'bag',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/paper-bag.svg'
+      )
+    );
   }
 
   ngOnInit(): void {

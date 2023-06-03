@@ -12,9 +12,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarItemComponent } from './components/navbar/navbar-item/navbar-item.component';
 import { UserProfileButtonComponent } from './components/navbar/user-profile-button/user-profile-button.component';
+import { OrderBagComponent } from './components/navbar/order-bag/order-bag.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent, NavbarItemComponent, UserProfileButtonComponent],
+  declarations: [AppComponent, NavbarComponent, FooterComponent, NavbarItemComponent, UserProfileButtonComponent, OrderBagComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

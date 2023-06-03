@@ -1,6 +1,6 @@
 import {createAction, props, union} from "@ngrx/store";
 import {Restaurant} from "../model/restaurant.model";
-import {RestaurantItem} from "../model/restaurant-item.model";
+import {RestaurantItem} from "../../shared/model/restaurant-item.model";
 
 export const getRestaurants = createAction(
   '[Restaurants] Get Restaurants'

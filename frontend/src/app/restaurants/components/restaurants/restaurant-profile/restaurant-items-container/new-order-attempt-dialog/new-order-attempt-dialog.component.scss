@@ -1,0 +1,60 @@
+@use "src/custom-theme" as theme;
+
+:host {
+  background-color: theme.$light-gray;
+  border-radius: 10px;
+  max-width: 600px;
+}
+
+.title {
+  font-family: Nunito, sans-serif;
+  color: theme.$black;
+  font-size: 20px;
+  font-weight: 800;
+  font-stretch: condensed;
+}
+
+.content {
+  color: theme.$dark-gray;
+  font-family: Nunito, sans-serif;
+  font-size: 18px;
+  word-break: break-word;
+  font-stretch: condensed;
+}
+
+.actions-container {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  font-size: 16px;
+  font-weight: bolder;
+  padding: 16px 0;
+  border-radius: 5px;
+  border: none;
+  max-width: 600px;
+  width: 100%;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.confirm-button {
+  background-color: theme.$green;
+  color: theme.$white;
+}
+
+.confirm-button:is(:hover, :active, :focus) {
+  background-color: theme.$dark-green;
+}
+
+.deny-button {
+  background-color: theme.$orange;
+  color: white;
+}
+
+.deny-button:is(:hover, :active, :focus) {
+  background-color: theme.$dark-orange;
+}

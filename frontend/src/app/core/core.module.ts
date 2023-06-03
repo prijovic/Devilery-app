@@ -13,6 +13,7 @@ import {CoreEffects} from "./store/core.effects";
 import {AdminDeliverersEffects} from "../admin-deliverers/store/admin-deliverers.effects";
 import {AdminRestaurantsEffects} from "../admin-restaurants/store/admin-restaurants.effects";
 import {RestaurantsEffects} from "../restaurants/store/restaurants.effects";
+import {OrderingEffects} from "../ordering/store/ordering.effects";
 
 @NgModule({
   providers: [
@@ -33,7 +34,13 @@ import {RestaurantsEffects} from "../restaurants/store/restaurants.effects";
   ],
   imports: [
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects, CoreEffects, RestaurantsEffects, AdminDeliverersEffects, AdminRestaurantsEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      CoreEffects,
+      RestaurantsEffects,
+      AdminDeliverersEffects,
+      AdminRestaurantsEffects,
+      OrderingEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
   exports: [StoreModule, EffectsModule, StoreDevtoolsModule],

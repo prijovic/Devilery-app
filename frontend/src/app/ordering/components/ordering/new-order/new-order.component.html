@@ -1,0 +1,14 @@
+<h2>Your order</h2>
+<div class="restaurant-item-card-container">
+  <app-restaurant-item-card *ngFor="let restaurantItem of restaurantItems | async" [isUserLoggedIn]="true" [restaurantItem]="restaurantItem"></app-restaurant-item-card>
+</div>
+<h2>Delivery details</h2>
+<div class="field-container">
+  <app-delivery-details (addressSelected)="onAddressSelected($event)"></app-delivery-details>
+</div>
+<h2>Payment method</h2>
+<div class="field-container">
+  <app-payment-methods></app-payment-methods>
+</div>
+<h2>Summary</h2>
+<app-order-summary [discount]="0" [distance]="0"></app-order-summary>

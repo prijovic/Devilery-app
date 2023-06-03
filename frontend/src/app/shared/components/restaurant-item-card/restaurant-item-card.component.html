@@ -6,10 +6,11 @@
     <p class="restaurant-item-price">{{restaurantItem.price}} €</p>
   </div>
   <div class="restaurant-item-options" *ngIf="isUserLoggedIn">
-    <button class="add-item-button" mat-icon-button>
+    <button class="add-item-button" mat-icon-button (click)="addItemToOrder()">
       <mat-icon>add</mat-icon>
     </button>
-    <button class="remove-item-button" mat-icon-button>
+    <div class="item-count" *ngIf="itemCountInBag">{{itemCountInBag}}</div>
+    <button class="remove-item-button" *ngIf="itemCountInBag" mat-icon-button (click)="removeItemFromOrder()">
       <mat-icon>remove</mat-icon>
     </button>
   </div>

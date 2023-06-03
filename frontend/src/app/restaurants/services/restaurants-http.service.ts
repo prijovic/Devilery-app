@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {APP_SERVICE_CONFIG, AppConfig} from "../../app-config/app-config";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Restaurant} from "../model/restaurant.model";
-import {RestaurantItem} from "../model/restaurant-item.model";
+import {RestaurantItem} from "../../shared/model/restaurant-item.model";
 
 @Injectable({
   providedIn: 'root'

@@ -1,0 +1,8 @@
+<h1 class="title" mat-dialog-title>New Order?</h1>
+<p class="content" mat-dialog-content>
+  This an item from different restaurant. Do you want to empty your bag and start a new order?
+</p>
+<div class="actions-container" mat-dialog-actions>
+  <button class="confirm-button" mat-dialog-close [mat-dialog-close]="'confirm'" (click)="newOrderAttemptAccepted()">Yes, create new order</button>
+  <button class="deny-button" mat-dialog-close cdkFocusInitial (click)="newOrderAttemptRejected()">No, continue order</button>
+</div>

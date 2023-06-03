@@ -12,7 +12,7 @@ export const selectRestaurants = createSelector(
 export const selectRestaurantItems = createSelector(
   selectRestaurantsFeature,
   (state: State) => state.restaurantItems
-)
+);
 
 export const selectRestaurantById = (id: string) => createSelector(
   selectRestaurants,

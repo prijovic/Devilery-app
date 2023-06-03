@@ -56,15 +56,18 @@ public class User extends BaseEntity {
     boolean blocked;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     List<Address> deliveryAddresses = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     List<Order> orders = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer")
     List<Review> reviews = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer")
     List<Report> reports = new ArrayList<>();
 

@@ -1,0 +1,23 @@
+@use "src/custom-theme" as theme;
+
+.restaurant-item-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 15px;
+  justify-items: center;
+}
+
+h2 {
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+.field-container {
+  max-width: 600px;
+}
+
+@media screen and (max-width: theme.$small-window-max) {
+  .field-container {
+    max-width: 100%;
+  }
+}

@@ -1,7 +1,7 @@
 import {Action, createReducer, on} from "@ngrx/store";
 import {Restaurant} from "../model/restaurant.model";
 import * as RestaurantsActions from './restaurants.actions';
-import {RestaurantItem} from "../model/restaurant-item.model";
+import {RestaurantItem} from "../../shared/model/restaurant-item.model";
 
 export interface State {
   restaurants: Restaurant[];

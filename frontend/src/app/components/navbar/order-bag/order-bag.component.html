@@ -1,0 +1,4 @@
+<a class="badge-button" mat-icon-button [routerLink]="itemsCount.getValue()? '/ordering/new':'/restaurants/all'">
+  <span class="badge" *ngIf="itemsCount.getValue()">{{itemsCount.getValue()}}</span>
+  <mat-icon svgIcon="bag"></mat-icon>
+</a>
