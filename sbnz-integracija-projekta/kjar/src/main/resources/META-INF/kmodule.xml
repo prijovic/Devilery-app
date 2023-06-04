@@ -5,8 +5,8 @@
     <kbase name="priceBase" packages="rules.price">
         <ksession name="priceKieSession"/>
     </kbase>
-    <kbase name="restaurantBase" packages="rules.restaurant">
-        <ksession name="restaurantKieSession"/>
+    <kbase name="restaurantBase" eventProcessingMode="stream" packages="rules.restaurant">
+        <ksession name="restaurantKieSession" clockType="realtime"/>
     </kbase>
     <kbase name="deliveryBase" packages="rules.delivery">
         <ksession name="deliveryKieSession"/>

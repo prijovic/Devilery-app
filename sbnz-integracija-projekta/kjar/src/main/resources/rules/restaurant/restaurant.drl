@@ -10,12 +10,10 @@ import java.lang.Integer;
 
 dialect  "mvel"
 
-global java.time.LocalDateTime now;
-
 rule "New Restaurant"
     salience 1
     when
-        $restaurant: Restaurant(createdOn >= now.minusMonths(1))
+        $restaurant: Restaurant() over window:time(30d)
     then
         modify($restaurant){setNew(true)}
 end

@@ -3,13 +3,16 @@ package com.ftn.sbnz.model.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import org.kie.api.definition.type.Role;
+import org.kie.api.definition.type.Timestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+@Role(Role.Type.EVENT)
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -18,9 +21,10 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "restaurant")
+@Timestamp("createdOn")
 public class Restaurant extends BaseEntity {
     @Column(name = "createdOn", nullable = false)
-    LocalDateTime createdOn;
+    Date createdOn;
 
     @Column(name = "name", nullable = false)
     String name;

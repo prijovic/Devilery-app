@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 @Service
@@ -38,11 +38,10 @@ public class RegisterNewRestaurant {
                 .build();
 
         Restaurant restaurant = Restaurant.builder()
-                .createdOn(LocalDateTime.now())
+                .createdOn(Calendar.getInstance().getTime())
                 .name(restaurantRegistrationRequest.getName())
                 .description(restaurantRegistrationRequest.getDescription())
                 .address(address)
-                .createdOn(LocalDateTime.now())
                 .minOrder(restaurantRegistrationRequest.getMinOrder() == null ? 0 : restaurantRegistrationRequest.getMinOrder())
                 .minPrep(restaurantRegistrationRequest.getMinPreparation())
                 .maxPrep(restaurantRegistrationRequest.getMaxPreparation())

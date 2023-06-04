@@ -6,8 +6,6 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 @RequiredArgsConstructor
 public class GetRestaurantKieSession {
@@ -16,7 +14,6 @@ public class GetRestaurantKieSession {
         KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
         KieSession kieSession = kContainer.newKieSession("restaurantKieSession");
-        kieSession.setGlobal("now", LocalDateTime.now());
 //        kieSession.addEventListener(new KieSessionCreatorHelper.CustomAgendaEventListener());
         return kieSession;
     }
