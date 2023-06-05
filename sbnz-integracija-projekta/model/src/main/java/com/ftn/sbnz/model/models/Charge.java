@@ -16,11 +16,24 @@ import javax.persistence.Table;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "charge")
 public class Charge extends BaseEntity {
-    @Column(name = "amount")
-    Double amount;
 
     String currency = "EUR";
 
-    @Column(name = "charged")
-    Boolean charged = false;
+    @Column(name = "product_cost")
+    Double productsCost;
+
+    @Column(name = "services_fee")
+    Double servicesFee;
+
+    @Column(name = "delivery_fee")
+    Double deliveryFee;
+
+    @Column(name = "user_discount")
+    Double userDiscount;
+
+    @Column(name = "discount_value")
+    Double discountValue;
+
+    @Column(name = "total")
+    Double total;
 }

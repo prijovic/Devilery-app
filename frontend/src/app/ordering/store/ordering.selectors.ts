@@ -17,3 +17,8 @@ export const selectNewOrderAttempt = createSelector(
   selectOrderingFeature,
   (state: State) => state.newOrderAttempt
 );
+
+export const selectOrderChargeEstimation = createSelector(
+  selectOrderingFeature,
+  (state: State) => state.orderChargeEstimation
+);

@@ -26,12 +26,8 @@ export class DeliveryDetailsComponent implements OnInit {
   onAddressSelectionChange(event: MatSelectChange): void {
     const selectedAddress = event.value;
     if (selectedAddress) {
-      const addresses: Address[] = this.addresses.getValue();
-      const address = addresses.find(a => a.name === selectedAddress);
-      if (address) {
-        this.mapComponent.addMarker(address.latitude, address.longitude);
-        this.addressSelected.emit(selectedAddress)
-      }
+      this.mapComponent.addMarker(selectedAddress.latitude, selectedAddress.longitude);
+      this.addressSelected.emit(selectedAddress)
     }
   }
 

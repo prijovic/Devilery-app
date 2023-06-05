@@ -2,24 +2,11 @@ package rules.price;
 
 import com.ftn.sbnz.model.models.MenuItem;
 import com.ftn.sbnz.model.models.Order;
+import com.ftn.sbnz.model.models.Charge;
 
 dialect  "mvel"
 
-declare DiscountApplication
-    order: Order
-    discount: Double
-end
-
-rule "Apply Discount"
-    salience 1
-    when
-        $discountApplication: DiscountApplication(discount != null, $order: order, $orderPrice: order.totalPrice, $discount: discount)
-    then
-        modify($order){setTotalPrice($orderPrice * (1 - $discount))}
-end
-
 rule "Calculate Order Price"
-    salience 2
     lock-on-active true
     when
         $order: Order($items: items, $distance: deliveryDistance, $discount: customer.getDiscount())
@@ -28,6 +15,12 @@ rule "Calculate Order Price"
             $totalItemPrice: sum($price)
         )
     then
-        modify($order){setTotalPrice($totalItemPrice + $distance * 1.1)}
-        insert(new DiscountApplication($order, $discount))
+        Charge charge = new Charge();
+        charge.setProductsCost($totalItemPrice);
+        charge.setServicesFee(0.5);
+        charge.setDeliveryFee($distance * 1.1);
+        charge.setUserDiscount($discount);
+        charge.setDiscountValue($totalItemPrice * $discount);
+        charge.setTotal($totalItemPrice - charge.getDiscountValue() + charge.getDeliveryFee() + charge.getServicesFee());
+        modify($order){setCharge(charge)}
 end

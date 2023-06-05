@@ -28,8 +28,8 @@ export class MapComponent implements AfterViewInit {
       iconAnchor: [16, 32] // Adjust the anchor point of the icon if needed
     });
 
-    this.markerGroup.clearLayers();
+    this.markerGroup?.clearLayers();
 
-    const marker = L.marker([lat, lng], { icon: markerIcon }).addTo(this.map);
+    // const marker = L.marker([lat, lng], { icon: markerIcon }).addTo(this.map);
   }
 }

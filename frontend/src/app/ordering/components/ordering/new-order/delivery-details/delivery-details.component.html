@@ -3,7 +3,7 @@
   <mat-label>Delivery address</mat-label>
   <mat-select [formControl]="addressControl" (selectionChange)="onAddressSelectionChange($event)">
     <div *ngIf="addresses.getValue()">
-      <mat-option *ngFor="let address of addresses | async" [value]="address.name">{{address.name}}</mat-option>
+      <mat-option *ngFor="let address of addresses | async" [value]="address">{{address.name}}</mat-option>
     </div>
   </mat-select>
   <button matSuffix mat-icon-button (click)="addNewAddress()">

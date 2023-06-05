@@ -1,4 +1,5 @@
 @use "src/custom-theme" as theme;
+@import "src/app/shared/styles/form";
 
 .restaurant-item-card-container {
   display: grid;
@@ -20,4 +21,8 @@ h2 {
   .field-container {
     max-width: 100%;
   }
+}
+
+button {
+  max-width: 600px;
 }

@@ -19,8 +19,6 @@ public class OrderResponse {
     UserResponse customer;
     OrderStatus status;
     Double deliveryDistance;
-    Double discount;
-    Double tip;
-    Double totalPrice;
+    ChargeResponse charge;
     Address address;
 }

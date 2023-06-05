@@ -11,4 +11,5 @@
   <app-payment-methods></app-payment-methods>
 </div>
 <h2>Summary</h2>
-<app-order-summary [discount]="0" [distance]="0"></app-order-summary>
+<app-order-summary (estimationChanged)="determineValidityOfOrder($event)"></app-order-summary>
+<button (click)="createOrder()" [disabled]="!isOrderValid.getValue()" [ngClass]="{'disabled': !isOrderValid.getValue()}">{{isOrderValid.getValue() ? 'Order!' : ('Min order is ' + minOrder.getValue()) + ' €'}}</button>

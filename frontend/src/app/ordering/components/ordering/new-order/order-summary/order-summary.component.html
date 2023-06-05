@@ -2,21 +2,25 @@
   <tbody>
     <tr>
       <td>Products</td>
-      <td>{{itemCost | async}} €</td>
+      <td>{{charge?.productsCost| number:'1.2-2'}} €</td>
     </tr>
     <tr>
-      <td>Delivery</td>
-      <td>{{deliveryCost}} €</td>
+      <td>Delivery fee</td>
+      <td>{{charge?.deliveryFee| number:'1.2-2'}} €</td>
     </tr>
     <tr>
-      <td>Discount ({{discount}}%)</td>
-      <td>-{{discountValue}} €</td>
+      <td>Services fee</td>
+      <td>{{charge?.servicesFee| number:'1.2-2'}} €</td>
+    </tr>
+    <tr *ngIf="charge?.userDiscount">
+      <td>Discount ({{charge ? charge.userDiscount * 100 : '' | number:'1.0-0'}}%)</td>
+      <td>-{{charge?.discountValue| number:'1.2-2'}} €</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <td>TOTAL</td>
-      <td>{{totalPrice}} €</td>
+      <td>{{charge?.total| number:'1.2-2'}} €</td>
     </tr>
   </tfoot>
 </table>

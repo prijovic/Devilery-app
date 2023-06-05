@@ -38,14 +38,8 @@ public class Order extends BaseEntity {
     @Column(name = "delivery_distance", nullable = false)
     Double deliveryDistance;
 
-    @Column(name = "discount")
-    Double discount;
-
     @Column(name = "rejection_reason")
     String rejectionReason;
-
-    @Column(name = "total_price")
-    Double totalPrice;
 
     @Column(name = "unsuccessful_delivery_reason")
     String unsuccessfulDeliveryReason;

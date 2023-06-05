@@ -1,8 +1,9 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {AddressService} from "../../../../../shared/services/address.service";
 import {Store} from "@ngrx/store";
-import {BehaviorSubject, map, Subscription} from "rxjs";
-import {selectItems} from "../../../../store/ordering.selectors";
+import {Subscription} from "rxjs";
+import {selectOrderChargeEstimation} from "../../../../store/ordering.selectors";
+import {Charge} from "../../../../../shared/model/charge.model";
 
 @Component({
   selector: 'app-order-summary',
@@ -10,36 +11,25 @@ import {selectItems} from "../../../../store/ordering.selectors";
   styleUrls: ['./order-summary.component.scss']
 })
 export class OrderSummaryComponent implements OnInit, OnDestroy {
+  @Output() estimationChanged = new EventEmitter<number>();
   storeSubscription!: Subscription;
-  @Input() distance = 0;
-  itemCost = new BehaviorSubject(0);
-  @Input() discount = 0;
+  charge: Charge | null = null;
 
   constructor(private addressService: AddressService, private store: Store) {}
 
-  get deliveryCost(): number {
-    return this.distance * 1.1;
-  }
-
-  get price(): number {
-    return (this.itemCost.getValue() + this.deliveryCost);
-  }
-
-  get totalPrice(): number {
-    return this.price - this.discountValue;
-  }
-
-  get discountValue(): number {
-    return this.price * this.discount;
-  }
-
   ngOnInit() {
-    this.storeSubscription = this.store.select(selectItems).pipe(
-      map(items => items.reduce((previousValue, currentValue) => {return {...currentValue, price:currentValue.price + previousValue.price}}))
-    ).subscribe(item => this.itemCost.next(item.price));
+    this.storeSubscription = this.store.select(selectOrderChargeEstimation).subscribe(
+      orderChargeEstimation => {
+        if (orderChargeEstimation) {
+          this.estimationChanged.emit(orderChargeEstimation.productsCost);
+        }
+        this.charge = orderChargeEstimation
+      }
+    );
   }
 
   ngOnDestroy() {
     this.storeSubscription.unsubscribe();
   }
+
 }

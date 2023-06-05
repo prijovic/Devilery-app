@@ -91,6 +91,16 @@ button:is(:hover, :active, :focus) {
   background-color: theme.$dark-green;
 }
 
+button.disabled {
+  background-color: theme.$light-gray;
+  color: theme.$dark-gray;
+  cursor: default;
+}
+
+button.disabled:is(:hover, :active, :focus) {
+  background-color: theme.$light-gray;
+}
+
 textarea {
   resize: none;
 }
