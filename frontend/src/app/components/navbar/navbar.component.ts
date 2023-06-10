@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { selectRole } from '../../auth/store/auth.selectors';
-import { logout } from '../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -23,9 +22,5 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.storeSubscription.unsubscribe();
-  }
-
-  logout() {
-    this.store.dispatch(logout());
   }
 }

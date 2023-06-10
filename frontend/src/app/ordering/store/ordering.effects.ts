@@ -41,7 +41,7 @@ export class OrderingEffects {
 
   createOrderSuccess = createEffect(() =>
       this.actions$.pipe(
-        ofType(OrderingActions.addItemToOrder.type),
+        ofType(OrderingActions.createOrderSuccess.type),
         tap(() => this.router.navigate(['/'])),
         map(() => notifySuccess({message: 'Wait for restaurant stuff to accept your order', title:'New Order'}))
       )

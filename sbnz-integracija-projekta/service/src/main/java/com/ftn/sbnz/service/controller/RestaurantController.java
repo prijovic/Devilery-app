@@ -27,11 +27,17 @@ public class RestaurantController {
     private final GetGenerallyRecommendedRestaurants getGenerallyRecommendedRestaurants;
     private final UpdateRestaurant updateRestaurant;
     private final GetRestaurantItems getRestaurantItems;
+    private final SearchRestaurants searchRestaurants;
 
     @PostMapping
     @HasAnyPermission({Permission.RESTAURANT_CRUD})
     public void create(@Valid @RequestBody RestaurantRegistrationRequest restaurantRegistrationRequest) {
         registerNewRestaurant.execute(restaurantRegistrationRequest);
+    }
+
+    @GetMapping("/search")
+    public List<RestaurantResponse> searchRestaurants(@RequestParam String query) {
+        return searchRestaurants.execute(query);
     }
 
     @GetMapping("/no-owner")

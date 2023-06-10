@@ -1,0 +1,10 @@
+@use "src/custom-theme" as theme;
+@import "src/app/styles/navbar-button";
+
+mat-icon {
+  color: theme.$black;
+}
+
+.white-icon {
+  color: theme.$white;
+}

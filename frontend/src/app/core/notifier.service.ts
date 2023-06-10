@@ -23,4 +23,8 @@ export class NotifierService {
   public notifySuccess(message: string, title?: string) {
     this.toast.success(message, title ? title : '');
   }
+
+  public notifyInfo(message: string, title?: string) {
+    this.toast.info(message, title ? title : '');
+  }
 }

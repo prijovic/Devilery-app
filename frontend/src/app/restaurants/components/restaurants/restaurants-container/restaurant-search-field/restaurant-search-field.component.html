@@ -1,0 +1,7 @@
+<mat-form-field appearance="outline" [formGroup]="formGroup">
+  <mat-label>Search Restaurants</mat-label>
+  <input matInput formControlName="search" placeholder="Eg. delicious pizza" (keyup.enter)="searchRestaurants()">
+  <button mat-icon-button matSuffix (click)="searchRestaurants()">
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>

@@ -1,7 +1,6 @@
 package com.ftn.sbnz.service.services.restaurant;
 
 import com.ftn.sbnz.model.models.Restaurant;
-import com.ftn.sbnz.service.services.kie.GetRestaurantKieSession;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
@@ -9,12 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RunRestaurantRules {
-    private final GetRestaurantKieSession getRestaurantKieSession;
+    private final KieSession kieSession;
 
     public void execute(Restaurant restaurant) {
-        KieSession kieSession = getRestaurantKieSession.execute();
         kieSession.insert(restaurant);
+        kieSession.getAgenda().getAgendaGroup("restaurant").setFocus();
         kieSession.fireAllRules();
-        kieSession.dispose();
+        kieSession.getAgenda().getAgendaGroup("restaurant").clear();
     }
 }

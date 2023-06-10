@@ -9,11 +9,13 @@ import { environment } from '../../environments/environment.prod';
 import { AuthEffects } from '../auth/store/auth.effects';
 import { AuthInterceptor } from '../auth/auth.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
-import {CoreEffects} from "./store/core.effects";
-import {AdminDeliverersEffects} from "../admin-deliverers/store/admin-deliverers.effects";
-import {AdminRestaurantsEffects} from "../admin-restaurants/store/admin-restaurants.effects";
-import {RestaurantsEffects} from "../restaurants/store/restaurants.effects";
-import {OrderingEffects} from "../ordering/store/ordering.effects";
+import { CoreEffects } from './store/core.effects';
+import { AdminDeliverersEffects } from '../admin-deliverers/store/admin-deliverers.effects';
+import { AdminRestaurantsEffects } from '../admin-restaurants/store/admin-restaurants.effects';
+import { RestaurantsEffects } from '../restaurants/store/restaurants.effects';
+import { OrderingEffects } from '../ordering/store/ordering.effects';
+import { RestaurantActiveOrdersEffects } from '../restaurant-active-orders/store/restaurant-active-orders.effects';
+import { DelivererActiveOrdersEffects } from '../deliverer-active-orders/store/deliverer-active-orders.effects';
 
 @NgModule({
   providers: [
@@ -40,7 +42,10 @@ import {OrderingEffects} from "../ordering/store/ordering.effects";
       RestaurantsEffects,
       AdminDeliverersEffects,
       AdminRestaurantsEffects,
-      OrderingEffects]),
+      OrderingEffects,
+      RestaurantActiveOrdersEffects,
+      DelivererActiveOrdersEffects,
+    ]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
   exports: [StoreModule, EffectsModule, StoreDevtoolsModule],

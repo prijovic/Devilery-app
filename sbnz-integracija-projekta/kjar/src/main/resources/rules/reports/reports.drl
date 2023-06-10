@@ -3,12 +3,11 @@ package rules.reports;
 import com.ftn.sbnz.model.models.Deliverer;
 import com.ftn.sbnz.model.models.Report;
 import com.ftn.sbnz.model.models.ReportStatus
-import org.drools.core.spi.KnowledgeHelper;
-import org.kie.api.event.rule.AfterMatchFiredEvent;
 
 dialect  "mvel"
 
 rule "Block Deliverer with 3 Approved Reports"
+    agenda-group "reports"
     when
         $deliverer: Deliverer()
         Number(intValue >= 3) from accumulate(

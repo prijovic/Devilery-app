@@ -1,0 +1,21 @@
+package rules.search;
+
+import com.ftn.sbnz.model.models.*;
+import java.util.*;
+
+dialect  "mvel"
+
+query isContainedIn(String x, String y)
+    Link(x, y;)
+    or
+    (Link(z, y;) and isContainedIn(x, z;))
+end
+
+rule "Search Restaurant By Word"
+    when
+        $word: String()
+        $uuid: UUID($id: toString())
+        isContainedIn($word, $id; )
+    then
+        insert(new SearchResult($uuid))
+end

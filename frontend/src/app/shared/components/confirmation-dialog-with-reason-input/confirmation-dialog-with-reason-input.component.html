@@ -1,0 +1,13 @@
+<h1 class="title" mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content class="content">
+  <span class="content-text">{{data.text}}</span>
+  <mat-form-field appearance="outline" [formGroup]="formGroup">
+    <mat-label>Reason</mat-label>
+    <textarea matInput placeholder="Enter your reason" formControlName="reason"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="actions">
+  <button class="cancel-button" (click)="dialogRef.close()">{{data.cancelButtonText}}</button>
+  <button class="confirm-button" (click)="confirm()"
+          cdkFocusInitial>{{data.confirmationButtonText}}</button>
+</div>

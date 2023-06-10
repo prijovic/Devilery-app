@@ -1,0 +1,5 @@
+<a class="badge-button" mat-icon-button
+   [routerLink]="role === 'DELIVERER' ? '/deliverer/active-orders/all' : '/restaurant/active-orders/all'">
+  <span class="badge" *ngIf="ordersCount.getValue()">{{ordersCount.getValue()}}</span>
+  <mat-icon svgIcon="bill"></mat-icon>
+</a>

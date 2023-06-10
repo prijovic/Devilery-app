@@ -1,0 +1,83 @@
+template header
+restaurantType
+restaurantTypeCondition
+levelAttributeName
+levelName
+upperLevelAttributeName
+setMethodName
+
+package rules.recommendation;
+
+import com.ftn.sbnz.model.models.*;
+import java.util.*;
+import java.lang.Integer;
+
+dialect  "mvel"
+
+rule "Restaurant is specialized for type"
+    agenda-group "restaurant"
+    when
+        $type: MenuItemType()
+        $specializedRestaurant: Restaurant(isSpecializedForType($type) == true, $id: id)
+    then
+end
+
+rule "Recommend 10 specialized opened well rated restaurants with the highest number of reviews" extends "Restaurant is specialized for type"
+    agenda-group "restaurant"
+    when
+        $recommendations: List(size < 10) from accumulate(
+            $recommendation: Recommendation(),
+            collectList($recommendation)
+        )
+        accumulate(
+            Restaurant(isWellRated() == true, isClosed() == false, $reviewsSize: reviewsSize(), $id == id),
+            $maximumReviews: max($reviewsSize)
+        )
+        $restaurant: Restaurant(isWellRated() == true, isClosed() == false, $rating: getRating(), $reviewsSize: reviewsSize(), $reviewsSize == $maximumReviews, $id == id)
+    then
+        insert(new Recommendation($restaurant, $rating));
+        delete($restaurant);
+end
+
+rule "First level fired specialized" extends "Restaurant is specialized for type"
+    agenda-group "restaurant"
+    when
+        exists(Restaurant($id == id))
+        not(Restaurant(isWellRated() == true, isClosed() == false, $id == id))
+        not(LevelsFired())
+    then
+        insert(new LevelsFired(true, false, false, false, false, false))
+end
+
+template "specialized-restaurant-recommendation-rules"
+
+rule "Recommend until 10 specialized @{restaurantType} restaurants with the highest number of reviews" extends "Restaurant is specialized for type"
+    agenda-group "restaurant"
+    when
+        $recommendations: List(size < 10) from accumulate(
+            $recommendation: Recommendation(),
+            collectList($recommendation)
+        )
+        accumulate(
+            Restaurant(@{restaurantTypeCondition}, $reviewsSize: reviewsSize(), $id == id),
+            $maximumReviews: max($reviewsSize)
+        )
+        $restaurant: Restaurant(@{restaurantTypeCondition}, $rating: getRating(), $reviewsSize: reviewsSize(), $reviewsSize == $maximumReviews, $id == id)
+        exists(LevelsFired())
+        not(LevelsFired(@{levelAttributeName}==true))
+    then
+        insert(new Recommendation($restaurant, $rating));
+        delete($restaurant);
+end
+
+rule "@{levelName} level fired specialized"
+    agenda-group "restaurant"
+    when
+        $type: MenuItemType()
+        not(Restaurant(@{restaurantTypeCondition}, isSpecializedForType($type) == true))
+        $levelsFired: LevelsFired(@{upperLevelAttributeName} == true)
+    then
+        modify($levelsFired){@{setMethodName}(true)}
+end
+
+end template

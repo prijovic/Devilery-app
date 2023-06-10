@@ -24,6 +24,16 @@ export const selectRole = createSelector(selectDecodedToken, (decodedToken) => {
   return null;
 });
 
+export const selectEmail = createSelector(
+  selectDecodedToken,
+  (decodedToken) => {
+    if (decodedToken) {
+      return decodedToken.sub;
+    }
+    return null;
+  }
+);
+
 export const selectTokenExpirationTime = createSelector(
   selectDecodedToken,
   (decodedToken) => {

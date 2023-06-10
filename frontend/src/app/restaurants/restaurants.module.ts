@@ -19,6 +19,8 @@ import { RestaurantDetailsContainerComponent } from './components/restaurants/re
 import { RestaurantDetailsComponent } from './components/restaurants/restaurant-profile/restaurant-details-container/restaurant-details/restaurant-details.component';
 import { RestaurantViewWithImageComponent } from './components/restaurants/restaurant-view-with-image/restaurant-view-with-image.component';
 import { RestaurantItemsContainerComponent } from './components/restaurants/restaurant-profile/restaurant-items-container/restaurant-items-container.component';
+import { RestaurantSearchFieldComponent } from './components/restaurants/restaurants-container/restaurant-search-field/restaurant-search-field.component';
+import { TextSearchResultRestaurantsComponent } from './components/restaurants/restaurants-container/text-search-result-restaurants/text-search-result-restaurants.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { RestaurantItemsContainerComponent } from './components/restaurants/rest
     RestaurantDetailsComponent,
     RestaurantViewWithImageComponent,
     RestaurantItemsContainerComponent,
+    RestaurantSearchFieldComponent,
+    TextSearchResultRestaurantsComponent,
   ],
   imports: [
     RestaurantsRoutingModule,

@@ -13,9 +13,23 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarItemComponent } from './components/navbar/navbar-item/navbar-item.component';
 import { UserProfileButtonComponent } from './components/navbar/user-profile-button/user-profile-button.component';
 import { OrderBagComponent } from './components/navbar/order-bag/order-bag.component';
+import { ActiveOrdersComponent } from './components/navbar/active-orders/active-orders.component';
+import { OrdersNotificationsComponent } from './components/navbar/orders-notifications/orders-notifications.component';
+import { RestaurantActiveOrdersModule } from './restaurant-active-orders/restaurant-active-orders.module';
+import { MenuButtonComponent } from './components/navbar/menu-button/menu-button.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent, NavbarItemComponent, UserProfileButtonComponent, OrderBagComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    FooterComponent,
+    NavbarItemComponent,
+    UserProfileButtonComponent,
+    OrderBagComponent,
+    ActiveOrdersComponent,
+    OrdersNotificationsComponent,
+    MenuButtonComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,6 +42,7 @@ import { OrderBagComponent } from './components/navbar/order-bag/order-bag.compo
     HttpClientModule,
     SharedModule,
     CoreModule,
+    RestaurantActiveOrdersModule,
     AppRoutingModule,
   ],
   providers: [],

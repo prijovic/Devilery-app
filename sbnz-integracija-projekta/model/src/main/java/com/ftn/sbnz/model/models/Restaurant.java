@@ -7,6 +7,7 @@ import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -82,6 +83,23 @@ public class Restaurant extends BaseEntity {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    List<Order> orders = new ArrayList<>();
+
+    public Integer reviewsSize() {
+        return reviews.size();
+    }
+
+    public boolean isClosed() {
+        if (closed) {
+            return true;
+        }
+        LocalTime currentTime = LocalTime.now();
+        LocalTime opensAt = workingHours.getOpensAt().toLocalTime();
+        LocalTime closesAt = workingHours.getClosesAt().toLocalTime();
+        return currentTime.isBefore(opensAt) || currentTime.isAfter(closesAt);
+    }
+
     public Double getRating() {
         return reviews.stream()
                 .filter(review -> review.getRestaurantRating() != null)
@@ -91,6 +109,9 @@ public class Restaurant extends BaseEntity {
     }
 
     public boolean isSpecializedForType(MenuItemType type) {
+        if (specializedTypes == null) {
+            return false;
+        }
         return specializedTypes.contains(type);
     }
 }

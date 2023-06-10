@@ -1,0 +1,20 @@
+@use "src/custom-theme" as theme;
+@import "src/app/shared/styles/dialog";
+
+:host {
+  display: block;
+  background-color: theme.$white;
+  border-radius: 10px;
+  padding: 10px
+}
+
+mat-form-field {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 32px;
+  margin-top: 16px;
+}
+
+textarea {
+  resize: none;
+}

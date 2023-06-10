@@ -13,6 +13,7 @@ dialect "mvel"
 template "discount-rules"
 
 rule "Calculate User Discount @{discount*100}%"
+    agenda-group "discount"
     when
         $user: User($orders: orders, $orders.size() >= @{min} && $orders.size() < @{max})
     then

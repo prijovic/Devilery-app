@@ -1,7 +1,6 @@
 package com.ftn.sbnz.service.services.user;
 
 import com.ftn.sbnz.model.models.User;
-import com.ftn.sbnz.service.services.kie.GetDiscountKieSession;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
@@ -9,14 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CalculateDiscount {
-    private final GetDiscountKieSession getDiscountKieSession;
+    private final KieSession kieSession;
 
     public void execute(User user) {
-        KieSession kieSession = getDiscountKieSession.execute();
-
         kieSession.insert(user);
+        kieSession.getAgenda().getAgendaGroup("discount").setFocus();
         kieSession.fireAllRules();
-
-        kieSession.dispose();
+        kieSession.getAgenda().getAgendaGroup("discount").clear();
     }
 }

@@ -22,3 +22,8 @@ export const selectOrderChargeEstimation = createSelector(
   selectOrderingFeature,
   (state: State) => state.orderChargeEstimation
 );
+
+export const selectSelectedAddress = createSelector(
+  selectOrderingFeature,
+  (state: State) => state.selectedAddress
+);

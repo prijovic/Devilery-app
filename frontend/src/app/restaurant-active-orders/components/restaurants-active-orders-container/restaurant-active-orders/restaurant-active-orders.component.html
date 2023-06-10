@@ -1,0 +1,25 @@
+<h1>Pending</h1>
+<app-order-card *ngFor="let order of pendingOrders" [order]="order"></app-order-card>
+<h3 *ngIf="pendingOrders.length === 0">There are no pending orders</h3>
+<div class="container" cdkDropListGroup>
+  <div class="list-container">
+    <h1>Preparing</h1>
+    <div
+      cdkDropList
+      [cdkDropListData]="acceptedOrders"
+      (cdkDropListDropped)="drop($event)">
+      <app-order-card *ngFor="let order of acceptedOrders" [order]="order" cdkDrag></app-order-card>
+    </div>
+    <h3 *ngIf="acceptedOrders.length === 0">There are no orders to prepare</h3>
+  </div>
+  <div class="list-container">
+    <h1>Done</h1>
+    <div
+      cdkDropList
+      [cdkDropListData]="doneOrders"
+      (cdkDropListDropped)="drop($event)">
+      <app-order-card *ngFor="let order of doneOrders" [order]="order" cdkDrag></app-order-card>
+    </div>
+    <h3 *ngIf="doneOrders.length === 0">There are no done orders</h3>
+  </div>
+</div>

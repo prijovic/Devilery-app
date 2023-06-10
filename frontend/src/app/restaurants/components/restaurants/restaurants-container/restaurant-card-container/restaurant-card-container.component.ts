@@ -1,10 +1,10 @@
-import {Component, Input} from '@angular/core';
-import {Restaurant} from "../../../../model/restaurant.model";
+import { Component, Input } from '@angular/core';
+import { Restaurant } from '../../../../../shared/model/restaurant.model';
 
 @Component({
   selector: 'app-restaurant-card-container',
   templateUrl: './restaurant-card-container.component.html',
-  styleUrls: ['./restaurant-card-container.component.scss']
+  styleUrls: ['./restaurant-card-container.component.scss'],
 })
 export class RestaurantCardContainerComponent {
   @Input() restaurants: Restaurant[] = [];

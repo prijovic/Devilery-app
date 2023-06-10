@@ -34,6 +34,12 @@ export class AppComponent implements OnInit {
       )
     );
     matIconRegistry.addSvgIcon(
+      'delivery-black',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/delivery-black.svg'
+      )
+    );
+    matIconRegistry.addSvgIcon(
       'star',
       this.domSanitizer.bypassSecurityTrustResourceUrl(
         '../assets/icons/star.svg'
@@ -55,6 +61,18 @@ export class AppComponent implements OnInit {
       'bag',
       this.domSanitizer.bypassSecurityTrustResourceUrl(
         '../assets/icons/paper-bag.svg'
+      )
+    );
+    matIconRegistry.addSvgIcon(
+      'bill',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/bill.svg'
+      )
+    );
+    matIconRegistry.addSvgIcon(
+      'order',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/order.svg'
       )
     );
   }

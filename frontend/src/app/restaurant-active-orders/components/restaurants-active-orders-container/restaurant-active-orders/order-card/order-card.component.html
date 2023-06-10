@@ -1,0 +1,17 @@
+<div class="order-card-container">
+  <h2 class="order-card-title">{{order.id}}</h2>
+  <div class="order-card-content">
+    <div class="order-item" *ngFor="let itemCount of itemCounts">
+      <div class="order-item-name">{{itemCount.item}}</div>
+      <div class="order-item-count">x {{itemCount.count}}</div>
+    </div>
+  </div>
+  <div class="order-card-actions" *ngIf="isPending">
+    <button class="accept-button" (click)="acceptOrder()">Accept</button>
+    <button class="reject-button" (click)="rejectOrder()">Reject</button>
+  </div>
+  <div class="order-card-footer">
+    <div>TOTAL:</div>
+    <div>{{order.charge.productsCost | number:'1.0-2'}} €</div>
+  </div>
+</div>

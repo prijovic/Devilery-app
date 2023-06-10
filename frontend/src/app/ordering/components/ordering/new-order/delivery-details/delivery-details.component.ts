@@ -16,7 +16,7 @@ export class DeliveryDetailsComponent implements OnInit {
   addressControl = new FormControl(null, Validators.required);
   addresses: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  constructor(private selfService: SelfService, private mapComponent: MapComponent) {
+  constructor(private selfService: SelfService) {
   }
 
   ngOnInit() {
@@ -26,7 +26,6 @@ export class DeliveryDetailsComponent implements OnInit {
   onAddressSelectionChange(event: MatSelectChange): void {
     const selectedAddress = event.value;
     if (selectedAddress) {
-      this.mapComponent.addMarker(selectedAddress.latitude, selectedAddress.longitude);
       this.addressSelected.emit(selectedAddress)
     }
   }

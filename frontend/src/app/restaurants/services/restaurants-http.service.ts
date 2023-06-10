@@ -1,16 +1,17 @@
-import {Inject, Injectable} from '@angular/core';
-import {APP_SERVICE_CONFIG, AppConfig} from "../../app-config/app-config";
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {Restaurant} from "../model/restaurant.model";
-import {RestaurantItem} from "../../shared/model/restaurant-item.model";
+import { Inject, Injectable } from '@angular/core';
+import { APP_SERVICE_CONFIG, AppConfig } from '../../app-config/app-config';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Restaurant } from '../../shared/model/restaurant.model';
+import { RestaurantItem } from '../../shared/model/restaurant-item.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RestaurantsHttpService {
   GET_RESTAURANTS = 'restaurant/general-recommendation';
   GET_RESTAURANTS_BY_TYPE = 'restaurant/type/';
-  GET_RESTAURANT_ITEMS = "restaurant/menu-items/"
+  GET_RESTAURANTS_BY_TEXT = 'restaurant/search';
+  GET_RESTAURANT_ITEMS = 'restaurant/menu-items/';
 
   constructor(
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig,
@@ -18,16 +19,32 @@ export class RestaurantsHttpService {
   ) {}
 
   getRestaurants() {
-    return this.http.get<Restaurant[]>(this.config.apiEndpoint + this.GET_RESTAURANTS);
+    return this.http.get<Restaurant[]>(
+      this.config.apiEndpoint + this.GET_RESTAURANTS
+    );
   }
 
   getRestaurantsByType(type: string) {
-    return this.http.get<Restaurant[]>(this.config.apiEndpoint + this.GET_RESTAURANTS_BY_TYPE + type);
+    return this.http.get<Restaurant[]>(
+      this.config.apiEndpoint + this.GET_RESTAURANTS_BY_TYPE + type
+    );
+  }
+
+  getRestaurantsByText(text: string) {
+    return this.http.get<Restaurant[]>(
+      this.config.apiEndpoint + this.GET_RESTAURANTS_BY_TEXT,
+      {
+        params: new HttpParams().append('query', text),
+      }
+    );
   }
 
   getRestaurantItems(id: string) {
-    return this.http.get<RestaurantItem[]>(this.config.apiEndpoint + this.GET_RESTAURANT_ITEMS, {
-      params: new HttpParams().append('id', id)
-    });
+    return this.http.get<RestaurantItem[]>(
+      this.config.apiEndpoint + this.GET_RESTAURANT_ITEMS,
+      {
+        params: new HttpParams().append('id', id),
+      }
+    );
   }
 }

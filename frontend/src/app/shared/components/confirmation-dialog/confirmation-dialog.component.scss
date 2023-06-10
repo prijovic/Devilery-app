@@ -1,0 +1,13 @@
+@use "src/custom-theme" as theme;
+@import "src/app/shared/styles/dialog";
+
+:host {
+  display: block;
+  background-color: theme.$white;
+  border-radius: 10px;
+  padding: 10px
+}
+
+.content {
+  margin-bottom: 32px;
+}

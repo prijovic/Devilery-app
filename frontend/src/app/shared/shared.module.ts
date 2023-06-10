@@ -7,14 +7,17 @@ import { FormWithImageInputComponent } from './components/form-with-image-input/
 import { PasswordFieldComponent } from './components/password-field/password-field.component';
 import { AddressFieldComponent } from './components/address-field/address-field.component';
 import { TimePipe } from './pipes/time.pipe';
-import {EnumerationPipe} from "./pipes/enumeration.pipe";
+import { EnumerationPipe } from './pipes/enumeration.pipe';
 import { ReverseEnumerationPipe } from './pipes/reverse-enumeration.pipe';
-import {RestaurantItemCardComponent} from "./components/restaurant-item-card/restaurant-item-card.component";
+import { RestaurantItemCardComponent } from './components/restaurant-item-card/restaurant-item-card.component';
 import { MapComponent } from './components/map/map.component';
 import { NewOrderAttemptDialogComponent } from '../restaurants/components/restaurants/restaurant-profile/restaurant-items-container/new-order-attempt-dialog/new-order-attempt-dialog.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogWithReasonInputComponent } from './components/confirmation-dialog-with-reason-input/confirmation-dialog-with-reason-input.component';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule],
+  imports: [CommonModule, ReactiveFormsModule, MaterialModule, LeafletModule],
   exports: [
     CommonModule,
     MaterialModule,
@@ -27,11 +30,22 @@ import { NewOrderAttemptDialogComponent } from '../restaurants/components/restau
     EnumerationPipe,
     ReverseEnumerationPipe,
     RestaurantItemCardComponent,
-    MapComponent
+    MapComponent,
   ],
-  providers: [
-    MapComponent
+  providers: [MapComponent],
+  declarations: [
+    ImageUploadFieldComponent,
+    FormWithImageInputComponent,
+    PasswordFieldComponent,
+    AddressFieldComponent,
+    TimePipe,
+    EnumerationPipe,
+    ReverseEnumerationPipe,
+    RestaurantItemCardComponent,
+    MapComponent,
+    NewOrderAttemptDialogComponent,
+    ConfirmationDialogComponent,
+    ConfirmationDialogWithReasonInputComponent,
   ],
-  declarations: [ImageUploadFieldComponent, FormWithImageInputComponent, PasswordFieldComponent, AddressFieldComponent, TimePipe, EnumerationPipe, ReverseEnumerationPipe, RestaurantItemCardComponent, MapComponent, NewOrderAttemptDialogComponent],
 })
 export class SharedModule {}

@@ -1,0 +1,36 @@
+@use 'src/custom-theme' as theme;
+
+a.nav-bar-link, .badge-button {
+  margin-left: 10px;
+}
+
+a.nav-bar-link:is(:hover, :active, :focus), .badge-button:is(:hover, :active, :focus) {
+  background-color: theme.$dark-green;
+
+  .badge {
+    background-color: theme.$dark-orange;
+    transform: scale(1.1);
+  }
+}
+
+.badge-button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: theme.$orange;
+  color: theme.$white;
+  font-size: 12px;
+  border-radius: 50%;
+  transition: transform ease-in-out 0.2s;
+}

@@ -1,35 +1,50 @@
-import {AfterViewInit, Component} from '@angular/core';
-import * as L from 'leaflet';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectSelectedAddress } from '../../../ordering/store/ordering.selectors';
+import { icon, latLng, LayerGroup, marker, tileLayer } from 'leaflet';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements AfterViewInit {
-  private map: any;
-  private markerGroup!: L.LayerGroup;
-  private readonly defaultZoom: number = 14;
+export class MapComponent implements OnInit, OnDestroy {
+  options = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '...',
+      }),
+    ],
+    zoom: 15,
+    center: latLng(45.267136, 19.833549),
+  };
+  markerGroup: LayerGroup[] = [];
+  storeSubscription!: Subscription;
 
-  ngAfterViewInit(): void {
-    this.initMap();
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.storeSubscription = this.store
+      .select(selectSelectedAddress)
+      .subscribe((address) => {
+        if (address) {
+          const layer = new LayerGroup();
+          const pin = marker([address.longitude, address.latitude], {
+            icon: icon({
+              iconUrl: 'assets/icons/pin.svg',
+              iconSize: [48, 48], // Adjust the size of the icon if needed
+              iconAnchor: [24, 48],
+            }),
+          });
+          pin.addTo(layer);
+          this.markerGroup = [layer];
+        }
+      });
   }
 
-  private initMap(): void {
-    this.map = L.map('map').setView([45.267136, 19.833549], this.defaultZoom);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
-    this.markerGroup = L.layerGroup().addTo(this.map);
-  }
-
-  addMarker(lat: number, lng: number): void {
-    const markerIcon = L.icon({
-      iconUrl: 'path-to-icon-file.png',
-      iconSize: [32, 32], // Adjust the size of the icon if needed
-      iconAnchor: [16, 32] // Adjust the anchor point of the icon if needed
-    });
-
-    this.markerGroup?.clearLayers();
-
-    // const marker = L.marker([lat, lng], { icon: markerIcon }).addTo(this.map);
+  ngOnDestroy() {
+    this.storeSubscription.unsubscribe();
   }
 }

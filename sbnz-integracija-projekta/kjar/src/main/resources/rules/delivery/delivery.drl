@@ -6,9 +6,11 @@ import com.ftn.sbnz.model.models.DelivererType;
 import com.ftn.sbnz.model.models.Order;
 import com.ftn.sbnz.model.models.OrderStatus;
 
+
 dialect  "mvel"
 
 rule "Well Rated Deliverer"
+    agenda-group "delivery"
     salience 4
     when
         $deliverer: Deliverer(getRating() >= 4)
@@ -17,6 +19,7 @@ rule "Well Rated Deliverer"
 end
 
 rule "Badly Rated Deliverer"
+    agenda-group "delivery"
     salience 4
     when
         $deliverer: Deliverer(getRating() < 2.5)
@@ -25,13 +28,15 @@ rule "Badly Rated Deliverer"
 end
 
 rule "Assign Order to Deliverer"
+    agenda-group "delivery"
     when
         $deliverer: Deliverer($delivererId: id, status != DelivererStatus.UNAVAILABLE)
-        $order: Order(status == OrderStatus.ACCEPTED, deliverer == null)
+        $order: Order(status == OrderStatus.DONE, deliverer == null)
     then
 end
 
 rule "Assign Order to not Bad Rated Deliverer" extends "Assign Order to Deliverer"
+    agenda-group "delivery"
     when
         Deliverer($delivererId == id, $notBadRatedDelivererId: id, isBadRated() == false)
     then
@@ -39,6 +44,7 @@ end
 
 rule "Assign Order to Available not Bad Rated Deliverer" extends "Assign Order to not Bad Rated Deliverer"
     salience 3
+    agenda-group "delivery"
     when
         Deliverer($delivererId == id, id == $notBadRatedDelivererId, status == DelivererStatus.AVAILABLE)
     then
@@ -47,6 +53,7 @@ end
 
 rule "Assign Order to Delivering not Bad Rated Deliverer" extends "Assign Order to not Bad Rated Deliverer"
     salience 2
+    agenda-group "delivery"
     when
         Deliverer($delivererId == id, id == $notBadRatedDelivererId, status == DelivererStatus.DELIVERING)
     then
@@ -55,6 +62,7 @@ end
 
 rule "Assign Order to Any Available Deliverer" extends "Assign Order to Deliverer"
     salience 1
+    agenda-group "delivery"
     when
         Deliverer($delivererId == id, status == DelivererStatus.AVAILABLE)
     then

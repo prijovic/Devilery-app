@@ -6,6 +6,7 @@ import com.ftn.sbnz.service.dto.response.AuthTokenResponse;
 import com.ftn.sbnz.service.services.auth.ActivateEmail;
 import com.ftn.sbnz.service.services.auth.LogInUser;
 import com.ftn.sbnz.service.services.auth.RegisterNewUser;
+import com.ftn.sbnz.service.services.user.UserExistsByEmail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
     private final LogInUser loginUser;
+    private final UserExistsByEmail userExistsByEmail;
     private final RegisterNewUser registerNewUser;
     private final ActivateEmail activateEmail;
 
@@ -25,6 +27,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthTokenResponse> login(@Valid @RequestBody final LoginRequest loginRequest) {
         return ResponseEntity.status(200).body(loginUser.execute(loginRequest.getEmail(), loginRequest.getPassword()));
+    }
+
+    @GetMapping("/user-exists/{email}")
+    public Boolean userExists(@PathVariable("email") String email) {
+        return userExistsByEmail.execute(email);
     }
 
     @PostMapping("/register")

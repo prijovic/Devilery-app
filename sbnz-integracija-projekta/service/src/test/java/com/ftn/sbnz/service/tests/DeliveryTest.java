@@ -90,7 +90,7 @@
 //        badRatedDeliverer.setStatus(DelivererStatus.AVAILABLE);
 //
 //        Order order = new Order();
-//        order.setStatus(OrderStatus.ACCEPTED);
+//        order.setStatus(OrderStatus.DONE);
 //
 //        KieSession kieSession = initKieSession();
 //        kieSession.insert(deliverer);
@@ -116,7 +116,7 @@
 //        badRatedDeliverer.setStatus(DelivererStatus.AVAILABLE);
 //
 //        Order order = new Order();
-//        order.setStatus(OrderStatus.ACCEPTED);
+//        order.setStatus(OrderStatus.DONE);
 //
 //        KieSession kieSession = initKieSession();
 //        kieSession.insert(deliverer);
@@ -142,7 +142,7 @@
 //        busyDeliverer.setStatus(DelivererStatus.DELIVERING);
 //
 //        Order order = new Order();
-//        order.setStatus(OrderStatus.ACCEPTED);
+//        order.setStatus(OrderStatus.DONE);
 //
 //        KieSession kieSession = initKieSession();
 //        kieSession.insert(deliverer);
@@ -194,6 +194,8 @@
 //        ExternalSpreadsheetCompiler converter = new ExternalSpreadsheetCompiler();
 //        String drl = readDRLFileAsString();
 //        drl += converter.compile(data, template, 3, 2);
+//
+//        KieSession kieSession = createKieSessionFromDRL(drl);
 //
 //        return createKieSessionFromDRL(drl);
 //    }

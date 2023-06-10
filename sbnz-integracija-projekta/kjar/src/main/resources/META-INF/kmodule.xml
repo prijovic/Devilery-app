@@ -1,17 +1,5 @@
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
-    <kbase name="discountBase" packages="rules.discount">
-        <ksession name="discountKieSession"/>
-    </kbase>
-    <kbase name="priceBase" packages="rules.price">
-        <ksession name="priceKieSession"/>
-    </kbase>
-    <kbase name="restaurantBase" eventProcessingMode="stream" packages="rules.restaurant">
-        <ksession name="restaurantKieSession" clockType="realtime"/>
-    </kbase>
-    <kbase name="deliveryBase" packages="rules.delivery">
-        <ksession name="deliveryKieSession"/>
-    </kbase>
-    <kbase name="reportsBase" eventProcessingMode="stream" packages="rules.reports">
-        <ksession name="reportsKieSession" clockType="realtime"/>
+    <kbase name="kBase" eventProcessingMode="stream" packages="rules">
+        <ksession default="true" name="kSession" clockType="realtime"/>
     </kbase>
 </kmodule>

@@ -3,9 +3,16 @@ type
 distance
 status
 
+package rules.delivery;
+
+import com.ftn.sbnz.model.models.*;
+
+dialect "mvel"
+
 template "busy-deliverer-rules"
 rule "@{type} Deliverer with order further than @{distance}km is @{status}"
     salience 4
+    agenda-group "delivery"
     when
         $deliverer: Deliverer(
             type == @{type},

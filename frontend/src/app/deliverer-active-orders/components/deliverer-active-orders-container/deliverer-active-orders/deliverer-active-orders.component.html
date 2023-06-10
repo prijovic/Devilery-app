@@ -1,0 +1,22 @@
+<div class="container" cdkDropListGroup>
+  <div class="list-container">
+    <h1>Pick me up!</h1>
+    <div
+      cdkDropList
+      [cdkDropListData]="pendingOrders"
+      (cdkDropListDropped)="drop($event)">
+      <app-order-card *ngFor="let order of pendingOrders" [order]="order" cdkDrag></app-order-card>
+    </div>
+    <h3 *ngIf="pendingOrders.length === 0">There are no orders to pick up</h3>
+  </div>
+  <div class="list-container">
+    <h1>Delivering</h1>
+    <div
+      cdkDropList
+      [cdkDropListData]="deliveringOrders"
+      (cdkDropListDropped)="drop($event)">
+      <app-order-card *ngFor="let order of deliveringOrders" [order]="order" cdkDrag></app-order-card>
+    </div>
+    <h3 *ngIf="deliveringOrders.length === 0">You are not delivering any orders</h3>
+  </div>
+</div>

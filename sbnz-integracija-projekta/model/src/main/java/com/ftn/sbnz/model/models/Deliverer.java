@@ -15,9 +15,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 @Table(name = "deliverer")
-@AllArgsConstructor
 public class Deliverer extends User {
 
     @Column(name = "status", nullable = false)
@@ -28,22 +28,26 @@ public class Deliverer extends User {
     @Enumerated(EnumType.STRING)
     DelivererType type;
 
+    @OneToMany(mappedBy = "deliverer")
     @JsonManagedReference
-    @OneToMany(mappedBy = "deliverer", fetch = FetchType.LAZY)
     List<Order> ordersDelivered = new ArrayList<>();
 
-    @OneToMany(mappedBy = "deliverer", cascade = CascadeType.ALL)
-    List<Review> reviews = new ArrayList<>();
+    @OneToMany(mappedBy = "deliverer")
+    @JsonManagedReference
+    List<Review> gotReviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "deliverer", cascade = CascadeType.ALL)
-    List<Report> reports = new ArrayList<>();
+    @OneToMany(mappedBy = "deliverer")
+    @JsonManagedReference
+    List<Report> gotReports = new ArrayList<>();
 
+    @Transient
     boolean isWellRated = false;
 
+    @Transient
     boolean isBadRated = false;
 
     public Double getRating() {
-        return reviews.stream()
+        return gotReviews.stream()
                 .filter(review -> review.getDelivererRating() != null)
                 .mapToDouble(Review::getDelivererRating)
                 .average()

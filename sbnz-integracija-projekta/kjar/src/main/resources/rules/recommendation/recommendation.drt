@@ -1,0 +1,78 @@
+template header
+restaurantType
+restaurantTypeCondition
+levelAttributeName
+levelName
+upperLevelAttributeName
+setMethodName
+
+package rules.recommendation;
+
+import com.ftn.sbnz.model.models.*;
+import java.util.*;
+import java.lang.Integer;
+
+dialect  "mvel"
+
+rule "Recommend 10 opened well rated restaurants with the highest number of reviews"
+    agenda-group "restaurant"
+    when
+        not(MenuItemType())
+        $recommendations: List(size < 10) from accumulate(
+            $recommendation: Recommendation(),
+            collectList($recommendation)
+        )
+        accumulate(
+            Restaurant(isWellRated() == true, isClosed() == false, $reviewsSize: reviewsSize()),
+            $maximumReviews: max($reviewsSize)
+        )
+        $restaurant: Restaurant(isWellRated() == true, isClosed() == false, $rating: getRating(), $reviewsSize: reviewsSize(), $reviewsSize == $maximumReviews)
+    then
+        insert(new Recommendation($restaurant, $rating));
+        delete($restaurant);
+end
+
+rule "First level fired"
+    agenda-group "restaurant"
+    when
+        not(MenuItemType())
+        exists(Restaurant())
+        not(Restaurant(isWellRated() == true, isClosed() == false))
+        not(LevelsFired())
+    then
+        insert(new LevelsFired(true, false, false, false, false, false))
+end
+
+template "restaurant-recommendation-rules"
+
+rule "Recommend until 10 @{restaurantType} restaurants with the highest number of reviews"
+    agenda-group "restaurant"
+    when
+        not(MenuItemType())
+        $recommendations: List(size < 10) from accumulate(
+            $recommendation: Recommendation(),
+            collectList($recommendation)
+        )
+        accumulate(
+            Restaurant(@{restaurantTypeCondition}, $reviewsSize: reviewsSize()),
+            $maximumReviews: max($reviewsSize)
+        )
+        $restaurant: Restaurant(@{restaurantTypeCondition}, $rating: getRating(), $reviewsSize: reviewsSize(), $reviewsSize == $maximumReviews)
+        exists(LevelsFired())
+        not(LevelsFired(@{levelAttributeName}==true))
+    then
+        insert(new Recommendation($restaurant, $rating));
+        delete($restaurant);
+end
+
+rule "@{levelName} level fired"
+    agenda-group "restaurant"
+    when
+        not(MenuItemType())
+        not(Restaurant(@{restaurantTypeCondition}))
+        $levelsFired: LevelsFired(@{upperLevelAttributeName} == true)
+    then
+        modify($levelsFired){@{setMethodName}(true)}
+end
+
+end template

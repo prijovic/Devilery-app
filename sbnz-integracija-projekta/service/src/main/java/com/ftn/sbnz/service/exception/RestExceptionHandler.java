@@ -58,7 +58,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             UserNotFoundException.class,
             RestaurantNotFoundException.class,
             MenuItemNotFoundException.class,
-            AddressNotFoundException.class
+            AddressNotFoundException.class,
+            OrderNotFound.class
     })
     protected ResponseEntity<?> handleNotFoundExceptions(CustomRuntimeException ex) {
         return buildResponseEntity(new ApiException(toLocale(ex.getKey()), HttpStatus.NOT_FOUND));

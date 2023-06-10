@@ -1,5 +1,6 @@
 package com.ftn.sbnz.model.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -29,10 +30,12 @@ public class Report extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonBackReference
     User customer;
 
     @ManyToOne
     @JoinColumn(name = "deliverer_id")
+    @JsonBackReference
     Deliverer deliverer;
 
     @Column(name = "comment", nullable = false)

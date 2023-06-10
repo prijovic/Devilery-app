@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { AuthHttpService } from '../services/auth-http.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as AuthActions from './auth.actions';
-import * as CoreActions from '../../core/store/core.actions';
 import { autoLoginFail, loginSuccess } from './auth.actions';
-import {catchError, map, of, switchMap, tap} from 'rxjs';
+import * as CoreActions from '../../core/store/core.actions';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import jwtDecode from 'jwt-decode';
+import { DecodedJwt } from '../model/decoded-jwt.model';
 
 @Injectable()
 export class AuthEffects {
@@ -45,7 +47,15 @@ export class AuthEffects {
         map((action) => {
           sessionStorage.setItem('token', action.token);
           this.authService.setLogoutTimer();
-          this.router.navigate(['/']);
+          const decodedToken = jwtDecode<DecodedJwt>(action.token);
+          if (
+            decodedToken.role === 'OWNER' ||
+            decodedToken.role === 'EMPLOYEE'
+          ) {
+            this.router.navigate(['/restaurant/active-orders/all']);
+          } else {
+            this.router.navigate(['/restaurants/all']);
+          }
         })
       );
     },
@@ -68,10 +78,25 @@ export class AuthEffects {
       ofType(AuthActions.signUp.type),
       switchMap((action) => {
         return this.httpService
-          .sendSignUpRequest(action.email, action.password, action.name, action.surname, action.phoneNumber, action.profilePicture)
+          .sendSignUpRequest(
+            action.email,
+            action.password,
+            action.name,
+            action.surname,
+            action.phoneNumber,
+            action.profilePicture
+          )
           .pipe(
-            map(() => CoreActions.notifySuccess({message: 'Your sign up request has been sent. Please go check your email.', title: 'Sign Up'})),
-            catchError(() => of(CoreActions.cleanUpFile({fileName: action.profilePicture})))
+            map(() =>
+              CoreActions.notifySuccess({
+                message:
+                  'Your sign up request has been sent. Please go check your email.',
+                title: 'Sign Up',
+              })
+            ),
+            catchError(() =>
+              of(CoreActions.cleanUpFile({ fileName: action.profilePicture }))
+            )
           );
       })
     );
@@ -88,15 +113,19 @@ export class AuthEffects {
     );
   });
 
-  confirm_email_success = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(AuthActions.confirmEmailSuccess.type),
-        tap(() => this.router.navigate(['/auth/login'])),
-        map(() => CoreActions.notifySuccess({message: 'You have successfully confirmed your email address. You may log in now.', title: 'Email Confirmation'})),
-      );
-    }
-  );
+  confirm_email_success = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.confirmEmailSuccess.type),
+      tap(() => this.router.navigate(['/auth/login'])),
+      map(() =>
+        CoreActions.notifySuccess({
+          message:
+            'You have successfully confirmed your email address. You may log in now.',
+          title: 'Email Confirmation',
+        })
+      )
+    );
+  });
 
   constructor(
     private router: Router,

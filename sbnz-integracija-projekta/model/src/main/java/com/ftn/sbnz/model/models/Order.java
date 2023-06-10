@@ -59,4 +59,8 @@ public class Order extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "address_id")
     Address address;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    Restaurant restaurant;
 }

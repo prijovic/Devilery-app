@@ -1,6 +1,7 @@
 import {createAction, props, union} from "@ngrx/store";
 import {RestaurantItem} from "../../shared/model/restaurant-item.model";
 import {Charge} from "../../shared/model/charge.model";
+import {Address} from "../../shared/model/address.model";
 
 export const addItemToOrder = createAction(
   '[Ordering] Add Item To Order',
@@ -28,6 +29,10 @@ export const setOrderChargeEstimation = createAction('[Ordering] Set Order Charg
   props<{orderChargeEstimation: Charge}>()
 );
 
+export const setSelectedAddress = createAction('[Ordering] Set Selected Address',
+  props<{selectedAddress: Address}>()
+);
+
 export const createOrder = createAction('[Ordering] Create Order',
   props<{addressId: string, deliveryDistance: number}>());
 
@@ -41,6 +46,7 @@ const all = union({
   removeItemFromOrder,
   getOrderChargeEstimation,
   setOrderChargeEstimation,
+  setSelectedAddress,
   createOrder,
   createOrderSuccess
 });

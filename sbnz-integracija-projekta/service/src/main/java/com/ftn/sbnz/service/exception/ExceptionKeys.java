@@ -24,7 +24,8 @@ public enum ExceptionKeys implements Translation {
     PASSWORD_MISMATCH("password_mismatch"),
     RESTAURANT_NOT_FOUND("restaurant_not_found"),
     MENU_ITEM_NOT_FOUND("menu_item_not_found"),
-    ADDRESS_NOT_FOUND("address_not_found");
+    ADDRESS_NOT_FOUND("address_not_found"),
+    ORDER_NOT_FOUND("order_not_found");
 
     private final String code;
 

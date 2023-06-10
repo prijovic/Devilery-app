@@ -5,7 +5,7 @@ import {Store} from "@ngrx/store";
 import {selectItems, selectRestaurantId} from "../../../store/ordering.selectors";
 import {Address} from "../../../../shared/model/address.model";
 import {AddressService} from "../../../../shared/services/address.service";
-import {createOrder, getOrderChargeEstimation} from "../../../store/ordering.actions";
+import {createOrder, getOrderChargeEstimation, setSelectedAddress} from "../../../store/ordering.actions";
 import {selectRestaurantById} from "../../../../restaurants/store/restaurants.selectors";
 
 @Component({
@@ -60,6 +60,7 @@ export class NewOrderComponent implements OnInit, OnDestroy {
     const itemIds = this.restaurantItems.getValue().map(item => item.id);
     const restaurantAddress = this.restaurantAddress.getValue();
     if (restaurantAddress && this.selectedAddress) {
+      this.store.dispatch(setSelectedAddress({selectedAddress: this.selectedAddress}));
       this.addressService.getAddressDistance(restaurantAddress.longitude, restaurantAddress.latitude, this.selectedAddress.longitude, this.selectedAddress.latitude).subscribe(distance => {
         this.deliveryDistance = distance;
         this.store.dispatch(getOrderChargeEstimation({itemIds, deliveryDistance: distance}))

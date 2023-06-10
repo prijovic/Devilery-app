@@ -2,19 +2,22 @@ import {Action, createReducer, on} from "@ngrx/store";
 import * as OrderingActions from './ordering.actions';
 import {RestaurantItem} from "../../shared/model/restaurant-item.model";
 import {Charge} from "../../shared/model/charge.model";
+import {Address} from "../../shared/model/address.model";
 
 export interface State {
   items: RestaurantItem[];
   restaurantId: string | null;
   newOrderAttempt: boolean;
   orderChargeEstimation: Charge | null;
+  selectedAddress: Address | null;
 }
 
 const initialState: State = {
   items: [],
   restaurantId: null,
   newOrderAttempt: false,
-  orderChargeEstimation: null
+  orderChargeEstimation: null,
+  selectedAddress: null
 };
 
 const orderingReducer = createReducer(
@@ -50,7 +53,8 @@ const orderingReducer = createReducer(
     ...state,
     orderChargeEstimation
   })),
-  on(OrderingActions.createOrderSuccess, (state) => ({...state, orderChargeEstimation: null, restaurantId: null, items: []}))
+  on(OrderingActions.createOrderSuccess, (state) => ({...state, orderChargeEstimation: null, restaurantId: null, items: []})),
+  on(OrderingActions.setSelectedAddress, (state, {selectedAddress}) => ({...state, selectedAddress}))
 );
 
 export function reducer(state: State | undefined, action: Action) {

@@ -1,0 +1,20 @@
+@use "src/custom-theme" as theme;
+@import "src/app/shared/styles/form";
+
+button {
+  background-color: theme.$white;
+  color: theme.$green;
+  border-radius: 100%;
+  margin: 0;
+  width: fit-content;
+  cursor: pointer;
+}
+
+button:is(:hover, :active, :focus) {
+  background-color: theme.$light-gray;
+  color: theme.$dark-green;
+}
+
+mat-form-field {
+  max-width: 600px;
+}
