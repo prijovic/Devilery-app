@@ -1,0 +1,32 @@
+@use 'src/custom-theme' as theme;
+
+.orders-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 15px;
+  justify-items: center;
+}
+
+.no-orders-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+a {
+  font-size: 22px;
+  font-weight: 700;
+  color: theme.$green;
+  text-decoration: none;
+}
+
+a:is(:hover, :active, :focus) {
+  color: theme.$dark-green;
+}

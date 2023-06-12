@@ -1,6 +1,6 @@
 @use "src/custom-theme" as theme;
-@import "src/app/restaurants/styles/restaurant_details";
-@import "src/app/restaurants/styles/restaurant_ordering_details";
+@import "../../../../../../../assets/styles/restaurant_details";
+@import "../../../../../../../assets/styles/restaurant_ordering_details";
 
 :host {
   height: fit-content;

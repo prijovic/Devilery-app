@@ -19,7 +19,7 @@ public class ChangeOrderStatus {
         Order order = getOrderById.execute(id);
         order.setStatus(status);
         order = saveOrder.execute(order);
-        orderStatusChanged.execute(order.getCustomer().getId(), order.getId());
+        orderStatusChanged.execute(order.getCustomer().getEmail(), order.getId(), status);
         return order;
     }
 }

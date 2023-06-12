@@ -1,0 +1,47 @@
+@import "../../../../../../assets/styles/emplyees-order-card";
+
+.order-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-picture {
+  width: 50px;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#delivery {
+  min-height: 60px;
+  margin: 10px auto;
+  justify-self: center;
+  align-self: center;
+}
+
+mat-icon {
+  width: 50px;
+  text-align: center;
+}
+
+.section-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.info {
+  margin-left: 50px;
+}
+
+.info-phone {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.order-card-actions {
+  margin-top: 15px;
+}

@@ -24,13 +24,13 @@ export class DelivererActiveOrdersEffects {
     this.actions$.pipe(
       ofType(DelivererActiveOrdersActions.getActiveDelivererOrders.type),
       switchMap(() =>
-        this.httpService
-          .getActiveOrders()
-          .pipe(
-            map((orders) =>
-              DelivererActiveOrdersActions.setActiveDelivererOrders({ orders })
-            )
+        this.httpService.getActiveOrders().pipe(
+          map((orders) =>
+            DelivererActiveOrdersActions.setActiveDelivererOrders({
+              orders,
+            })
           )
+        )
       )
     )
   );

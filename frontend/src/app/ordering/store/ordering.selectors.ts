@@ -1,5 +1,5 @@
-import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {State} from "./ordering.reducer";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { State } from './ordering.reducer';
 
 export const selectOrderingFeature = createFeatureSelector<State>('ordering');
 
@@ -27,3 +27,14 @@ export const selectSelectedAddress = createSelector(
   selectOrderingFeature,
   (state: State) => state.selectedAddress
 );
+
+export const selectActiveOrders = createSelector(
+  selectOrderingFeature,
+  (state: State) => state.orders
+);
+
+export const selectActiveOrderById = (id: string) =>
+  createSelector(
+    selectOrderingFeature,
+    (state: State) => state.orders.filter((order) => order.id === id)[0]
+  );

@@ -6,9 +6,9 @@ import { DelivererActiveOrdersContainerComponent } from './components/deliverer-
 import { DelivererActiveOrdersComponent } from './components/deliverer-active-orders-container/deliverer-active-orders/deliverer-active-orders.component';
 import { OrderCardComponent } from './components/deliverer-active-orders-container/deliverer-active-orders/order-card/order-card.component';
 import { StoreModule } from '@ngrx/store';
-import * as fromRestaurantActiveOrders from '../restaurant-active-orders/store/restaurant-active-orders.reducer';
 import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { SharedModule } from '../shared/shared.module';
+import * as fromDelivererActiveOrders from './store/deliverer-active-orders.reducer';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     StoreModule.forFeature(
       'deliverer-active-orders',
-      fromRestaurantActiveOrders.reducer
+      fromDelivererActiveOrders.reducer
     ),
     DelivererActiveOrdersRoutingModule,
     CdkDrag,

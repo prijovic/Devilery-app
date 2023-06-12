@@ -1,0 +1,16 @@
+<h1 class="title" mat-dialog-title>User Report</h1>
+<div mat-dialog-content class="content" [formGroup]="formGroup">
+  <div class="profile-picture"
+       [ngStyle]="{'background-image': !delivererImage ? avatarImageUrl : getBackgroundImageUrl(delivererImage)}"></div>
+  <h3>{{deliverer.name + " " + deliverer.surname | titlecase}}</h3>
+  <mat-form-field appearance="outline">
+    <mat-label>Comment reason</mat-label>
+    <textarea formControlName="comment" matInput placeholder="Explain to us what happened"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="actions">
+  <button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+  <button class="confirm-button" (click)="confirm()"
+          cdkFocusInitial>Submit report
+  </button>
+</div>

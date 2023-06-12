@@ -59,7 +59,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             RestaurantNotFoundException.class,
             MenuItemNotFoundException.class,
             AddressNotFoundException.class,
-            OrderNotFound.class
+            OrderNotFound.class,
+            ReportNotFoundException.class
     })
     protected ResponseEntity<?> handleNotFoundExceptions(CustomRuntimeException ex) {
         return buildResponseEntity(new ApiException(toLocale(ex.getKey()), HttpStatus.NOT_FOUND));
@@ -97,6 +98,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Throwable.class)
     protected ResponseEntity<?> defaultExceptionHandler(Throwable t) {
+        logger.error(t.getMessage());
         logger.error("Unhandled exception: " + Strings.join(Arrays.asList(t.getStackTrace()), '\n'));
         return buildResponseEntity(new ApiException("Unhandled exception", HttpStatus.INTERNAL_SERVER_ERROR));
     }

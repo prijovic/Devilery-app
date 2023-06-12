@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 public enum Permission implements GrantedAuthority {
     USER_CRUD,
     RESTAURANT_CRUD,
+    REPORT_MANAGEMENT,
 
     CREATE_EMPLOYEE,
     ORDER_STATUS_UPDATE,

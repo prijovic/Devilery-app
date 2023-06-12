@@ -1,5 +1,5 @@
 @use "src/custom-theme" as theme;
-@import "src/app/shared/styles/form";
+@import "../../../../../assets/styles/form";
 
 .restaurant-item-card-container {
   display: grid;

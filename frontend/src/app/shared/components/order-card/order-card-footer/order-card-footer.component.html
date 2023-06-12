@@ -1,0 +1,14 @@
+<div class="restaurant-ordering-details">
+  <div class="delivery-cost">
+    <mat-icon svgIcon="delivery"></mat-icon>
+    <div class="value">{{deliveryCost | number:'1.0-2'}} €</div>
+  </div>
+  <div class="created-on">
+    <mat-icon svgIcon="time"></mat-icon>
+    <div class="value">{{createdOn | date:'d.M.yy. h:m'}}</div>
+  </div>
+  <div class="total-cost">
+    <span>TOTAL:</span>
+    <div class="value">{{totalCost | number:'1.0-2'}} €</div>
+  </div>
+</div>

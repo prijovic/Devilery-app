@@ -1,0 +1,25 @@
+<h1 class="title" mat-dialog-title>User Report</h1>
+<div mat-dialog-content class="content">
+  <div class="part-container">
+    <div class="profile-picture"
+         [ngStyle]="{'background-image': !customerImage ? avatarImageUrl : getBackgroundImageUrl(customerImage)}"></div>
+    <h3 *ngIf="data.report">{{data.report.customer.name + " " + data.report.customer.surname | titlecase}}</h3>
+  </div>
+  <div class="part-container">
+    <div class="message-container">
+      <div class="message-bubble">
+        <span>Comment:</span>
+        <p class="message-text">{{data.report.comment}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="part-container">
+    <div class="profile-picture"
+         [ngStyle]="{'background-image': !delivererImage ? avatarImageUrl : getBackgroundImageUrl(delivererImage)}"></div>
+    <h3 *ngIf="data.report">{{data.report.deliverer.name + " " + data.report.deliverer.surname | titlecase}}</h3>
+  </div>
+</div>
+<div mat-dialog-actions class="actions">
+  <button class="cancel-button" (click)="rejectReport()">Reject</button>
+  <button class="confirm-button" (click)="acceptReport()" cdkFocusInitial>Accept</button>
+</div>

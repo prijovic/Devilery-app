@@ -27,6 +27,7 @@
     "@ngrx/store": "^15.4.0",
     "@ngrx/store-devtools": "^15.4.0",
     "@types/socket.io": "^3.0.2",
+    "angular-star-rating": "^6.0.0",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.4",
     "net": "^1.0.2",

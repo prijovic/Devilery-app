@@ -49,6 +49,11 @@ export const orderStatusChanged = createAction(
   props<{ id: string; status: string }>()
 );
 
+export const removeOrder = createAction(
+  '[Restaurant Active Orders] Remove Order',
+  props<{ id: string }>()
+);
+
 const all = union({
   getRestaurantId,
   setRestaurantId,
@@ -60,6 +65,7 @@ const all = union({
   rejectOrder,
   finishOrder,
   orderStatusChanged,
+  removeOrder,
 });
 
 export type RestaurantActiveOrdersActionsUnion = typeof all;

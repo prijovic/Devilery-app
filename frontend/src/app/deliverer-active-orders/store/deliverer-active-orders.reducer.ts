@@ -18,10 +18,7 @@ const delivererActiveOrdersReducer = createReducer(
   })),
   on(
     DelivererActiveOrdersActions.setActiveDelivererOrders,
-    (state, { orders }) => ({
-      ...state,
-      orders,
-    })
+    (state, { orders }) => ({ ...state, orders: orders })
   ),
   on(
     DelivererActiveOrdersActions.orderStatusChanged,

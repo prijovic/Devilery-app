@@ -22,6 +22,8 @@ import java.util.UUID;
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
+    private final GetUsersOrderHistory getUsersOrderHistory;
+    private final GetUsersActiveOrders getUsersActiveOrders;
     private final GetRestaurantActiveOrders getRestaurantActiveOrders;
     private final GetDelivererActiveOrders getDelivererActiveOrders;
     private final GetOrderPriceEstimation getOrderPriceEstimation;
@@ -30,6 +32,7 @@ public class OrderController {
     private final CreateOrder createOrder;
     private final ChangeOrderStatus changeOrderStatus;
     private final RejectOrder rejectOrder;
+    private final MarkOrderBeingDelivered markOrderBeingDelivered;
     private final MarkDoneOrder markDoneOrder;
     private final MarkUnsuccessfulOrder markUnsuccessfulOrder;
     private final GetRestaurantIdForSubscription getRestaurantIdForSubscription;
@@ -37,6 +40,16 @@ public class OrderController {
     @GetMapping("/price")
     public ChargeResponse getPriceForOrder(@Valid GetPriceEstimationRequest getPriceEstimationRequest) {
         return getOrderPriceEstimation.execute(getPriceEstimationRequest);
+    }
+
+    @GetMapping("/history")
+    public List<OrderResponse> getOrderHistory() {
+        return getUsersOrderHistory.execute();
+    }
+
+    @GetMapping("/active")
+    public List<OrderResponse> getActiveOrders() {
+        return getUsersActiveOrders.execute();
     }
 
     @GetMapping("/restaurant-id")
@@ -95,7 +108,7 @@ public class OrderController {
     @PutMapping("/{id}/delivering")
     @HasAnyPermission({Permission.DELIVERY_ORDER_STATUS_UPDATE})
     public void markBeingDelivered(@NotBlank @PathVariable UUID id) {
-        changeOrderStatus.execute(id, OrderStatus.BEING_DELIVERED);
+        markOrderBeingDelivered.execute(id);
     }
 
     @PutMapping("/{id}/success")

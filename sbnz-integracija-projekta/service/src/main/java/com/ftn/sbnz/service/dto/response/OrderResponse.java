@@ -5,6 +5,7 @@ import com.ftn.sbnz.model.models.OrderStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -21,4 +22,9 @@ public class OrderResponse {
     Double deliveryDistance;
     ChargeResponse charge;
     Address address;
+    RestaurantResponse restaurant;
+    List<MenuItemResponse> items;
+    String rejectionReason;
+    String unsuccessfulDeliveryReason;
+    Boolean isReportSubmitted;
 }

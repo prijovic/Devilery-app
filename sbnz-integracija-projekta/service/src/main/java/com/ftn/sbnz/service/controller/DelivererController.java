@@ -21,7 +21,8 @@ public class DelivererController {
 
     @GetMapping("/all")
     public List<Deliverer> test() {
-        return delivererRepository.findAll();
+        List<Deliverer> deliverers = delivererRepository.findAll();
+        return deliverers;
     }
 
     @PostMapping

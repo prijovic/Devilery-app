@@ -1,0 +1,49 @@
+@use "src/custom-theme" as theme;
+@import "src/assets/styles/dialog";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: theme.$white;
+  border-radius: 10px;
+  padding: 10px
+}
+
+star-rating {
+  height: 32px;
+}
+
+mat-form-field {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 32px;
+}
+
+textarea {
+  resize: none;
+}
+
+.title {
+  text-align: center;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: theme.$black;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.profile-picture {
+  aspect-ratio: 1/1;
+  height: 100px;
+  border-radius: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-left: auto;
+  margin-right: auto;
+}

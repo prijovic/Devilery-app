@@ -16,6 +16,8 @@ import { RestaurantsEffects } from '../restaurants/store/restaurants.effects';
 import { OrderingEffects } from '../ordering/store/ordering.effects';
 import { RestaurantActiveOrdersEffects } from '../restaurant-active-orders/store/restaurant-active-orders.effects';
 import { DelivererActiveOrdersEffects } from '../deliverer-active-orders/store/deliverer-active-orders.effects';
+import { OrderHistoryEffects } from '../order-history/store/order-history.effects';
+import { AdminReportsEffects } from '../admin-reports/store/admin-reports.effects';
 
 @NgModule({
   providers: [
@@ -45,6 +47,8 @@ import { DelivererActiveOrdersEffects } from '../deliverer-active-orders/store/d
       OrderingEffects,
       RestaurantActiveOrdersEffects,
       DelivererActiveOrdersEffects,
+      OrderHistoryEffects,
+      AdminReportsEffects,
     ]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],

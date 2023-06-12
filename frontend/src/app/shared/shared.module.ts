@@ -15,9 +15,20 @@ import { NewOrderAttemptDialogComponent } from '../restaurants/components/restau
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogWithReasonInputComponent } from './components/confirmation-dialog-with-reason-input/confirmation-dialog-with-reason-input.component';
+import { OrderCardComponent } from './components/order-card/order-card.component';
+import { OrderCardContentComponent } from './components/order-card/order-card-content/order-card-content.component';
+import { OrderCardFooterComponent } from './components/order-card/order-card-footer/order-card-footer.component';
+import { ReportDialogComponent } from './components/order-card/report-dialog/report-dialog.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule, LeafletModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    LeafletModule,
+    StarRatingModule,
+  ],
   exports: [
     CommonModule,
     MaterialModule,
@@ -31,6 +42,7 @@ import { ConfirmationDialogWithReasonInputComponent } from './components/confirm
     ReverseEnumerationPipe,
     RestaurantItemCardComponent,
     MapComponent,
+    OrderCardComponent,
   ],
   providers: [MapComponent],
   declarations: [
@@ -46,6 +58,10 @@ import { ConfirmationDialogWithReasonInputComponent } from './components/confirm
     NewOrderAttemptDialogComponent,
     ConfirmationDialogComponent,
     ConfirmationDialogWithReasonInputComponent,
+    OrderCardComponent,
+    OrderCardContentComponent,
+    OrderCardFooterComponent,
+    ReportDialogComponent,
   ],
 })
 export class SharedModule {}

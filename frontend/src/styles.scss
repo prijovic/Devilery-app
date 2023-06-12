@@ -1,4 +1,11 @@
-@use 'custom-theme' as customTheme;
+@use 'custom-theme' as theme;
+
+$color-negative-rating: theme.$orange !default;
+$color-ok-rating: theme.$orange !default;
+$color-positive-rating: theme.$orange !default;
+$color-default-rating: theme.$orange !default;
+
+@import 'node_modules/css-star-rating/scss/star-rating';
 
 html, body {
   height: 100%;
@@ -6,6 +13,6 @@ html, body {
 
 body {
   margin: 0;
-  background: customTheme.$white;
+  background: theme.$white;
   font-family: Nunito, sans-serif;
 }

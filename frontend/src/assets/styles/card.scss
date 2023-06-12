@@ -1,0 +1,21 @@
+@use 'src/custom-theme' as theme;
+
+.card {
+  background-color: theme.$light-gray;
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translate(0, -5px);
+}
+
+.card-picture {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}

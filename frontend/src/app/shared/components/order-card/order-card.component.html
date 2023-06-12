@@ -1,0 +1,24 @@
+<a class="restaurant-card card">
+  <div class="restaurant-picture card-picture" [ngStyle]="{'background-image': !image ? '' : getBackgroundImageUrl()}">
+  </div>
+  <button (click)="submitReport()" mat-icon-button *ngIf="isInHistory && !order.isReportSubmitted" class="report">
+    <mat-icon>report</mat-icon>
+  </button>
+  <div class="preparation-details history"
+       [ngClass]="{'success': order.status === 'DELIVERED', 'fail': order.status === 'UNSUCCESSFUL_DELIVERY' || order.status === 'REJECTED'}">
+    <div class="preparation-time" *ngIf="!isInHistory">
+      <div class="min-preparation-time">{{minWaitingTime | number:'1.0-0'}}</div>
+      <span class="preparation-time-separator">-</span>
+      <div class="max-preparation-time">{{maxWaitingTime | number:'1.0-0'}}</div>
+    </div>
+    <div class="preparation-time-units" *ngIf="!isInHistory">min</div>
+    <div *ngIf="isInHistory">{{order.status | enumeration}}</div>
+  </div>
+  <app-order-card-content
+    [itemsCount]="order.items.length"
+    [name]="order.restaurant.name"></app-order-card-content>
+  <app-order-card-footer
+    [createdOn]="createdOn"
+    [totalCost]="order.charge.total" [deliveryCost]="order.charge.deliveryFee"
+  ></app-order-card-footer>
+</a>

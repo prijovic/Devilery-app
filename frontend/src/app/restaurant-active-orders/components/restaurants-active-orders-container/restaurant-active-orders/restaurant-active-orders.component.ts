@@ -6,7 +6,12 @@ import { RestaurantOrder } from '../../../model/restaurant-order.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
-import { finishOrder } from '../../../store/restaurant-active-orders.actions';
+import {
+  finishOrder,
+  removeOrder,
+} from '../../../store/restaurant-active-orders.actions';
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
 
 @Component({
   selector: 'app-restaurant-active-orders',
@@ -15,6 +20,7 @@ import { finishOrder } from '../../../store/restaurant-active-orders.actions';
 })
 export class RestaurantActiveOrdersComponent implements OnInit, OnDestroy {
   private storeSubscription!: Subscription;
+  private stompClient: any;
   pendingOrders: RestaurantOrder[] = [];
   acceptedOrders: RestaurantOrder[] = [];
   doneOrders: RestaurantOrder[] = [];
@@ -33,10 +39,30 @@ export class RestaurantActiveOrdersComponent implements OnInit, OnDestroy {
         );
         this.doneOrders = orders.filter((order) => order.status === 'DONE');
       });
+    this.initializeWebSocketConnection();
   }
 
   ngOnDestroy() {
     this.storeSubscription.unsubscribe();
+    this.stompClient.disconnect();
+  }
+
+  initializeWebSocketConnection() {
+    const ws = new SockJS('http://localhost:8080/api/socket');
+    this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = null;
+    this.stompClient.connect({}, () => {
+      this.openOrderStatusSocket();
+    });
+  }
+
+  openOrderStatusSocket() {
+    this.stompClient.subscribe(
+      '/topic/order-picked-up',
+      (message: { body: string }) => {
+        this.store.dispatch(removeOrder({ id: message.body }));
+      }
+    );
   }
 
   drop(event: CdkDragDrop<RestaurantOrder[]>) {

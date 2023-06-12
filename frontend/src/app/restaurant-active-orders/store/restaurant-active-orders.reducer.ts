@@ -43,7 +43,11 @@ const restaurantActiveOrdersReducer = createReducer(
         return order;
       }),
     })
-  )
+  ),
+  on(ActiveRestaurantOrdersActions.removeOrder, (state, { id }) => ({
+    ...state,
+    orders: state.orders.filter((order) => order.id !== id),
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

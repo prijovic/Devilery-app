@@ -3,14 +3,22 @@
 </button>
 
 <mat-menu #menu="matMenu" xPosition="before">
-  <button mat-menu-item [matMenuTriggerFor]="deliverers">
+  <a routerLink="/order-history" mat-menu-item>
+    <mat-icon>history</mat-icon>
+    <span>Order History</span>
+  </a>
+  <button *ngIf="role === 'ADMIN'" mat-menu-item [matMenuTriggerFor]="deliverers">
     <mat-icon svgIcon="delivery-black"></mat-icon>
     <span>Deliverers</span>
   </button>
-  <button mat-menu-item [matMenuTriggerFor]="restaurants">
+  <button *ngIf="role === 'ADMIN'" mat-menu-item [matMenuTriggerFor]="restaurants">
     <mat-icon>restaurant</mat-icon>
     <span>Restaurants</span>
   </button>
+  <a *ngIf="role === 'ADMIN'" routerLink="/admin/reports" mat-menu-item>
+    <mat-icon>report</mat-icon>
+    <span>Reports</span>
+  </a>
 </mat-menu>
 
 <mat-menu #restaurants="matMenu" xPosition="after">

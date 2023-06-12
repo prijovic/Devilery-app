@@ -5,15 +5,13 @@
   <div class="navbar-items">
     <app-navbar-item text="Log in" url="/auth/login" *ngIf="!role"></app-navbar-item>
     <app-navbar-item text="Sign up" [isReverse]="true" url="/auth/sign-up" *ngIf="!role"></app-navbar-item>
-    <!--    <app-navbar-item text="Deliverers" url="/admin/deliverers/new" *ngIf="role === 'ADMIN'"></app-navbar-item>-->
-    <!--    <app-navbar-item text="Restaurants" url="/admin/restaurants/new" *ngIf="role === 'ADMIN'"></app-navbar-item>-->
     <!--    <app-navbar-item text="Users" url="/admin/users" *ngIf="role === 'ADMIN'"></app-navbar-item>-->
     <!--    <app-navbar-item text="Restaurants" url="/owner/restaurants" *ngIf="role === 'OWNER'"></app-navbar-item>-->
-    <!--    <app-navbar-item text="Home" url="/order/confirm" *ngIf="role === 'OWNER' || role === 'EMPLOYEE'"></app-navbar-item>-->
-    <app-orders-notifications *ngIf="role === 'OWNER' || role === 'EMPLOYEE'"></app-orders-notifications>
+    <app-orders-notifications
+      *ngIf="role === 'OWNER' || role === 'EMPLOYEE' || role === 'DELIVERER'"></app-orders-notifications>
     <app-active-orders *ngIf="role"></app-active-orders>
     <app-order-bag *ngIf="role"></app-order-bag>
-    <app-menu-button *ngIf="role === 'ADMIN'"></app-menu-button>
+    <app-menu-button *ngIf="role" [role]="role"></app-menu-button>
     <app-user-profile-button *ngIf="role"></app-user-profile-button>
   </div>
 </nav>

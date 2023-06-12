@@ -17,6 +17,14 @@ const routes: Routes = [
       import('./auth/auth.module').then((module) => module.AuthModule),
   },
   {
+    path: 'order-history',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./order-history/order-history.module').then(
+        (module) => module.OrderHistoryModule
+      ),
+  },
+  {
     path: 'ordering',
     canActivate: [AuthGuard],
     loadChildren: () =>
@@ -61,6 +69,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin-restaurants/admin-restaurants.module').then(
         (module) => module.AdminRestaurantsModule
+      ),
+  },
+  {
+    path: 'admin/reports',
+    canActivate: [AdminGuard],
+    loadChildren: () =>
+      import('./admin-reports/admin-reports.module').then(
+        (module) => module.AdminReportsModule
       ),
   },
 ];

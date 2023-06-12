@@ -1,0 +1,32 @@
+@use "src/custom-theme" as theme;
+
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 400px;
+}
+
+mat-table {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.table-row {
+  background-color: theme.$light-gray;
+}
+
+mat-header-row {
+  font-weight: bold;
+}
+
+@media(max-width: theme.$small-window-max) {
+  .container {
+    max-width: 90%;
+  }
+}

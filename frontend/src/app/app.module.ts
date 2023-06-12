@@ -17,6 +17,8 @@ import { ActiveOrdersComponent } from './components/navbar/active-orders/active-
 import { OrdersNotificationsComponent } from './components/navbar/orders-notifications/orders-notifications.component';
 import { RestaurantActiveOrdersModule } from './restaurant-active-orders/restaurant-active-orders.module';
 import { MenuButtonComponent } from './components/navbar/menu-button/menu-button.component';
+import { ReviewDialogComponent } from './components/navbar/active-orders/review-dialog/review-dialog.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { MenuButtonComponent } from './components/navbar/menu-button/menu-button
     ActiveOrdersComponent,
     OrdersNotificationsComponent,
     MenuButtonComponent,
+    ReviewDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { MenuButtonComponent } from './components/navbar/menu-button/menu-button
       preventDuplicates: true,
       closeButton: true,
     }),
+    StarRatingModule.forRoot(),
     HttpClientModule,
     SharedModule,
     CoreModule,

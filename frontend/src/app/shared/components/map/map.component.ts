@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectSelectedAddress } from '../../../ordering/store/ordering.selectors';
-import { icon, latLng, LayerGroup, marker, tileLayer } from 'leaflet';
+import { icon, latLng, Layer, marker, tileLayer } from 'leaflet';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,18 +10,18 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, OnDestroy {
+  center = latLng(45.267136, 19.833549);
   options = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        attribution: '...',
       }),
     ],
     zoom: 15,
     center: latLng(45.267136, 19.833549),
   };
-  markerGroup: LayerGroup[] = [];
-  storeSubscription!: Subscription;
+  markerGroup: Layer[] = [];
+  private storeSubscription!: Subscription;
 
   constructor(private store: Store) {}
 
@@ -30,16 +30,15 @@ export class MapComponent implements OnInit, OnDestroy {
       .select(selectSelectedAddress)
       .subscribe((address) => {
         if (address) {
-          const layer = new LayerGroup();
-          const pin = marker([address.longitude, address.latitude], {
+          this.center = latLng(address.latitude, address.longitude);
+          const markerLayer = marker(this.center, {
             icon: icon({
               iconUrl: 'assets/icons/pin.svg',
               iconSize: [48, 48], // Adjust the size of the icon if needed
               iconAnchor: [24, 48],
             }),
           });
-          pin.addTo(layer);
-          this.markerGroup = [layer];
+          this.markerGroup = [markerLayer];
         }
       });
   }

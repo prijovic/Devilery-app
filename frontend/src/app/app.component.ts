@@ -75,6 +75,12 @@ export class AppComponent implements OnInit {
         '../assets/icons/order.svg'
       )
     );
+    matIconRegistry.addSvgIcon(
+      'pin',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../assets/icons/pin.svg'
+      )
+    );
   }
 
   ngOnInit(): void {

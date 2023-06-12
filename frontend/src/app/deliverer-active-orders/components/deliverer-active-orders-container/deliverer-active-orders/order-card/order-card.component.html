@@ -1,34 +1,36 @@
 <div class="order-card-container">
   <h2 class="order-card-title">{{order.id}}</h2>
   <div class="order-card-content">
-    <div class="restaurant-details-container">
-      <h3 class="name">{{order.restaurant.name}}</h3>
-      <div class="profile-picture"></div>
-      <mat-icon class="pin" svgIcon="pin"></mat-icon>
-      <div class="info-container">
-        <div class="info">
-          <mat-icon>location_city</mat-icon>
-          <span>{{order.restaurant.address.name}}</span>
-        </div>
+    <div class="section-header">
+      <div class="restaurant-profile-picture profile-picture"
+           [ngStyle]="{'background-image': !restaurantImage ? '' : getBackgroundImageUrl(restaurantImage)}"></div>
+      <h3 class="restaurant-name name">{{order.restaurant.name}}</h3>
+    </div>
+    <div class="restaurant-info-container info-container">
+      <div class="info">
+        <mat-icon class="pin" svgIcon="pin"></mat-icon>
+        <span>{{order.restaurant.address.name}}</span>
       </div>
     </div>
-    <div class="delivery-path"></div>
-    <div class="customer-details-container">
-      <h3 class="name">{{order.customer.name + " " + order.customer.surname | titlecase}}</h3>
-      <div class="profile-picture"></div>
-      <mat-icon class="pin" svgIcon="pin"></mat-icon>
-      <div class="info-container">
-        <div class="info">
-          <mat-icon>location_city</mat-icon>
-          <span>{{order.address.name}}</span>
-        </div>
-        <div class="info">
-          <mat-icon> phone</mat-icon>
-          <span>{{order.address.name}}</span>
-        </div>
+    <mat-icon id="delivery" svgIcon="delivery-black"></mat-icon>
+    <div class="section-header">
+      <div class="customer-profile-picture profile-picture"
+           [ngStyle]="{'background-image': !customerImage ? userAvatarUrl : getBackgroundImageUrl(customerImage)}"></div>
+      <h3 class="customer-name name">{{order.customer.name + " " + order.customer.surname | titlecase}}</h3>
+    </div>
+    <div class="customer-info-container info-container">
+      <div class="info">
+        <mat-icon class="pin" svgIcon="pin"></mat-icon>
+        <span>{{order.address.name}}</span>
+      </div>
+      <div class="info info-phone">
+        <mat-icon>phone</mat-icon>
+        <span>{{order.customer.phoneNumber}}</span>
       </div>
     </div>
   </div>
-  <div class="order-card-actions">
+  <div class="order-card-actions" *ngIf="isDelivering">
+    <button class="accept-button" (click)="successOrder()">Finish</button>
+    <button class="reject-button" (click)="failOrder()">Report</button>
   </div>
 </div>

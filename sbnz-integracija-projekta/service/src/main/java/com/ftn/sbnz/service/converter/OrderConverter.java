@@ -21,9 +21,14 @@ public class OrderConverter {
                 .deliverer(deliverer)
                 .customer(UserConverter.toUserResponse(order.getCustomer()))
                 .status(order.getStatus())
+                .rejectionReason(order.getRejectionReason())
+                .unsuccessfulDeliveryReason(order.getUnsuccessfulDeliveryReason())
+                .items(order.getItems().stream().map(MenuItemConverter::toMenuItemResponse).collect(Collectors.toList()))
+                .restaurant(RestaurantConverter.toRestaurantResponse(order.getRestaurant()))
                 .charge(ChargeConverter.toChargeResponse(order.getCharge()))
                 .deliveryDistance(order.getDeliveryDistance())
                 .address(order.getAddress())
+                .isReportSubmitted(order.getReport() != null)
                 .build();
     }
 

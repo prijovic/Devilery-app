@@ -1,8 +1,9 @@
-import {Action, createReducer, on} from "@ngrx/store";
+import { Action, createReducer, on } from '@ngrx/store';
 import * as OrderingActions from './ordering.actions';
-import {RestaurantItem} from "../../shared/model/restaurant-item.model";
-import {Charge} from "../../shared/model/charge.model";
-import {Address} from "../../shared/model/address.model";
+import { RestaurantItem } from '../../shared/model/restaurant-item.model';
+import { Charge } from '../../shared/model/charge.model';
+import { Address } from '../../shared/model/address.model';
+import { Order } from '../../shared/model/order.model';
 
 export interface State {
   items: RestaurantItem[];
@@ -10,6 +11,7 @@ export interface State {
   newOrderAttempt: boolean;
   orderChargeEstimation: Charge | null;
   selectedAddress: Address | null;
+  orders: Order[];
 }
 
 const initialState: State = {
@@ -17,25 +19,41 @@ const initialState: State = {
   restaurantId: null,
   newOrderAttempt: false,
   orderChargeEstimation: null,
-  selectedAddress: null
+  selectedAddress: null,
+  orders: [],
 };
 
 const orderingReducer = createReducer(
   initialState,
-  on(OrderingActions.addItemToOrder, (state, { item , restaurantId }) => {
+  on(OrderingActions.addItemToOrder, (state, { item, restaurantId }) => {
     return {
       ...state,
-      items: state.restaurantId !== null && restaurantId !== state.restaurantId ? state.items : [...state.items, item],
-      restaurantId: state.restaurantId != null && restaurantId !== state.restaurantId ? state.restaurantId : restaurantId
+      items:
+        state.restaurantId !== null && restaurantId !== state.restaurantId
+          ? state.items
+          : [...state.items, item],
+      restaurantId:
+        state.restaurantId != null && restaurantId !== state.restaurantId
+          ? state.restaurantId
+          : restaurantId,
     };
   }),
-  on(OrderingActions.askForNewOrderAttempt, (state) => ({...state, newOrderAttempt: true})),
-  on(OrderingActions.newOrderAttemptAccepted, (state, {item, restaurantId}) => {
-    return {...state, restaurantId, items: [item], newOrderAttempt: false};
-  }),
-  on(OrderingActions.newOrderAttemptRejected, (state) => ({...state, newOrderAttempt: false})),
+  on(OrderingActions.askForNewOrderAttempt, (state) => ({
+    ...state,
+    newOrderAttempt: true,
+  })),
+  on(
+    OrderingActions.newOrderAttemptAccepted,
+    (state, { item, restaurantId }) => {
+      return { ...state, restaurantId, items: [item], newOrderAttempt: false };
+    }
+  ),
+  on(OrderingActions.newOrderAttemptRejected, (state) => ({
+    ...state,
+    newOrderAttempt: false,
+  })),
   on(OrderingActions.removeItemFromOrder, (state, { itemId }) => {
-    const itemIndex = state.items.findIndex(item => item.id === itemId);
+    const itemIndex = state.items.findIndex((item) => item.id === itemId);
     if (itemIndex > -1) {
       const updatedItems = [...state.items];
       updatedItems.splice(itemIndex, 1);
@@ -43,18 +61,33 @@ const orderingReducer = createReducer(
       return {
         ...state,
         items: updatedItems,
-        restaurantId: updatedItems.length === 0 ? null : state.restaurantId
+        restaurantId: updatedItems.length === 0 ? null : state.restaurantId,
       };
     }
 
     return state;
   }),
-  on(OrderingActions.setOrderChargeEstimation, (state, {orderChargeEstimation}) => ({
+  on(
+    OrderingActions.setOrderChargeEstimation,
+    (state, { orderChargeEstimation }) => ({
+      ...state,
+      orderChargeEstimation,
+    })
+  ),
+  on(OrderingActions.createOrderSuccess, (state) => ({
     ...state,
-    orderChargeEstimation
+    orderChargeEstimation: null,
+    restaurantId: null,
+    items: [],
   })),
-  on(OrderingActions.createOrderSuccess, (state) => ({...state, orderChargeEstimation: null, restaurantId: null, items: []})),
-  on(OrderingActions.setSelectedAddress, (state, {selectedAddress}) => ({...state, selectedAddress}))
+  on(OrderingActions.setSelectedAddress, (state, { selectedAddress }) => ({
+    ...state,
+    selectedAddress,
+  })),
+  on(OrderingActions.setActiveOrders, (state, { orders }) => ({
+    ...state,
+    orders,
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

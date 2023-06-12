@@ -97,6 +97,12 @@ public class Restaurant extends BaseEntity {
         LocalTime currentTime = LocalTime.now();
         LocalTime opensAt = workingHours.getOpensAt().toLocalTime();
         LocalTime closesAt = workingHours.getClosesAt().toLocalTime();
+        if (opensAt.equals(closesAt)) {
+            return false;
+        }
+        if (opensAt.isAfter(closesAt)) {
+            return (currentTime.isBefore(opensAt) && currentTime.isAfter(closesAt));
+        }
         return currentTime.isBefore(opensAt) || currentTime.isAfter(closesAt);
     }
 
