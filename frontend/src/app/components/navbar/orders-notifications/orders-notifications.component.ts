@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import {
   getActiveRestaurantOrders,
   getRestaurantId,
-  getRestaurantOrderById,
 } from '../../../restaurant-active-orders/store/restaurant-active-orders.actions';
 import {
   selectOrdersWithStatus,
@@ -14,7 +13,7 @@ import * as SockJS from 'sockjs-client';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { notifyInfo } from '../../../core/store/core.actions';
 import { selectDecodedToken } from '../../../auth/store/auth.selectors';
-import { getDelivererOrderById } from '../../../deliverer-active-orders/store/deliverer-active-orders.actions';
+import { getActiveDelivererOrders } from '../../../deliverer-active-orders/store/deliverer-active-orders.actions';
 
 @Component({
   selector: 'app-orders-notifications',
@@ -89,7 +88,7 @@ export class OrdersNotificationsComponent implements OnInit, OnDestroy {
             title: 'New Order Assigned',
           })
         );
-        this.store.dispatch(getDelivererOrderById({ id: message.body }));
+        this.store.dispatch(getActiveDelivererOrders());
       }
     );
   }
@@ -104,7 +103,7 @@ export class OrdersNotificationsComponent implements OnInit, OnDestroy {
             title: 'New Order Arrived',
           })
         );
-        this.store.dispatch(getRestaurantOrderById({ id: message.body }));
+        this.store.dispatch(getActiveRestaurantOrders());
       }
     );
   }

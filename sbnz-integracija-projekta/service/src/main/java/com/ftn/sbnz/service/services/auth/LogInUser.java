@@ -1,11 +1,12 @@
 package com.ftn.sbnz.service.services.auth;
 
+import com.ftn.sbnz.model.models.Deliverer;
 import com.ftn.sbnz.model.models.User;
 import com.ftn.sbnz.service.configProperties.CustomProperties;
 import com.ftn.sbnz.service.dto.response.AuthTokenResponse;
 import com.ftn.sbnz.service.exception.UserBlockedException;
 import com.ftn.sbnz.service.exception.UserNotActiveException;
-import com.ftn.sbnz.service.services.deliverer.MakeDelivererActive;
+import com.ftn.sbnz.service.services.deliverer.ChangeDelivererOnlineStatus;
 import com.ftn.sbnz.service.services.jwt.JwtGenerateToken;
 import com.ftn.sbnz.service.services.user.GetUserByEmail;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class LogInUser {
     private final JwtGenerateToken jwtGenerateToken;
     private final GetUserByEmail getUserByEmail;
     private final CustomProperties customProperties;
-    private final MakeDelivererActive makeDelivererActive;
+    private final ChangeDelivererOnlineStatus changeDelivererOnlineStatus;
 
 
     public AuthTokenResponse execute(final String email, final String password) {
@@ -51,8 +52,8 @@ public class LogInUser {
             throw new UserNotActiveException();
         }
 
-        if (user.getRole().getName().equals("DRIVER")) {
-            makeDelivererActive.execute(user.getEmail());
+        if (user instanceof Deliverer) {
+            changeDelivererOnlineStatus.execute(user.getId(), true);
         }
 
         return new AuthTokenResponse(jwtGenerateToken.execute(user.getEmail(), customProperties.getAuthTokenExpirationMilliseconds(), user.getRole()),

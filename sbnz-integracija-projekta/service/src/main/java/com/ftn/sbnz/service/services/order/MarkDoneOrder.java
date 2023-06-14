@@ -18,6 +18,4 @@ public class MarkDoneOrder {
         assignDelivererToOrder.execute(order);
         return order;
     }
-
-
 }

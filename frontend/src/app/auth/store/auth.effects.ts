@@ -65,13 +65,26 @@ export class AuthEffects {
   logout = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.logout.type),
-      map(() => {
-        sessionStorage.clear();
-        this.authService.clearLogoutTimer();
-        return AuthActions.logoutSuccess();
-      })
+      switchMap(() =>
+        this.httpService.logout().pipe(map(() => AuthActions.logoutSuccess()))
+      )
     );
   });
+
+  logoutSuccess = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.logoutSuccess.type),
+        map(() => {
+          sessionStorage.clear();
+          this.authService.clearLogoutTimer();
+          return AuthActions.logoutSuccess();
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
 
   sign_up = createEffect(() => {
     return this.actions$.pipe(

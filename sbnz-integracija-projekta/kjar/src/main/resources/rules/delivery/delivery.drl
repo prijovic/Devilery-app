@@ -22,7 +22,7 @@ rule "Badly Rated Deliverer"
     agenda-group "delivery"
     salience 4
     when
-        $deliverer: Deliverer(getRating() < 2.5)
+        $deliverer: Deliverer(getRating() < 2.5, getRating() != 0)
     then
         modify($deliverer){setWellRated(false), setBadRated(true)}
 end
@@ -30,7 +30,7 @@ end
 rule "Assign Order to Deliverer"
     agenda-group "delivery"
     when
-        $deliverer: Deliverer($delivererId: id, status != DelivererStatus.UNAVAILABLE)
+        $deliverer: Deliverer($delivererId: id, status != DelivererStatus.UNAVAILABLE, isOnline() == true)
         $order: Order(status == OrderStatus.DONE, deliverer == null)
     then
 end

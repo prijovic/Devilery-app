@@ -72,7 +72,7 @@ public class KieConfiguration {
         ((SessionConfiguration) ksConf).setBeliefSystemType(BeliefSystemType.DEFEASIBLE);
 
         KieSession kieSession = kieBase.newKieSession(ksConf, null);
-//        kieSession.addEventListener(new CustomAgendaEventListener());
+        kieSession.addEventListener(new CustomAgendaEventListener());
         return kieSession;
     }
 

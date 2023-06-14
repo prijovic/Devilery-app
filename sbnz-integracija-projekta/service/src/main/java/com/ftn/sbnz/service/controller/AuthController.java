@@ -5,6 +5,7 @@ import com.ftn.sbnz.service.dto.request.auth.RegistrationRequest;
 import com.ftn.sbnz.service.dto.response.AuthTokenResponse;
 import com.ftn.sbnz.service.services.auth.ActivateEmail;
 import com.ftn.sbnz.service.services.auth.LogInUser;
+import com.ftn.sbnz.service.services.auth.LogOutUser;
 import com.ftn.sbnz.service.services.auth.RegisterNewUser;
 import com.ftn.sbnz.service.services.user.UserExistsByEmail;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +23,17 @@ public class AuthController {
     private final UserExistsByEmail userExistsByEmail;
     private final RegisterNewUser registerNewUser;
     private final ActivateEmail activateEmail;
+    private final LogOutUser logOutUser;
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
     public ResponseEntity<AuthTokenResponse> login(@Valid @RequestBody final LoginRequest loginRequest) {
         return ResponseEntity.status(200).body(loginUser.execute(loginRequest.getEmail(), loginRequest.getPassword()));
+    }
+
+    @PutMapping("/logout")
+    public void logout() {
+        logOutUser.execute();
     }
 
     @GetMapping("/user-exists/{email}")

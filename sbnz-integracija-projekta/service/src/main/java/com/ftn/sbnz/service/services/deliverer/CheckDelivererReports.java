@@ -17,13 +17,11 @@ public class CheckDelivererReports {
     private final KieSession kieSession;
     private final UserBlocked userBlocked;
 
-    public Deliverer execute(Report report) {
-        Deliverer deliverer = report.getDeliverer();
-        for (Report rep : deliverer.getReports()) {
-            kieSession.insert(rep);
+    public Deliverer execute(Deliverer deliverer) {
+        for (Report report : deliverer.getReports()) {
+            kieSession.insert(report);
         }
         kieSession.insert(deliverer);
-        kieSession.insert(report);
         kieSession.getAgenda().getAgendaGroup("reports").setFocus();
         kieSession.fireAllRules();
 

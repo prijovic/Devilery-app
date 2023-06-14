@@ -36,7 +36,6 @@ rule "First level fired"
     agenda-group "restaurant"
     when
         not(MenuItemType())
-        exists(Restaurant())
         not(Restaurant(isWellRated() == true, isClosed() == false))
         not(LevelsFired())
     then

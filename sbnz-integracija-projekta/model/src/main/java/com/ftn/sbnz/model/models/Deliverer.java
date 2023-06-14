@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,6 +20,10 @@ import java.util.List;
 @SuperBuilder
 @Table(name = "deliverer")
 public class Deliverer extends User {
+
+    @Column(name = "online")
+    @Value("false")
+    boolean online;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
